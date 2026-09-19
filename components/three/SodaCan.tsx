@@ -42,8 +42,9 @@ export type SodaCanProps = {
   spec: LabelSpec;
   /** Radians per second of idle spin. 0 disables. */
   spin?: number;
-  /** Scroll- or pointer-driven rotation offset, in radians. */
-  rotationOffset?: number;
+  /** Scroll- or pointer-driven rotation offset, in radians. Passed as a ref so
+   *  scroll updates never trigger a React render — useFrame reads it directly. */
+  rotationRef?: React.MutableRefObject<number>;
   /** Gentle vertical bob, in scene units. 0 disables. */
   float?: number;
   position?: [number, number, number];
@@ -55,7 +56,7 @@ export type SodaCanProps = {
 export function SodaCan({
   spec,
   spin = 0.35,
-  rotationOffset = 0,
+  rotationRef,
   float = 0.04,
   position = [0, 0, 0],
   scale = 1,
@@ -71,7 +72,8 @@ export function SodaCan({
     g.rotation.y += spin * delta;
     // Lerp toward the externally driven angle so scroll input feels weighted
     // rather than snapping frame-to-frame.
-    g.rotation.z = THREE.MathUtils.lerp(g.rotation.z, rotationOffset * 0.08, 0.06);
+    const target = (rotationRef?.current ?? 0) * 0.08;
+    g.rotation.z = THREE.MathUtils.lerp(g.rotation.z, target, 0.06);
     if (float > 0) {
       const t = state.clock.elapsedTime + phase;
       g.position.y = position[1] + Math.sin(t * 0.9) * float;
