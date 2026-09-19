@@ -77,7 +77,19 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-IN" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
+    <html
+      lang="en-IN"
+      className={`no-js ${display.variable} ${sans.variable} ${mono.variable}`}
+    >
+      <head>
+        {/* Runs before first paint, so scroll reveals keep their animation
+            when JS is available and are forced visible when it is not. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.remove('no-js')`,
+          }}
+        />
+      </head>
       <body>
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
         <Announcement />

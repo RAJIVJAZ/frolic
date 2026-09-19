@@ -27,7 +27,7 @@ export function Bubbles({
   color = '#ffffff',
   spread = 3.4,
   height = 4.2,
-  opacity = 0.34,
+  opacity = 0.22,
 }: {
   count?: number;
   color?: string;
@@ -41,9 +41,11 @@ export function Bubbles({
     // Deterministic-ish distribution; visual noise doesn't need crypto entropy.
     return Array.from({ length: count }, () => ({
       x: (Math.random() - 0.5) * spread * 2,
-      z: (Math.random() - 0.5) * spread,
+      // Kept behind the can and shallow in z: bubbles that drift close to the
+      // camera render as large opaque blobs rather than carbonation.
+      z: -0.35 - Math.random() * 1.1,
       y: Math.random() * height - height / 2,
-      r: 0.012 + Math.random() * 0.042,
+      r: 0.006 + Math.random() * 0.017,
       speed: 0.18 + Math.random() * 0.5,
       wobble: 0.5 + Math.random() * 1.6,
       phase: Math.random() * Math.PI * 2,
@@ -83,8 +85,8 @@ export function Bubbles({
         color={color}
         transparent
         opacity={opacity}
-        roughness={0.05}
-        metalness={0.1}
+        roughness={0.02}
+        metalness={0.2}
         depthWrite={false}
       />
     </instancedMesh>
@@ -109,11 +111,11 @@ export function FloatingForms({
     () =>
       Array.from({ length: count }, (_, i) => ({
         position: [
-          Math.cos((i / count) * Math.PI * 2) * (1.7 + (i % 3) * 0.45),
-          Math.sin((i / count) * Math.PI * 4) * 1.15,
-          -0.6 - (i % 4) * 0.55,
+          Math.cos((i / count) * Math.PI * 2) * (1.45 + (i % 3) * 0.3),
+          Math.sin((i / count) * Math.PI * 4) * 0.95,
+          -1.1 - (i % 4) * 0.5,
         ] as [number, number, number],
-        scale: 0.1 + (i % 4) * 0.045,
+        scale: 0.055 + (i % 4) * 0.022,
         color: colors[i % colors.length],
         detail: i % 3,
         speed: 0.25 + (i % 5) * 0.12,
@@ -128,7 +130,7 @@ export function FloatingForms({
     const t = state.clock.elapsedTime;
     g.children.forEach((child, i) => {
       const f = forms[i];
-      child.position.y = f.position[1] + Math.sin(t * f.speed + f.phase) * 0.3;
+      child.position.y = f.position[1] + Math.sin(t * f.speed + f.phase) * 0.22;
       child.rotation.x = t * f.speed * 0.5;
       child.rotation.z = t * f.speed * 0.32;
     });

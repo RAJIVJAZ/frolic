@@ -66,17 +66,15 @@ export function Hero() {
             7g prebiotic fibre · 4g added sugar · 0 caffeine
           </motion.p>
 
-          <h1 className="text-step-6 leading-[0.86]">
-            <RevealWords text="India's Most" delay={0.15} />
+          <h1 className="text-step-6">
+            <RevealWords text="India's most" delay={0.15} />
             <br />
-            <RevealWords text="Exciting" delay={0.3} className="gradient-text" />{' '}
-            <RevealWords text="Functional" delay={0.42} />
-            <br />
-            <RevealWords text="Soda" delay={0.58} />
+            <RevealWords text="exciting" delay={0.3} className="gradient-text" />{' '}
+            <RevealWords text="functional soda" delay={0.42} />
           </h1>
 
           <motion.p
-            className="mt-7 max-w-[42ch] text-step-1 text-charcoal-muted"
+            className="mt-6 max-w-[42ch] text-step-1 text-charcoal-muted"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.7 }}
@@ -100,7 +98,7 @@ export function Hero() {
           </motion.div>
 
           <motion.dl
-            className="mt-12 flex flex-wrap gap-x-10 gap-y-4"
+            className="mt-10 flex flex-wrap gap-x-10 gap-y-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1 }}
@@ -113,7 +111,7 @@ export function Hero() {
               <div key={s.l}>
                 <dt className="sr-only">{s.l}</dt>
                 <dd>
-                  <span className="block font-display text-step-3 font-black leading-none">{s.v}</span>
+                  <span className="block font-display text-step-2 font-black leading-none">{s.v}</span>
                   <span className="mt-1.5 block font-mono text-[0.64rem] font-semibold uppercase tracking-[0.16em] text-charcoal-muted">
                     {s.l}
                   </span>

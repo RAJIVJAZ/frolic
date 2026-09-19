@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import { useReducedMotion } from 'framer-motion';
 import { useNearViewport, useCapableDevice } from './support';
 import { CanFallback } from './CanFallback';
+import { StageBoundary } from './StageBoundary';
 import type { Product } from '@/lib/products';
 
 /**
@@ -43,20 +44,23 @@ export function LazyCanStage({
   const reduce = useReducedMotion();
 
   const use3D = near && capable === true && !reduce;
+  const fallback = <CanFallback product={product} widthClass={fallbackWidthClass} />;
 
   return (
     <div ref={ref} className={className}>
       {use3D ? (
-        <CanStage
-          product={product}
-          rotationRef={rotationRef}
-          className="h-full w-full"
-          bubbles={bubbles}
-          showForms={showForms}
-          scale={scale}
-        />
+        <StageBoundary fallback={fallback}>
+          <CanStage
+            product={product}
+            rotationRef={rotationRef}
+            className="h-full w-full"
+            bubbles={bubbles}
+            showForms={showForms}
+            scale={scale}
+          />
+        </StageBoundary>
       ) : (
-        <CanFallback product={product} widthClass={fallbackWidthClass} />
+        fallback
       )}
     </div>
   );

@@ -52,6 +52,7 @@ export function Reveal({
 
   return (
     <MotionTag
+      data-reveal
       className={cn(className)}
       initial="hidden"
       whileInView="show"
@@ -63,7 +64,19 @@ export function Reveal({
   );
 }
 
-/** Word-by-word headline reveal for hero and section openers. */
+/**
+ * Word-by-word headline reveal.
+ *
+ * Deliberately CSS rather than Framer Motion. A Framer `initial` state is
+ * inlined into the SSR markup as `opacity: 0`, which means the headline — the
+ * LCP element on most of these pages — stays invisible until React hydrates,
+ * and stays invisible forever if the JS never arrives. A CSS animation starts
+ * at first paint with no hydration in the critical path, and degrades to
+ * plain visible text if it cannot run at all.
+ *
+ * Opacity is never animated here: each word slides up inside an
+ * overflow-hidden mask, so the text is opaque from the first frame.
+ */
 export function RevealWords({
   text,
   className,
@@ -83,20 +96,17 @@ export function RevealWords({
   return (
     <span className={cn('inline-block', className)}>
       {words.map((word, i) => (
-        <span key={`${word}-${i}`} className="inline-block overflow-hidden pb-[0.12em] align-bottom">
-          <motion.span
-            className={cn('inline-block', wordClassName)}
-            initial={{ y: '110%', opacity: 0 }}
-            animate={{ y: '0%', opacity: 1 }}
-            transition={{
-              duration: 0.85,
-              delay: delay + i * 0.055,
-              ease: [0.22, 1, 0.36, 1],
-            }}
+        <span
+          key={`${word}-${i}`}
+          className="inline-block overflow-hidden pb-[0.12em] align-bottom"
+        >
+          <span
+            className={cn('inline-block animate-wordIn motion-reduce:animate-none', wordClassName)}
+            style={{ animationDelay: `${delay + i * 0.055}s` }}
           >
             {word}
-            {i < words.length - 1 ? ' ' : ''}
-          </motion.span>
+            {i < words.length - 1 ? '\u00A0' : ''}
+          </span>
         </span>
       ))}
     </span>

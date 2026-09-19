@@ -103,9 +103,9 @@ const config: Config = {
         'step-1': ['clamp(1.2rem, 1.12rem + 0.4vw, 1.5rem)', { lineHeight: '1.45' }],
         'step-2': ['clamp(1.5rem, 1.35rem + 0.75vw, 2.1rem)', { lineHeight: '1.25' }],
         'step-3': ['clamp(1.9rem, 1.6rem + 1.45vw, 3rem)', { lineHeight: '1.1' }],
-        'step-4': ['clamp(2.4rem, 1.85rem + 2.75vw, 4.4rem)', { lineHeight: '1.02' }],
-        'step-5': ['clamp(3rem, 1.95rem + 5.2vw, 6.6rem)', { lineHeight: '0.95' }],
-        'step-6': ['clamp(3.6rem, 1.7rem + 9.5vw, 10rem)', { lineHeight: '0.88' }],
+        'step-4': ['clamp(2.1rem, 1.7rem + 2vw, 3.4rem)', { lineHeight: '1.04' }],
+        'step-5': ['clamp(2.6rem, 1.85rem + 3.7vw, 5rem)', { lineHeight: '0.98' }],
+        'step-6': ['clamp(3rem, 1.9rem + 5.4vw, 6.4rem)', { lineHeight: '0.9' }],
       },
       borderRadius: {
         pill: '999px',
@@ -148,6 +148,10 @@ const config: Config = {
           '0%': { backgroundPosition: '-160% 0' },
           '100%': { backgroundPosition: '260% 0' },
         },
+        wordIn: {
+          from: { transform: 'translate3d(0, 110%, 0)' },
+          to: { transform: 'translate3d(0, 0, 0)' },
+        },
         pulseRing: {
           '0%': { transform: 'scale(0.85)', opacity: '0.7' },
           '100%': { transform: 'scale(1.8)', opacity: '0' },
@@ -158,6 +162,7 @@ const config: Config = {
         marquee: 'marquee var(--marquee-duration, 38s) linear infinite',
         bob: 'bob 6s ease-in-out infinite',
         shimmer: 'shimmer 2.6s linear infinite',
+        wordIn: 'wordIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) backwards',
         pulseRing: 'pulseRing 2.4s ease-out infinite',
       },
     },

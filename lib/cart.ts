@@ -11,6 +11,16 @@ export type CartLine = {
   packSize: number;
   subscribe: boolean;
   quantity: number;
+  /**
+   * Per-can price in paise-free rupees, set only for bundle lines. A
+   * build-your-own box is priced by its tier (12 or 24 cans total), not by how
+   * many cans of each flavour it happens to contain — so a 4-can share of a
+   * 24-can box must not be re-priced as a 4-can pack. When present this wins
+   * over the catalogue pack tiers.
+   */
+  unitPrice?: number;
+  /** Label shown in the drawer, e.g. "Part of your 24-can box". */
+  note?: string;
 };
 
 type CartState = {
@@ -29,8 +39,8 @@ type CartState = {
   toggle: () => void;
 };
 
-const lineId = (handle: string, packSize: number, subscribe: boolean) =>
-  `${handle}:${packSize}:${subscribe ? 'sub' : 'once'}`;
+const lineId = (handle: string, packSize: number, subscribe: boolean, unitPrice?: number) =>
+  `${handle}:${packSize}:${subscribe ? 'sub' : 'once'}${unitPrice ? `:${unitPrice}` : ''}`;
 
 export const useCart = create<CartState>()(
   persist(
@@ -39,15 +49,15 @@ export const useCart = create<CartState>()(
       isOpen: false,
       hydrated: false,
 
-      add: ({ handle, packSize, subscribe, quantity = 1 }) =>
+      add: ({ handle, packSize, subscribe, quantity = 1, unitPrice, note }) =>
         set((state) => {
-          const id = lineId(handle, packSize, subscribe);
+          const id = lineId(handle, packSize, subscribe, unitPrice);
           const existing = state.lines.find((l) => l.id === id);
           const lines = existing
             ? state.lines.map((l) =>
                 l.id === id ? { ...l, quantity: l.quantity + quantity } : l,
               )
-            : [...state.lines, { id, handle, packSize, subscribe, quantity }];
+            : [...state.lines, { id, handle, packSize, subscribe, quantity, unitPrice, note }];
           return { lines, isOpen: true };
         }),
 
@@ -94,10 +104,16 @@ export type CartTotals = {
 export const FREE_SHIPPING_THRESHOLD = 999;
 const FLAT_SHIPPING = 79;
 
-export function lineSubtotal(line: CartLine): number {
+/** Per-can price for a line — a bundle's own price wins over pack tiers. */
+export function lineUnitPrice(line: CartLine): number {
+  if (line.unitPrice !== undefined) return line.unitPrice;
   const product = products.find((p) => p.handle === line.handle);
   if (!product) return 0;
-  return unitPriceFor(product, line.packSize, line.subscribe) * line.packSize * line.quantity;
+  return unitPriceFor(product, line.packSize, line.subscribe);
+}
+
+export function lineSubtotal(line: CartLine): number {
+  return lineUnitPrice(line) * line.packSize * line.quantity;
 }
 
 export function lineListPrice(line: CartLine): number {

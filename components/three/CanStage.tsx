@@ -2,7 +2,7 @@
 
 import { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Environment, AdaptiveDpr, AdaptiveEvents, ContactShadows } from '@react-three/drei';
+import { Environment, Lightformer, AdaptiveDpr, AdaptiveEvents, ContactShadows } from '@react-three/drei';
 import { SodaCan } from './SodaCan';
 import { Bubbles, FloatingForms } from './Bubbles';
 import type { Product } from '@/lib/products';
@@ -17,7 +17,8 @@ import type { Product } from '@/lib/products';
  *
  * Performance contract (docs/06-motion-spec.md): dpr capped at 2 with
  * AdaptiveDpr dropping it under load, one instanced draw call for the whole
- * bubble field, and no texture or model fetched over the network.
+ * bubble field, and no texture, model or environment map fetched over the
+ * network — see StudioEnvironment below.
  */
 
 export type CanStageProps = {
@@ -80,9 +81,77 @@ export function CanStage({
             blur={2.6}
             far={1.6}
           />
-          <Environment preset="studio" />
+          <StudioEnvironment />
         </Suspense>
         </Canvas>
     </div>
+  );
+}
+
+/**
+ * Studio lighting rig, built from geometry rather than an HDR file.
+ *
+ * drei's `<Environment preset="...">` looks great but fetches a ~1 MB .hdr
+ * from a third-party CDN at runtime. That is a hard external dependency in the
+ * render path: when the fetch fails the loader throws inside Suspense and takes
+ * the whole page down with it, and even when it succeeds it is a megabyte on
+ * the critical path for a decorative background.
+ *
+ * Building the environment map from Lightformers instead keeps the aluminium
+ * reflections that make the can read as metal, costs nothing over the network,
+ * and cannot fail. The rig is a standard three-point setup: a broad key panel,
+ * a cooler fill opposite, and two thin strips that draw the vertical
+ * highlights down the side of the can.
+ */
+function StudioEnvironment() {
+  return (
+    <Environment resolution={128} frames={1}>
+      <group>
+        {/* Key */}
+        <Lightformer
+          form="rect"
+          intensity={2.6}
+          position={[2.5, 3, 2]}
+          rotation={[-Math.PI / 4, 0, 0]}
+          scale={[6, 6, 1]}
+          color="#ffffff"
+        />
+        {/* Fill */}
+        <Lightformer
+          form="rect"
+          intensity={0.9}
+          position={[-3.5, 1, -1.5]}
+          rotation={[0, Math.PI / 2.4, 0]}
+          scale={[5, 5, 1]}
+          color="#e8f0ff"
+        />
+        {/* Edge strips — these are what become the long vertical highlights */}
+        <Lightformer
+          form="rect"
+          intensity={3.2}
+          position={[-2, 0, 1.5]}
+          rotation={[0, Math.PI / 3, 0]}
+          scale={[0.35, 5, 1]}
+          color="#ffffff"
+        />
+        <Lightformer
+          form="rect"
+          intensity={2.2}
+          position={[2, 0.4, 1.2]}
+          rotation={[0, -Math.PI / 3, 0]}
+          scale={[0.25, 4.5, 1]}
+          color="#fff6e8"
+        />
+        {/* Ground bounce */}
+        <Lightformer
+          form="rect"
+          intensity={0.5}
+          position={[0, -3, 0]}
+          rotation={[Math.PI / 2, 0, 0]}
+          scale={[8, 8, 1]}
+          color="#fffdf7"
+        />
+      </group>
+    </Environment>
   );
 }

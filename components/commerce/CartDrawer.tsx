@@ -133,7 +133,8 @@ export function CartDrawer() {
                             <div className="min-w-0">
                               <p className="truncate font-semibold">{product.shortName}</p>
                               <p className="text-step--1 text-charcoal-muted">
-                                {line.packSize}-can pack
+                                {line.note ?? `${line.packSize}-can pack`}
+                                {line.note && ` · ${line.packSize} cans`}
                               </p>
                             </div>
                             <button

@@ -1,5 +1,37 @@
 import { type ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { extendTailwindMerge } from 'tailwind-merge';
+
+/**
+ * Our fluid type scale uses names tailwind-merge does not ship with
+ * (`text-step-3`, `text-step--1`). Left unconfigured it guesses from the
+ * shape of the class and files them as text *colours* — so in
+ * `cn('text-cream', 'text-step--1')` the colour is silently dropped as a
+ * duplicate and the element inherits its parent's ink. That is how a dark
+ * button ends up with charcoal text on a charcoal fill: invisible.
+ *
+ * Declaring the scale here puts the classes in the font-size group where they
+ * belong, so size and colour stop competing.
+ */
+const twMerge = extendTailwindMerge({
+  extend: {
+    classGroups: {
+      'font-size': [
+        {
+          text: [
+            'step--1',
+            'step-0',
+            'step-1',
+            'step-2',
+            'step-3',
+            'step-4',
+            'step-5',
+            'step-6',
+          ],
+        },
+      ],
+    },
+  },
+});
 
 /** Tailwind-aware class joiner. */
 export function cn(...inputs: ClassValue[]) {

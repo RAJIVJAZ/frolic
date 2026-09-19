@@ -137,3 +137,14 @@
     color: transparent;
   }
 }
+
+/* Framer Motion writes its `initial` state into the SSR markup, so a
+   viewport-driven reveal is invisible until React hydrates. If scripting is
+   unavailable it would never become visible at all — this forces every
+   revealed element to its end state instead. */
+@layer base {
+  .no-js [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
