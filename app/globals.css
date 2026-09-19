@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================================
+   FROLIC — global primitives
+   Tokens live in tailwind.config.ts; this file holds runtime CSS variables,
+   base element styling and the handful of composite utilities that are
+   cheaper to express in plain CSS than as Tailwind chains.
+   ========================================================================= */
+
+:root {
+  --font-display: 'Frolic Display', 'Georgia', serif;
+  --font-sans: 'Frolic Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', 'Menlo', monospace;
+
+  /* Flavour-world variables. Every product page / carousel slide overwrites
+     these three, and the rest of the UI reacts automatically. */
+  --world-base: #b8f135;
+  --world-deep: #5c8310;
+  --world-ink: #14110f;
+  --glow-tint: rgba(184, 241, 53, 0.55);
+
+  --nav-height: 4.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-charcoal-line;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-cream text-charcoal font-sans text-step-0 antialiased;
+    /* Prevents the horizontal jitter that fixed-position 3D canvases can cause
+       on iOS when the address bar collapses. */
+    overflow-x: clip;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display font-black tracking-[-0.03em];
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--world-base);
+    color: var(--world-ink);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--world-deep);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Honour the OS-level motion preference everywhere at once. Components also
+     read this via the useReducedMotion hook so 3D work is skipped, not just
+     visually frozen. */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-shell px-gutter;
+  }
+
+  .eyebrow {
+    @apply font-mono text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-charcoal-muted;
+  }
+
+  /* Ink-on-colour chip used for ingredient tags, nutrition callouts, badges */
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-pill border border-charcoal/10 bg-cream/70 px-3 py-1
+           font-mono text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-charcoal-soft backdrop-blur;
+  }
+
+  .hairline {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-charcoal-line to-transparent;
+  }
+
+  /* Soft radial wash keyed to the active flavour world. */
+  .world-wash {
+    background:
+      radial-gradient(120% 90% at 18% 8%, color-mix(in oklab, var(--world-base) 46%, transparent) 0%, transparent 62%),
+      radial-gradient(100% 80% at 88% 22%, color-mix(in oklab, var(--world-deep) 34%, transparent) 0%, transparent 58%);
+  }
+
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.32;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+
+  /* Horizontal snap rails for the mobile carousels. */
+  .rail {
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .rail::-webkit-scrollbar { display: none; }
+  .rail > * { scroll-snap-align: center; }
+
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .gradient-text {
+    background: linear-gradient(96deg, var(--world-deep), var(--world-base) 55%, var(--world-deep));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
