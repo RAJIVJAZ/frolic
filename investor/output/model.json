@@ -1,0 +1,1020 @@
+{
+  "meta": {
+    "currency": "INR",
+    "crore": 10000000,
+    "usdInr": 88,
+    "modelVersion": "1.0",
+    "baseYearLabel": "FY27",
+    "generatedAt": "2026-09-19"
+  },
+  "tax": {
+    "carbonatedGst": 0.4,
+    "stillBeverageGst": 0.05,
+    "corporateTax": 0.25
+  },
+  "market": {
+    "cities": [
+      "Delhi NCR",
+      "Mumbai",
+      "Bengaluru",
+      "Pune",
+      "Hyderabad"
+    ],
+    "adultPopulationMn": 46,
+    "secAPlusMn": 11.96,
+    "premiumBeverageBuyersMn": 2.99,
+    "note": "Beachhead only — five metros. Not a national TAM."
+  },
+  "marketRefs": {
+    "functionalBeverageIndiaUsdBn": {
+      "low": 4.2,
+      "high": 8.3,
+      "year": "2025-26"
+    },
+    "functionalBeverageCagr": 0.105,
+    "prebioticSodaIndiaUsdMn2025": 12.6,
+    "poppiExitMultiple": 3.9,
+    "poppiExitUsdBn": 1.95,
+    "poppiRevenueUsdMn": 500,
+    "olipopValuationUsdBn": 1.85,
+    "olipopRevenueUsdMn": 400,
+    "beachhead": {
+      "cities": [
+        "Delhi NCR",
+        "Mumbai",
+        "Bengaluru",
+        "Pune",
+        "Hyderabad"
+      ],
+      "adultPopulationMn": 46,
+      "secAPlusShare": 0.26,
+      "premiumBeverageBuyerShare": 0.25
+    }
+  },
+  "channels": [
+    {
+      "channel": "D2C (own site)",
+      "mrp": 130,
+      "gst": 37.14,
+      "exGst": 92.86,
+      "tradeAndPlatform": 4.64,
+      "logistics": 4.2,
+      "netToBrand": 84.01,
+      "netAsPctOfMrp": 64.63
+    },
+    {
+      "channel": "Quick commerce",
+      "mrp": 130,
+      "gst": 37.14,
+      "exGst": 92.86,
+      "tradeAndPlatform": 23.21,
+      "logistics": 2.5,
+      "netToBrand": 67.14,
+      "netAsPctOfMrp": 51.65
+    },
+    {
+      "channel": "Modern trade",
+      "mrp": 130,
+      "gst": 37.14,
+      "exGst": 92.86,
+      "tradeAndPlatform": 28.79,
+      "logistics": 2.5,
+      "netToBrand": 61.57,
+      "netAsPctOfMrp": 47.36
+    },
+    {
+      "channel": "General trade",
+      "mrp": 130,
+      "gst": 37.14,
+      "exGst": 92.86,
+      "tradeAndPlatform": 27.67,
+      "logistics": 3,
+      "netToBrand": 62.19,
+      "netAsPctOfMrp": 47.84
+    },
+    {
+      "channel": "HoReCa / gyms",
+      "mrp": 130,
+      "gst": 37.14,
+      "exGst": 92.86,
+      "tradeAndPlatform": 11.14,
+      "logistics": 2.5,
+      "netToBrand": 79.21,
+      "netAsPctOfMrp": 60.93
+    }
+  ],
+  "unitEconomics": {
+    "can250": [
+      {
+        "format": "250 ml sleek can",
+        "ml": 250,
+        "mrp": 130,
+        "gstPerCan": 37.14,
+        "blendedNetRealisation": 76.71,
+        "cogs": 34,
+        "contributionPerCan": 42.71,
+        "grossMarginPct": 55.68,
+        "mrpToNetLeakagePct": 40.99
+      },
+      {
+        "format": "250 ml sleek can",
+        "ml": 250,
+        "mrp": 130,
+        "gstPerCan": 37.14,
+        "blendedNetRealisation": 74,
+        "cogs": 31,
+        "contributionPerCan": 43,
+        "grossMarginPct": 58.11,
+        "mrpToNetLeakagePct": 43.08
+      },
+      {
+        "format": "250 ml sleek can",
+        "ml": 250,
+        "mrp": 130,
+        "gstPerCan": 37.14,
+        "blendedNetRealisation": 71.45,
+        "cogs": 28,
+        "contributionPerCan": 43.45,
+        "grossMarginPct": 60.81,
+        "mrpToNetLeakagePct": 45.04
+      },
+      {
+        "format": "250 ml sleek can",
+        "ml": 250,
+        "mrp": 130,
+        "gstPerCan": 37.14,
+        "blendedNetRealisation": 70.12,
+        "cogs": 25,
+        "contributionPerCan": 45.12,
+        "grossMarginPct": 64.35,
+        "mrpToNetLeakagePct": 46.06
+      },
+      {
+        "format": "250 ml sleek can",
+        "ml": 250,
+        "mrp": 130,
+        "gstPerCan": 37.14,
+        "blendedNetRealisation": 69.14,
+        "cogs": 23,
+        "contributionPerCan": 46.14,
+        "grossMarginPct": 66.73,
+        "mrpToNetLeakagePct": 46.82
+      }
+    ],
+    "byFormatY1": [
+      {
+        "format": "250 ml sleek can",
+        "ml": 250,
+        "mrp": 130,
+        "gstPerCan": 37.14,
+        "blendedNetRealisation": 76.71,
+        "cogs": 34,
+        "contributionPerCan": 42.71,
+        "grossMarginPct": 55.68,
+        "mrpToNetLeakagePct": 40.99
+      },
+      {
+        "format": "300 ml can",
+        "ml": 300,
+        "mrp": 145,
+        "gstPerCan": 41.43,
+        "blendedNetRealisation": 85.97,
+        "cogs": 37.5,
+        "contributionPerCan": 48.47,
+        "grossMarginPct": 56.38,
+        "mrpToNetLeakagePct": 40.71
+      },
+      {
+        "format": "330 ml sleek can",
+        "ml": 330,
+        "mrp": 155,
+        "gstPerCan": 44.29,
+        "blendedNetRealisation": 92.14,
+        "cogs": 39.8,
+        "contributionPerCan": 52.34,
+        "grossMarginPct": 56.8,
+        "mrpToNetLeakagePct": 40.56
+      }
+    ],
+    "byFormatY5": [
+      {
+        "format": "250 ml sleek can",
+        "ml": 250,
+        "mrp": 130,
+        "gstPerCan": 37.14,
+        "blendedNetRealisation": 69.14,
+        "cogs": 23,
+        "contributionPerCan": 46.14,
+        "grossMarginPct": 66.73,
+        "mrpToNetLeakagePct": 46.82
+      },
+      {
+        "format": "300 ml can",
+        "ml": 300,
+        "mrp": 145,
+        "gstPerCan": 41.43,
+        "blendedNetRealisation": 77.45,
+        "cogs": 25.4,
+        "contributionPerCan": 52.05,
+        "grossMarginPct": 67.21,
+        "mrpToNetLeakagePct": 46.58
+      },
+      {
+        "format": "330 ml sleek can",
+        "ml": 330,
+        "mrp": 155,
+        "gstPerCan": 44.29,
+        "blendedNetRealisation": 82.99,
+        "cogs": 27,
+        "contributionPerCan": 55.99,
+        "grossMarginPct": 67.47,
+        "mrpToNetLeakagePct": 46.46
+      }
+    ],
+    "minimumViablePrice": [
+      {
+        "format": "250 ml sleek can",
+        "currentMrp": 130,
+        "requiredNet": 68,
+        "minimumViableMrp": 115.89,
+        "targetGmPct": 0.5
+      },
+      {
+        "format": "300 ml can",
+        "currentMrp": 145,
+        "requiredNet": 75,
+        "minimumViableMrp": 127.23,
+        "targetGmPct": 0.5
+      },
+      {
+        "format": "330 ml sleek can",
+        "currentMrp": 155,
+        "requiredNet": 79.6,
+        "minimumViableMrp": 134.69,
+        "targetGmPct": 0.5
+      }
+    ]
+  },
+  "costBreakdown": {
+    "y1": {
+      "ingredientsBase": 8,
+      "prebioticFibre": 4,
+      "waterCo2": 0.5,
+      "canBody": 12,
+      "canEnd": 1.5,
+      "secondaryPack": 2.5,
+      "conversion": 5.5
+    },
+    "y5": {
+      "ingredientsBase": 5.5,
+      "prebioticFibre": 3,
+      "waterCo2": 0.4,
+      "canBody": 8,
+      "canEnd": 1.2,
+      "secondaryPack": 2,
+      "conversion": 2.9
+    }
+  },
+  "pnl": {
+    "conservative": {
+      "scenario": "Conservative",
+      "years": [
+        {
+          "year": 1,
+          "customers": 11000,
+          "cans": 198000,
+          "netRealisationPerCan": 76.71,
+          "cogsPerCan": 34,
+          "arpu": 1381,
+          "netRevenueCr": 1.52,
+          "grossProfitCr": 0.85,
+          "grossMarginPct": 55.68,
+          "marketingCr": 1.06,
+          "marketingPctOfRev": 70,
+          "opexCr": 4.2,
+          "ebitdaCr": -4.42,
+          "ebitdaMarginPct": -290.85,
+          "netProfitCr": -5.42,
+          "cac": 1100,
+          "contributionPerCustomer": 769,
+          "cacPaybackYears": 1.43,
+          "retentionPct": 34
+        },
+        {
+          "year": 2,
+          "customers": 40000,
+          "cans": 798000,
+          "netRealisationPerCan": 74,
+          "cogsPerCan": 31,
+          "arpu": 1476,
+          "netRevenueCr": 5.9,
+          "grossProfitCr": 3.43,
+          "grossMarginPct": 58.11,
+          "marketingCr": 3.07,
+          "marketingPctOfRev": 52,
+          "opexCr": 7,
+          "ebitdaCr": -6.64,
+          "ebitdaMarginPct": -112.44,
+          "netProfitCr": -7.64,
+          "cac": 950,
+          "contributionPerCustomer": 858,
+          "cacPaybackYears": 1.11,
+          "retentionPct": 38
+        },
+        {
+          "year": 3,
+          "customers": 110000,
+          "cans": 2420000,
+          "netRealisationPerCan": 71.45,
+          "cogsPerCan": 28,
+          "arpu": 1572,
+          "netRevenueCr": 17.29,
+          "grossProfitCr": 10.51,
+          "grossMarginPct": 60.81,
+          "marketingCr": 6.57,
+          "marketingPctOfRev": 38,
+          "opexCr": 12.5,
+          "ebitdaCr": -8.56,
+          "ebitdaMarginPct": -49.49,
+          "netProfitCr": -9.56,
+          "cac": 820,
+          "contributionPerCustomer": 956,
+          "cacPaybackYears": 0.86,
+          "retentionPct": 42
+        },
+        {
+          "year": 4,
+          "customers": 230000,
+          "cans": 5290000,
+          "netRealisationPerCan": 70.12,
+          "cogsPerCan": 25,
+          "arpu": 1613,
+          "netRevenueCr": 37.1,
+          "grossProfitCr": 23.87,
+          "grossMarginPct": 64.35,
+          "marketingCr": 11.13,
+          "marketingPctOfRev": 30,
+          "opexCr": 19,
+          "ebitdaCr": -6.26,
+          "ebitdaMarginPct": -16.87,
+          "netProfitCr": -9.76,
+          "cac": 760,
+          "contributionPerCustomer": 1038,
+          "cacPaybackYears": 0.73,
+          "retentionPct": 45
+        },
+        {
+          "year": 5,
+          "customers": 420000,
+          "cans": 10584000,
+          "netRealisationPerCan": 69.14,
+          "cogsPerCan": 23,
+          "arpu": 1742,
+          "netRevenueCr": 73.18,
+          "grossProfitCr": 48.83,
+          "grossMarginPct": 66.73,
+          "marketingCr": 17.56,
+          "marketingPctOfRev": 24,
+          "opexCr": 27,
+          "ebitdaCr": 4.27,
+          "ebitdaMarginPct": 5.84,
+          "netProfitCr": 0.58,
+          "cac": 720,
+          "contributionPerCustomer": 1163,
+          "cacPaybackYears": 0.62,
+          "retentionPct": 47
+        }
+      ],
+      "ebitdaPositiveYear": 5,
+      "cumulativeEbitdaToBreakevenCr": -25.88,
+      "peakCumulativeBurnCr": -25.88,
+      "peakWorkingCapitalCr": 3.67,
+      "totalCapitalNeedCr": 29.55,
+      "y5NetRevenueCr": 73.18,
+      "y5NetRevenueUsdMn": 8.32
+    },
+    "base": {
+      "scenario": "Base",
+      "years": [
+        {
+          "year": 1,
+          "customers": 18000,
+          "cans": 432000,
+          "netRealisationPerCan": 76.71,
+          "cogsPerCan": 34,
+          "arpu": 1841,
+          "netRevenueCr": 3.31,
+          "grossProfitCr": 1.85,
+          "grossMarginPct": 55.68,
+          "marketingCr": 1.99,
+          "marketingPctOfRev": 60,
+          "opexCr": 4.5,
+          "ebitdaCr": -4.64,
+          "ebitdaMarginPct": -140.12,
+          "netProfitCr": -5.64,
+          "cac": 850,
+          "contributionPerCustomer": 1025,
+          "cacPaybackYears": 0.83,
+          "retentionPct": 34
+        },
+        {
+          "year": 2,
+          "customers": 75000,
+          "cans": 1968750,
+          "netRealisationPerCan": 74,
+          "cogsPerCan": 31,
+          "arpu": 1942,
+          "netRevenueCr": 14.57,
+          "grossProfitCr": 8.46,
+          "grossMarginPct": 58.11,
+          "marketingCr": 6.56,
+          "marketingPctOfRev": 45,
+          "opexCr": 9,
+          "ebitdaCr": -7.09,
+          "ebitdaMarginPct": -48.67,
+          "netProfitCr": -8.09,
+          "cac": 780,
+          "contributionPerCustomer": 1129,
+          "cacPaybackYears": 0.69,
+          "retentionPct": 38
+        },
+        {
+          "year": 3,
+          "customers": 250000,
+          "cans": 7150000,
+          "netRealisationPerCan": 71.45,
+          "cogsPerCan": 28,
+          "arpu": 2043,
+          "netRevenueCr": 51.08,
+          "grossProfitCr": 31.06,
+          "grossMarginPct": 60.81,
+          "marketingCr": 16.35,
+          "marketingPctOfRev": 32,
+          "opexCr": 20,
+          "ebitdaCr": -5.28,
+          "ebitdaMarginPct": -10.34,
+          "netProfitCr": -6.28,
+          "cac": 640,
+          "contributionPerCustomer": 1243,
+          "cacPaybackYears": 0.52,
+          "retentionPct": 42
+        },
+        {
+          "year": 4,
+          "customers": 600000,
+          "cans": 17820000,
+          "netRealisationPerCan": 70.12,
+          "cogsPerCan": 25,
+          "arpu": 2083,
+          "netRevenueCr": 124.96,
+          "grossProfitCr": 80.41,
+          "grossMarginPct": 64.35,
+          "marketingCr": 29.99,
+          "marketingPctOfRev": 24,
+          "opexCr": 38,
+          "ebitdaCr": 12.42,
+          "ebitdaMarginPct": 9.94,
+          "netProfitCr": 6.69,
+          "cac": 580,
+          "contributionPerCustomer": 1340,
+          "cacPaybackYears": 0.43,
+          "retentionPct": 45
+        },
+        {
+          "year": 5,
+          "customers": 1200000,
+          "cans": 38640000,
+          "netRealisationPerCan": 69.14,
+          "cogsPerCan": 23,
+          "arpu": 2226,
+          "netRevenueCr": 267.15,
+          "grossProfitCr": 178.28,
+          "grossMarginPct": 66.73,
+          "marketingCr": 48.09,
+          "marketingPctOfRev": 18,
+          "opexCr": 68,
+          "ebitdaCr": 62.19,
+          "ebitdaMarginPct": 23.28,
+          "netProfitCr": 44.02,
+          "cac": 540,
+          "contributionPerCustomer": 1486,
+          "cacPaybackYears": 0.36,
+          "retentionPct": 47
+        }
+      ],
+      "ebitdaPositiveYear": 4,
+      "cumulativeEbitdaToBreakevenCr": -17.01,
+      "peakCumulativeBurnCr": -17.01,
+      "peakWorkingCapitalCr": 13.39,
+      "totalCapitalNeedCr": 30.4,
+      "y5NetRevenueCr": 267.15,
+      "y5NetRevenueUsdMn": 30.36
+    },
+    "aggressive": {
+      "scenario": "Aggressive",
+      "years": [
+        {
+          "year": 1,
+          "customers": 26000,
+          "cans": 737100,
+          "netRealisationPerCan": 76.71,
+          "cogsPerCan": 34,
+          "arpu": 2175,
+          "netRevenueCr": 5.65,
+          "grossProfitCr": 3.15,
+          "grossMarginPct": 55.68,
+          "marketingCr": 3.28,
+          "marketingPctOfRev": 58,
+          "opexCr": 5.5,
+          "ebitdaCr": -5.63,
+          "ebitdaMarginPct": -99.6,
+          "netProfitCr": -6.63,
+          "cac": 780,
+          "contributionPerCustomer": 1211,
+          "cacPaybackYears": 0.64,
+          "retentionPct": 34
+        },
+        {
+          "year": 2,
+          "customers": 120000,
+          "cans": 3828000,
+          "netRealisationPerCan": 74,
+          "cogsPerCan": 31,
+          "arpu": 2360,
+          "netRevenueCr": 28.33,
+          "grossProfitCr": 16.46,
+          "grossMarginPct": 58.11,
+          "marketingCr": 11.9,
+          "marketingPctOfRev": 42,
+          "opexCr": 12,
+          "ebitdaCr": -7.44,
+          "ebitdaMarginPct": -26.26,
+          "netProfitCr": -8.44,
+          "cac": 700,
+          "contributionPerCustomer": 1372,
+          "cacPaybackYears": 0.51,
+          "retentionPct": 38
+        },
+        {
+          "year": 3,
+          "customers": 420000,
+          "cans": 14973000,
+          "netRealisationPerCan": 71.45,
+          "cogsPerCan": 28,
+          "arpu": 2547,
+          "netRevenueCr": 106.98,
+          "grossProfitCr": 65.05,
+          "grossMarginPct": 60.81,
+          "marketingCr": 32.09,
+          "marketingPctOfRev": 30,
+          "opexCr": 28,
+          "ebitdaCr": 4.96,
+          "ebitdaMarginPct": 4.64,
+          "netProfitCr": 2.97,
+          "cac": 590,
+          "contributionPerCustomer": 1549,
+          "cacPaybackYears": 0.38,
+          "retentionPct": 42
+        },
+        {
+          "year": 4,
+          "customers": 1050000,
+          "cans": 41580000,
+          "netRealisationPerCan": 70.12,
+          "cogsPerCan": 25,
+          "arpu": 2777,
+          "netRevenueCr": 291.57,
+          "grossProfitCr": 187.62,
+          "grossMarginPct": 64.35,
+          "marketingCr": 64.15,
+          "marketingPctOfRev": 22,
+          "opexCr": 55,
+          "ebitdaCr": 68.48,
+          "ebitdaMarginPct": 23.49,
+          "netProfitCr": 48.73,
+          "cac": 530,
+          "contributionPerCustomer": 1787,
+          "cacPaybackYears": 0.3,
+          "retentionPct": 45
+        },
+        {
+          "year": 5,
+          "customers": 2050000,
+          "cans": 86100000,
+          "netRealisationPerCan": 69.14,
+          "cogsPerCan": 23,
+          "arpu": 2904,
+          "netRevenueCr": 595.29,
+          "grossProfitCr": 397.26,
+          "grossMarginPct": 66.73,
+          "marketingCr": 95.25,
+          "marketingPctOfRev": 16,
+          "opexCr": 96,
+          "ebitdaCr": 206.01,
+          "ebitdaMarginPct": 34.61,
+          "netProfitCr": 151.88,
+          "cac": 495,
+          "contributionPerCustomer": 1938,
+          "cacPaybackYears": 0.26,
+          "retentionPct": 47
+        }
+      ],
+      "ebitdaPositiveYear": 3,
+      "cumulativeEbitdaToBreakevenCr": -13.07,
+      "peakCumulativeBurnCr": -13.07,
+      "peakWorkingCapitalCr": 29.84,
+      "totalCapitalNeedCr": 42.91,
+      "y5NetRevenueCr": 595.29,
+      "y5NetRevenueUsdMn": 67.65
+    }
+  },
+  "ltv": {
+    "conservative": [
+      {
+        "year": 1,
+        "cac": 1100,
+        "year1Contribution": 769,
+        "threeYearLtv": 1130,
+        "ltvToCac": 1.03,
+        "paybackMonths": 17.17
+      },
+      {
+        "year": 2,
+        "cac": 950,
+        "year1Contribution": 858,
+        "threeYearLtv": 1321,
+        "ltvToCac": 1.39,
+        "paybackMonths": 13.29
+      },
+      {
+        "year": 3,
+        "cac": 820,
+        "year1Contribution": 956,
+        "threeYearLtv": 1538,
+        "ltvToCac": 1.88,
+        "paybackMonths": 10.29
+      },
+      {
+        "year": 4,
+        "cac": 760,
+        "year1Contribution": 1038,
+        "threeYearLtv": 1725,
+        "ltvToCac": 2.27,
+        "paybackMonths": 8.79
+      },
+      {
+        "year": 5,
+        "cac": 720,
+        "year1Contribution": 1163,
+        "threeYearLtv": 1967,
+        "ltvToCac": 2.73,
+        "paybackMonths": 7.43
+      }
+    ],
+    "base": [
+      {
+        "year": 1,
+        "cac": 850,
+        "year1Contribution": 1025,
+        "threeYearLtv": 1506,
+        "ltvToCac": 1.77,
+        "paybackMonths": 9.95
+      },
+      {
+        "year": 2,
+        "cac": 780,
+        "year1Contribution": 1129,
+        "threeYearLtv": 1738,
+        "ltvToCac": 2.23,
+        "paybackMonths": 8.29
+      },
+      {
+        "year": 3,
+        "cac": 640,
+        "year1Contribution": 1243,
+        "threeYearLtv": 2000,
+        "ltvToCac": 3.12,
+        "paybackMonths": 6.18
+      },
+      {
+        "year": 4,
+        "cac": 580,
+        "year1Contribution": 1340,
+        "threeYearLtv": 2226,
+        "ltvToCac": 3.84,
+        "paybackMonths": 5.19
+      },
+      {
+        "year": 5,
+        "cac": 540,
+        "year1Contribution": 1486,
+        "threeYearLtv": 2513,
+        "ltvToCac": 4.65,
+        "paybackMonths": 4.36
+      }
+    ],
+    "aggressive": [
+      {
+        "year": 1,
+        "cac": 780,
+        "year1Contribution": 1211,
+        "threeYearLtv": 1779,
+        "ltvToCac": 2.28,
+        "paybackMonths": 7.73
+      },
+      {
+        "year": 2,
+        "cac": 700,
+        "year1Contribution": 1372,
+        "threeYearLtv": 2112,
+        "ltvToCac": 3.02,
+        "paybackMonths": 6.12
+      },
+      {
+        "year": 3,
+        "cac": 590,
+        "year1Contribution": 1549,
+        "threeYearLtv": 2492,
+        "ltvToCac": 4.22,
+        "paybackMonths": 4.57
+      },
+      {
+        "year": 4,
+        "cac": 530,
+        "year1Contribution": 1787,
+        "threeYearLtv": 2969,
+        "ltvToCac": 5.6,
+        "paybackMonths": 3.56
+      },
+      {
+        "year": 5,
+        "cac": 495,
+        "year1Contribution": 1938,
+        "threeYearLtv": 3277,
+        "ltvToCac": 6.62,
+        "paybackMonths": 3.07
+      }
+    ]
+  },
+  "capTable": [
+    {
+      "stage": "Founding",
+      "founders": 1,
+      "esop": 0,
+      "rows": []
+    },
+    {
+      "stage": "Post-ESOP pool",
+      "founders": 90,
+      "esop": 10,
+      "rows": []
+    },
+    {
+      "stage": "Post-Seed",
+      "raiseCr": 10,
+      "postMoneyCr": 50,
+      "founders": 72,
+      "esop": 8,
+      "rows": [
+        {
+          "name": "Seed",
+          "pct": 20
+        }
+      ]
+    },
+    {
+      "stage": "Post-Series A",
+      "raiseCr": 50,
+      "postMoneyCr": 250,
+      "founders": 56.45,
+      "esop": 8.27,
+      "rows": [
+        {
+          "name": "Seed",
+          "pct": 15.68
+        },
+        {
+          "name": "Series A",
+          "pct": 19.6
+        }
+      ]
+    },
+    {
+      "stage": "Post-Series B",
+      "raiseCr": 150,
+      "postMoneyCr": 1050,
+      "founders": 47.42,
+      "esop": 8.95,
+      "rows": [
+        {
+          "name": "Seed",
+          "pct": 13.17
+        },
+        {
+          "name": "Series A",
+          "pct": 16.46
+        },
+        {
+          "name": "Series B",
+          "pct": 14
+        }
+      ]
+    }
+  ],
+  "returns": {
+    "conservative": {
+      "scenario": "conservative",
+      "y7RevenueCr": 310,
+      "exitMultiple": 3.9,
+      "exitValueCr": 1209,
+      "exitValueUsdMn": 137.39,
+      "founderPct": 47.42,
+      "esopPct": 8.95,
+      "rows": [
+        {
+          "round": "Seed",
+          "investedCr": 10,
+          "entryPostMoneyCr": 50,
+          "finalOwnershipPct": 13.17,
+          "exitProceedsCr": 159.24,
+          "moic": 15.92,
+          "irrPct": 48.5,
+          "holdYears": 7
+        },
+        {
+          "round": "Series A",
+          "investedCr": 50,
+          "entryPostMoneyCr": 250,
+          "finalOwnershipPct": 16.46,
+          "exitProceedsCr": 199.05,
+          "moic": 3.98,
+          "irrPct": 31.83,
+          "holdYears": 5
+        },
+        {
+          "round": "Series B",
+          "investedCr": 150,
+          "entryPostMoneyCr": 1050,
+          "finalOwnershipPct": 14,
+          "exitProceedsCr": 169.26,
+          "moic": 1.13,
+          "irrPct": 4.11,
+          "holdYears": 3
+        }
+      ]
+    },
+    "base": {
+      "scenario": "base",
+      "y7RevenueCr": 760,
+      "exitMultiple": 3.9,
+      "exitValueCr": 2964,
+      "exitValueUsdMn": 336.82,
+      "founderPct": 47.42,
+      "esopPct": 8.95,
+      "rows": [
+        {
+          "round": "Seed",
+          "investedCr": 10,
+          "entryPostMoneyCr": 50,
+          "finalOwnershipPct": 13.17,
+          "exitProceedsCr": 390.39,
+          "moic": 39.04,
+          "irrPct": 68.79,
+          "holdYears": 7
+        },
+        {
+          "round": "Series A",
+          "investedCr": 50,
+          "entryPostMoneyCr": 250,
+          "finalOwnershipPct": 16.46,
+          "exitProceedsCr": 487.99,
+          "moic": 9.76,
+          "irrPct": 57.72,
+          "holdYears": 5
+        },
+        {
+          "round": "Series B",
+          "investedCr": 150,
+          "entryPostMoneyCr": 1050,
+          "finalOwnershipPct": 14,
+          "exitProceedsCr": 414.96,
+          "moic": 2.77,
+          "irrPct": 40.38,
+          "holdYears": 3
+        }
+      ]
+    },
+    "aggressive": {
+      "scenario": "aggressive",
+      "y7RevenueCr": 1450,
+      "exitMultiple": 3.9,
+      "exitValueCr": 5655,
+      "exitValueUsdMn": 642.61,
+      "founderPct": 47.42,
+      "esopPct": 8.95,
+      "rows": [
+        {
+          "round": "Seed",
+          "investedCr": 10,
+          "entryPostMoneyCr": 50,
+          "finalOwnershipPct": 13.17,
+          "exitProceedsCr": 744.83,
+          "moic": 74.48,
+          "irrPct": 85.11,
+          "holdYears": 7
+        },
+        {
+          "round": "Series A",
+          "investedCr": 50,
+          "entryPostMoneyCr": 250,
+          "finalOwnershipPct": 16.46,
+          "exitProceedsCr": 931.04,
+          "moic": 18.62,
+          "irrPct": 79.47,
+          "holdYears": 5
+        },
+        {
+          "round": "Series B",
+          "investedCr": 150,
+          "entryPostMoneyCr": 1050,
+          "finalOwnershipPct": 14,
+          "exitProceedsCr": 791.7,
+          "moic": 5.28,
+          "irrPct": 74.11,
+          "holdYears": 3
+        }
+      ]
+    }
+  },
+  "probabilityWeighted": {
+    "outcomes": [
+      {
+        "name": "Failure / acquihire",
+        "probability": 0.55,
+        "proceedsCr": 0,
+        "probabilityPct": 55,
+        "weightedCr": 0,
+        "moic": 0
+      },
+      {
+        "name": "Conservative",
+        "probability": 0.25,
+        "proceedsCr": 159.24,
+        "probabilityPct": 25,
+        "weightedCr": 39.81,
+        "moic": 15.92
+      },
+      {
+        "name": "Base",
+        "probability": 0.15,
+        "proceedsCr": 390.39,
+        "probabilityPct": 15,
+        "weightedCr": 58.56,
+        "moic": 39.04
+      },
+      {
+        "name": "Aggressive",
+        "probability": 0.05,
+        "proceedsCr": 744.83,
+        "probabilityPct": 5,
+        "weightedCr": 37.24,
+        "moic": 74.48
+      }
+    ],
+    "expectedProceedsCr": 135.61,
+    "expectedMoic": 13.56,
+    "expectedIrrPct": 45.13
+  },
+  "adoption": [
+    {
+      "year": 1,
+      "customers": 18000,
+      "penetrationOfBeachheadPct": 0.6,
+      "adopterBand": "Innovators"
+    },
+    {
+      "year": 2,
+      "customers": 75000,
+      "penetrationOfBeachheadPct": 2.51,
+      "adopterBand": "Early adopters"
+    },
+    {
+      "year": 3,
+      "customers": 250000,
+      "penetrationOfBeachheadPct": 8.36,
+      "adopterBand": "Early adopters"
+    },
+    {
+      "year": 4,
+      "customers": 600000,
+      "penetrationOfBeachheadPct": 20.07,
+      "adopterBand": "Early majority"
+    },
+    {
+      "year": 5,
+      "customers": 1200000,
+      "penetrationOfBeachheadPct": 40.13,
+      "adopterBand": "Early majority"
+    }
+  ]
+}
