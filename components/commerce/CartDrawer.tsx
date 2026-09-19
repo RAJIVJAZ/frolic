@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect } from 'react';
 import {
@@ -10,7 +9,7 @@ import {
   FREE_SHIPPING_THRESHOLD,
 } from '@/lib/cart';
 import { getProduct, formatINR } from '@/lib/products';
-import { Button } from '@/components/ui/Button';
+import { Button, ButtonLink } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { worldVars } from '@/lib/utils';
 
@@ -97,9 +96,9 @@ export function CartDrawer() {
                     <p className="max-w-[28ch] text-charcoal-muted">
                       Ten flavours, seven grams of fibre each. Start somewhere.
                     </p>
-                    <Button onClick={close} variant="primary">
-                      <Link href="/shop">Browse flavours</Link>
-                    </Button>
+                    <ButtonLink href="/shop" onClick={close} variant="primary">
+                      Browse flavours
+                    </ButtonLink>
                   </div>
                 </div>
               ) : (
