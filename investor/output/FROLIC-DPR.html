@@ -1,0 +1,2230 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<title>FROLIC — Detailed Project Report</title>
+<style>
+@page { size: A4; margin: 18mm 16mm 20mm 16mm; }
+@page :first { margin: 0; }
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  margin: 0;
+  font-family: "Bitstream Charter", Charter, Georgia, "Liberation Serif", serif;
+  font-size: 9.8pt;
+  line-height: 1.52;
+  color: #1a1714;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── Typography ─────────────────────────────────────────────── */
+h1, h2, h3, h4, .sans {
+  font-family: "Liberation Sans", Arial, Helvetica, sans-serif;
+}
+h1 { font-size: 21pt; line-height: 1.12; margin: 0 0 4mm; font-weight: 700; letter-spacing: -0.3pt; }
+h2 { font-size: 14pt; line-height: 1.2; margin: 9mm 0 3mm; font-weight: 700; color: #14110F;
+     padding-bottom: 1.6mm; border-bottom: 1.6pt solid #14110F; }
+h3 { font-size: 11pt; line-height: 1.25; margin: 6mm 0 2mm; font-weight: 700; color: #14110F; }
+h4 { font-size: 9.6pt; margin: 4mm 0 1.5mm; font-weight: 700; color: #4a423a; }
+p  { margin: 0 0 2.6mm; text-align: justify; hyphens: auto; }
+ul, ol { margin: 0 0 3mm; padding-left: 5mm; }
+li { margin-bottom: 1.2mm; }
+strong { font-weight: 700; color: #14110F; }
+a { color: #5C8310; text-decoration: none; }
+.small { font-size: 8.4pt; line-height: 1.45; color: #5C544D; }
+.muted { color: #5C544D; }
+.eyebrow { font-family: "Liberation Sans", Arial, sans-serif; font-size: 7.6pt; font-weight: 700;
+           letter-spacing: 1.4pt; text-transform: uppercase; color: #5C8310; margin: 0 0 2mm; }
+
+/* ── Structure ──────────────────────────────────────────────── */
+.section { page-break-before: always; }
+.part-divider { page-break-before: always; page-break-after: always;
+  display: flex; flex-direction: column; justify-content: center; height: 232mm;
+  background: #14110F; color: #FFFDF7; padding: 0 16mm;
+  /* No negative margins. A full-bleed panel pulled outside the @page box
+     overlaps the preceding content in continuous flow, and the risk of it
+     doing so in pagination is not worth the edge-to-edge look. */
+  page-break-inside: avoid; }
+.avoid-break { page-break-inside: avoid; }
+
+/* ── Cover ──────────────────────────────────────────────────── */
+.cover { height: 297mm; width: 210mm; background: #14110F; color: #FFFDF7;
+  padding: 26mm 22mm; display: flex; flex-direction: column; justify-content: space-between;
+  page-break-after: always; }
+.cover .wordmark { font-family: "Liberation Sans", Arial, sans-serif; font-size: 62pt;
+  font-weight: 700; letter-spacing: -2.5pt; color: #B8F135; line-height: 0.95; margin: 0; }
+
+/* ── Tables ─────────────────────────────────────────────────── */
+table { width: 100%; border-collapse: collapse; margin: 3mm 0 4mm;
+  font-family: "Liberation Sans", Arial, sans-serif; font-size: 8.2pt;
+  page-break-inside: avoid; }
+thead { display: table-header-group; }
+th { background: #14110F; color: #FFFDF7; font-weight: 700; text-align: left;
+     padding: 2mm 2.4mm; border: none; }
+td { padding: 1.9mm 2.4mm; border-bottom: 0.4pt solid #ddd5c6; vertical-align: top; }
+tbody tr:nth-child(even) { background: #faf7f0; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.tot td { font-weight: 700; background: #f0eadc !important; border-top: 1pt solid #14110F; }
+table.compact { font-size: 7.6pt; }
+table.compact td, table.compact th { padding: 1.4mm 1.8mm; }
+
+/* ── Callouts ───────────────────────────────────────────────── */
+.callout { border-left: 3pt solid #BC4104; background: #fdf3ee; padding: 3.5mm 4mm;
+  margin: 4mm 0; page-break-inside: avoid; }
+.callout.good { border-left-color: #1A8F69; background: #eefaf5; }
+.callout.info { border-left-color: #5C8310; background: #f6fbe8; }
+.callout.warn { border-left-color: #BC4104; background: #fdf3ee; }
+.callout p:last-child { margin-bottom: 0; }
+.callout .label { font-family: "Liberation Sans", Arial, sans-serif; font-size: 7.4pt;
+  font-weight: 700; letter-spacing: 1pt; text-transform: uppercase; color: #BC4104;
+  display: block; margin-bottom: 1.5mm; }
+.callout.good .label { color: #1A8F69; }
+.callout.info .label { color: #5C8310; }
+
+/* ── Stat rows & cards ──────────────────────────────────────── */
+.stats { display: flex; gap: 3mm; margin: 4mm 0; page-break-inside: avoid; }
+.stat { flex: 1; border: 0.6pt solid #ddd5c6; border-top: 2.4pt solid #14110F;
+  padding: 3mm; background: #fffdf7; }
+.stat .v { font-family: "Liberation Sans", Arial, sans-serif; font-size: 16pt;
+  font-weight: 700; line-height: 1; color: #14110F; display: block; }
+.stat .l { font-size: 7.6pt; color: #5C544D; display: block; margin-top: 1.5mm; line-height: 1.3; }
+
+/* ── Charts (print-safe CSS bars) ───────────────────────────── */
+.chart { margin: 4mm 0 5mm; page-break-inside: avoid; }
+.bar-row { display: flex; align-items: center; gap: 3mm; margin-bottom: 2mm; }
+.bar-label { width: 38mm; font-family: "Liberation Sans", Arial, sans-serif; font-size: 8pt;
+  flex-shrink: 0; }
+.bar-track { flex: 1; background: #efe9dd; height: 5.5mm; position: relative; }
+.bar-fill { height: 5.5mm; background: #5C8310; }
+.bar-fill.ctx { background: #B8AFA2; }
+.bar-fill.neg { background: #BC4104; }
+.bar-val { width: 22mm; text-align: right; font-family: "Liberation Sans", Arial, sans-serif;
+  font-size: 8pt; font-weight: 700; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+.chart-note { font-size: 7.6pt; color: #5C544D; margin-top: 2mm; font-style: italic; }
+
+/* Column chart with a zero line, for EBITDA */
+.col-chart { display: flex; gap: 3mm; height: 52mm; align-items: stretch; margin: 4mm 0 2mm; }
+.col { flex: 1; display: flex; flex-direction: column; }
+.col-top { height: 26mm; display: flex; flex-direction: column; justify-content: flex-end; }
+.col-bot { height: 26mm; display: flex; flex-direction: column; }
+.col-zero { height: 0.8pt; background: #14110F; }
+.col-bar { background: #5C8310; }
+.col-bar.neg { background: #BC4104; }
+.col-cap { font-family: "Liberation Sans", Arial, sans-serif; font-size: 7.6pt;
+  font-weight: 700; text-align: center; margin-bottom: 1mm; }
+.col-cap.neg { color: #BC4104; margin-bottom: 0; margin-top: 1mm; }
+.col-lab { font-family: "Liberation Sans", Arial, sans-serif; font-size: 7.6pt;
+  text-align: center; color: #5C544D; margin-top: 1.5mm; }
+
+/* ── TOC ────────────────────────────────────────────────────── */
+.toc-item { display: flex; align-items: baseline; gap: 2mm; margin-bottom: 1.8mm;
+  font-family: "Liberation Sans", Arial, sans-serif; font-size: 9pt; }
+.toc-num { width: 9mm; color: #5C8310; font-weight: 700; flex-shrink: 0; }
+.toc-txt { flex-shrink: 0; }
+.toc-dots { flex: 1; border-bottom: 0.5pt dotted #b8ae9e; margin-bottom: 1mm; }
+.toc-part { font-weight: 700; font-size: 9.4pt; margin: 4mm 0 2mm; color: #14110F;
+  text-transform: uppercase; letter-spacing: 0.8pt; }
+
+/* ── Misc ───────────────────────────────────────────────────── */
+.two-col { display: flex; gap: 6mm; }
+.two-col > * { flex: 1; }
+.tag { display: inline-block; font-family: "Liberation Sans", Arial, sans-serif;
+  font-size: 7pt; font-weight: 700; padding: 0.6mm 1.8mm; border-radius: 1mm;
+  background: #14110F; color: #FFFDF7; letter-spacing: 0.5pt; }
+.tag.v { background: #1A8F69; }
+.tag.e { background: #BC4104; }
+.tag.a { background: #6B2E8F; }
+.swatch { display: inline-block; width: 4mm; height: 4mm; border: 0.4pt solid #00000022;
+  vertical-align: -0.6mm; margin-right: 1.2mm; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ COVER ══════════════ -->
+<div class="cover">
+  <div>
+    <p style="font-family:'Liberation Sans',Arial,sans-serif;font-size:8pt;font-weight:700;letter-spacing:2pt;text-transform:uppercase;color:#B8F135;margin:0">Detailed Project Report</p>
+    <p class="small" style="color:#8F8880;margin-top:2mm">Confidential · For prospective investors and lenders</p>
+  </div>
+  <div>
+    <p class="wordmark">FROLIC</p>
+    <p style="font-family:'Liberation Sans',Arial,sans-serif;font-size:19pt;font-weight:700;color:#FFFDF7;margin:6mm 0 0">Feel Good. Sip Different.</p>
+    <p style="font-size:11.5pt;line-height:1.5;color:#BFBAB3;margin:5mm 0 0;max-width:135mm;text-align:left">
+      India's prebiotic functional soda. Ten flavours built from nimbu, jamun, kokum and aam panna —
+      7&nbsp;g of prebiotic fibre and a quarter of the sugar of a conventional soft drink.
+    </p>
+    <div style="height:0.8pt;background:#B8F135;margin:8mm 0 6mm;width:60mm"></div>
+    <table style="width:auto;margin:0;font-size:8.6pt;color:#BFBAB3;border:none">
+      <tbody>
+      <tr style="background:none"><td style="border:none;padding:1mm 8mm 1mm 0;color:#8F8880">Entity</td><td style="border:none;padding:1mm 0;color:#FFFDF7">Frolic Beverages Pvt. Ltd. (proposed)</td></tr>
+      <tr style="background:none"><td style="border:none;padding:1mm 8mm 1mm 0;color:#8F8880">Sector</td><td style="border:none;padding:1mm 0;color:#FFFDF7">FMCG — Functional Beverages</td></tr>
+      <tr style="background:none"><td style="border:none;padding:1mm 8mm 1mm 0;color:#8F8880">Stage</td><td style="border:none;padding:1mm 0;color:#FFFDF7">Pre-revenue · pre-production</td></tr>
+      <tr style="background:none"><td style="border:none;padding:1mm 8mm 1mm 0;color:#8F8880">Capital sought</td><td style="border:none;padding:1mm 0;color:#FFFDF7">₹10 Cr seed at ₹50 Cr post-money</td></tr>
+      <tr style="background:none"><td style="border:none;padding:1mm 8mm 1mm 0;color:#8F8880">Base location</td><td style="border:none;padding:1mm 0;color:#FFFDF7">Pune, Maharashtra</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <p class="small" style="color:#8F8880;margin:0">Model version 1.0 · generated 2026-09-19 · all figures in INR unless stated · USD at ₹88</p>
+  </div>
+</div>
+
+<!-- ══════════════ NOTICE ══════════════ -->
+<div class="section">
+  <h1>Important Notice</h1>
+  <div class="callout warn">
+    <span class="label">Read before anything else</span>
+    <p><strong>FROLIC is pre-revenue, pre-production and pre-traction.</strong> There is no sales history,
+    no repeat-purchase data, no shelf velocity and no completed blind taste test. Every financial figure
+    in this report is arithmetic applied to stated assumptions. The model is internally consistent; that
+    is not the same as being correct.</p>
+  </div>
+
+  <h3>How to read the numbers</h3>
+  <p>Every input to the financial model carries a provenance tag. The tags appear throughout this report
+  and in <span class="sans">investor/assumptions.mjs</span>, which is the single source from which every
+  table here is generated.</p>
+
+  <table>
+    <thead><tr><th style="width:14%">Tag</th><th style="width:30%">Meaning</th><th>What it implies for diligence</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag v">V</span></td><td>Verified against a primary or reputable secondary source</td><td>Cited in Annexure D. Can be independently checked.</td></tr>
+      <tr><td><span class="tag e">E</span></td><td>Industry estimate or benchmark</td><td>Defensible, but must be validated by a production run or quotation.</td></tr>
+      <tr><td><span class="tag a">A</span></td><td>An assumption — a choice, not a fact</td><td><strong>Attack these first.</strong> They drive the outcome.</td></tr>
+    </tbody>
+  </table>
+
+  <p>Currently verified: the 40% GST slab on aerated beverages and the 5% still-beverage rate; the PepsiCo–Poppi
+  acquisition consideration and revenue multiple; the Olipop valuation; the existence and product specification
+  of competing Indian brands. <strong>Almost everything else is an estimate or an assumption.</strong></p>
+
+  <h3>Nature of this document</h3>
+  <p>This report is prepared for the information of prospective investors and lenders. It is not a prospectus,
+  an offer, or a solicitation. Projections are illustrative and depend on assumptions that may prove incorrect.
+  FROLIC is presented throughout as a food product, not a medicine; no statement here should be read as a claim
+  to diagnose, treat, cure or prevent any condition. Readers should form their own view and take independent
+  professional advice.</p>
+
+  <h3>Generation and reproducibility</h3>
+  <p>No figure in this report was typed by hand. Every table, chart and derived statistic is computed from
+  <span class="sans">investor/assumptions.mjs</span> by <span class="sans">investor/build.mjs</span> and rendered
+  by <span class="sans">investor/dpr/build-dpr.mjs</span>. Changing an assumption and re-running regenerates the
+  entire document consistently. This is deliberate: the fastest way to lose credibility is for two figures in
+  the same document to disagree.</p>
+</div>
+
+<!-- ══════════════ CONTENTS ══════════════ -->
+<div class="section">
+  <h1>Contents</h1>
+  
+    <p class="toc-part">Part I — Summary</p>
+    <div class="toc-item"><span class="toc-num">1</span><span class="toc-txt">Executive Summary</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">2</span><span class="toc-txt">Project at a Glance</span><span class="toc-dots"></span></div>
+  
+    <p class="toc-part">Part II — The Business</p>
+    <div class="toc-item"><span class="toc-num">3</span><span class="toc-txt">Promoter, Company & Team</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">4</span><span class="toc-txt">Product & Formulation</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">5</span><span class="toc-txt">Product Range — Ten SKUs</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">6</span><span class="toc-txt">Brand & Design System</span><span class="toc-dots"></span></div>
+  
+    <p class="toc-part">Part III — Market & Competition</p>
+    <div class="toc-item"><span class="toc-num">7</span><span class="toc-txt">Market Analysis</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">8</span><span class="toc-txt">Category Creation & Timing</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">9</span><span class="toc-txt">Competition</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">10</span><span class="toc-txt">Moat Analysis</span><span class="toc-dots"></span></div>
+  
+    <p class="toc-part">Part IV — Operations</p>
+    <div class="toc-item"><span class="toc-num">11</span><span class="toc-txt">Manufacturing & Supply Chain</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">12</span><span class="toc-txt">Regulatory & Compliance</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">13</span><span class="toc-txt">Technology & Digital Infrastructure</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">14</span><span class="toc-txt">Distribution & Channel Strategy</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">15</span><span class="toc-txt">Marketing & Conversion</span><span class="toc-dots"></span></div>
+  
+    <p class="toc-part">Part V — Financials</p>
+    <div class="toc-item"><span class="toc-num">16</span><span class="toc-txt">Unit Economics</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">17</span><span class="toc-txt">Revenue Projections</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">18</span><span class="toc-txt">Profitability — Three Scenarios</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">19</span><span class="toc-txt">Working Capital & Funding Plan</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">20</span><span class="toc-txt">Cap Table & Investor Returns</span><span class="toc-dots"></span></div>
+  
+    <p class="toc-part">Part VI — Risk & Execution</p>
+    <div class="toc-item"><span class="toc-num">21</span><span class="toc-txt">Risk Register</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">22</span><span class="toc-txt">Proof Required Before Funding</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">23</span><span class="toc-txt">Investor Readiness Assessment</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">24</span><span class="toc-txt">Implementation Roadmap</span><span class="toc-dots"></span></div>
+  
+    <p class="toc-part">Annexures</p>
+    <div class="toc-item"><span class="toc-num">A</span><span class="toc-txt">Model Assumptions in Full</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">B</span><span class="toc-txt">Generated Financial Tables</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">C</span><span class="toc-txt">Investor FAQ — Selected</span><span class="toc-dots"></span></div><div class="toc-item"><span class="toc-num">D</span><span class="toc-txt">Sources & References</span><span class="toc-dots"></span></div>
+  
+</div>
+
+<!-- ══════════════ PART I ══════════════ -->
+<div class="part-divider">
+    <p style="font-family:'Liberation Sans',Arial,sans-serif;font-size:8pt;font-weight:700;letter-spacing:2.4pt;text-transform:uppercase;color:#B8F135;margin:0 0 4mm">Part I</p>
+    <h1 style="font-size:32pt;color:#FFFDF7;margin:0 0 6mm;border:none">Summary</h1>
+    <p style="font-size:11pt;line-height:1.55;color:#BFBAB3;max-width:130mm;text-align:left;margin:0">The proposition, the numbers that matter, and the three findings that change how this business should be pitched.</p>
+  </div>
+
+<div class="section">
+  <h1>1 · Executive Summary</h1>
+
+  <p class="eyebrow">The proposition</p>
+  <p><strong>FROLIC is a premium prebiotic soda brand for urban India, built on Indian flavour idiom rather than
+  a Western one.</strong> Ten SKUs drawn from regional drinking culture — nimbu masala, aam panna, kokum, jamun,
+  kala khatta, jeera — each carrying 7&nbsp;g of prebiotic fibre and roughly a quarter of the added sugar of a
+  conventional soft drink, at an MRP of ₹130 for a 250&nbsp;ml can.</p>
+
+  <p>The category has been proven decisively outside India. Poppi was acquired by PepsiCo in May 2025 for
+  <strong>$1.95&nbsp;bn in cash plus $0.2&nbsp;bn contingent</strong> — approximately <strong>3.9× its 2024 revenue
+  of ~$500&nbsp;m</strong>, as disclosed in PepsiCo's Form 10-Q. Olipop was valued at $1.85&nbsp;bn and has been
+  profitable since early 2024. Both were founded in 2018. The Indian equivalent category was worth approximately
+  <strong>$12.6&nbsp;m in 2025</strong> — roughly 0.2% of the functional beverage market it sits inside.</p>
+
+  <div class="stats">
+    <div class="stat"><span class="v">₹267 Cr</span><span class="l">Year 5 net revenue, base case ($30M)</span></div>
+    <div class="stat"><span class="v">Year 4</span><span class="l">EBITDA positive, base case</span></div>
+    <div class="stat"><span class="v">₹30.4 Cr</span><span class="l">Total capital required to breakeven</span></div>
+    <div class="stat"><span class="v">13.6×</span><span class="l">Expected seed MOIC, weighted for a 55% failure rate</span></div>
+  </div>
+
+  <h3>1.1 Three findings that change the pitch</h3>
+  <p>This report was built by verifying the load-bearing inputs rather than accepting them. Three came back
+  differently from how they are usually presented, and each materially changes the investment case.</p>
+
+  <div class="callout warn">
+    <span class="label">Finding 1 — the first-mover claim is false</span>
+    <p><strong>India already has at least two prebiotic soda brands in market.</strong> Misfits (Mumbai) is
+    seed-funded by Nu Ventures alongside angels who backed Acko and Third Wave Coffee, and sells through its own
+    site, Amazon India and Swiggy Instamart. Its specification is <strong>250&nbsp;ml, 7&nbsp;g prebiotic fibre,
+    4&nbsp;g sugar</strong> — within rounding error of FROLIC's — at a lower price point, and with
+    <strong>zero added sugar</strong> against FROLIC's 4&nbsp;g. Bubz is a second entrant.</p>
+    <p>Any pitch claiming "India's first" fails the moment a partner runs one search. The reframe is stronger
+    anyway: category creation with two sub-scale incumbents beats true first-mover, because someone else is
+    funding consumer education and nobody has won distribution. <strong>FROLIC's wedge is not primacy — it is
+    being the only brand in the category that tastes Indian.</strong></p>
+  </div>
+
+  <div class="callout warn">
+    <span class="label">Finding 2 — a 40% GST slab governs the entire economic model</span>
+    <p>From 22 September 2025 India taxes aerated sweetened beverages at a flat <strong>40% GST</strong>,
+    replacing the earlier 28% plus 12% cess. At an MRP of ₹130, <strong>₹37.14 is
+    tax</strong> — 29% of shelf price — before the brand, distributor or retailer is paid anything.</p>
+    <p>This sets the price floor (minimum viable MRP is ₹115.89,
+    leaving only 11% of discount
+    headroom), makes D2C permanently the most profitable channel, and rules out price-led competition for every
+    participant. Non-carbonated beverages sit at 5% — a 35-point lever held on the Series A roadmap.</p>
+  </div>
+
+  <div class="callout info">
+    <span class="label">Finding 3 — the exit multiple is observed, not chosen</span>
+    <p>The return model applies <strong>3.9× revenue</strong>, which is the multiple PepsiCo actually paid for
+    Poppi per its SEC filing — not a comparable-company average. Using a strategic acquirer's disclosed multiple
+    for the same category is considerably more defensible than a constructed comp set.</p>
+  </div>
+
+  <h3>1.2 What the model says</h3>
+  <p>Built bottom-up from a beachhead of <strong>2.99 million</strong>
+  premium-beverage buyers across five metros — not from a top-down share of a national market.</p>
+
+  <table>
+    <thead><tr>
+      <th>Scenario</th><th class="num">Y5 revenue</th><th class="num">Y5 USD</th>
+      <th class="num">EBITDA+</th><th class="num">Y5 margin</th>
+      <th class="num">Capital need</th><th class="num">Seed MOIC</th>
+    </tr></thead>
+    <tbody><tr>
+      <td><strong>Conservative</strong></td>
+      <td class="num">₹73 Cr</td>
+      <td class="num">$8 M</td>
+      <td class="num">Year 5</td>
+      <td class="num">5.8%</td>
+      <td class="num">₹29.6 Cr</td>
+      <td class="num">15.9×</td>
+    </tr><tr>
+      <td><strong>Base</strong></td>
+      <td class="num">₹267 Cr</td>
+      <td class="num">$30 M</td>
+      <td class="num">Year 4</td>
+      <td class="num">23.3%</td>
+      <td class="num">₹30.4 Cr</td>
+      <td class="num">39.0×</td>
+    </tr><tr>
+      <td><strong>Aggressive</strong></td>
+      <td class="num">₹595 Cr</td>
+      <td class="num">$68 M</td>
+      <td class="num">Year 3</td>
+      <td class="num">34.6%</td>
+      <td class="num">₹42.9 Cr</td>
+      <td class="num">74.5×</td>
+    </tr></tbody>
+  </table>
+
+  <p>The base case reaches EBITDA positive in Year 4 on ₹30.4 Cr
+  of total capital. Gross margin expands from 55.7% to
+  66.7% — a procurement outcome as COGS falls from ₹34 to ₹23 per can, not a
+  pricing one, since blended net realisation actually falls as the channel mix shifts toward retail.</p>
+
+  <h3>1.3 What the model also says, which most decks omit</h3>
+  <ul>
+    <li><strong>Year 1 LTV:CAC is 1.8×</strong>, below the 3× floor most consumer
+    investors require. It does not clear 3× until Year 3. The seed
+    round funds the journey to good unit economics; it does not scale economics that already work.</li>
+    <li><strong>The aggressive case requires more capital than the base case</strong>
+    (₹42.9 Cr against ₹30.4 Cr) despite reaching
+    profitability two years earlier, because growth consumes working capital.</li>
+    <li><strong>Series B returns 1.1× in the conservative case</strong>
+    — barely capital back after three years. Early money is protected by entry price; late money is a bet that
+    growth continues exactly as modelled.</li>
+    <li><strong>The probability-weighted seed return assumes a 55% chance of total failure</strong>, which is
+    appropriate for a pre-revenue consumer brand facing a funded incumbent.</li>
+  </ul>
+
+  <h3>1.4 Recommendation</h3>
+  <div class="callout">
+    <span class="label">This contradicts the stated ask</span>
+    <p><strong>Do not raise ₹10 Cr now.</strong> Investor readiness today assesses at <strong>5.7 / 10</strong>,
+    dragged down by zero traction and — more seriously — an undocumented founding team. Raising an institutional
+    seed on a model alone, against a funded incumbent with a near-identical product, invites either a pass or a
+    valuation that permanently damages the cap table.</p>
+    <p>The sequence that works: raise <strong>₹1.5–2.5 Cr from angels and strategic operators</strong> against one
+    production run and a six-month D2C pilot in two cities; then raise the ₹10 Cr seed on cohort data. Approximately
+    <strong>₹40 lakh and nine months</strong> moves readiness to 7.5–8 / 10. Section 22 sets out exactly what
+    evidence to generate, in priority order.</p>
+  </div>
+</div>
+
+<div class="section">
+  <h1>2 · Project at a Glance</h1>
+  <table><tbody><tr><td style="width:36%"><strong>Project</strong></td><td>Premium prebiotic functional soda brand for urban India</td></tr><tr><td style="width:36%"><strong>Product</strong></td><td>250 ml sleek can · 7 g prebiotic fibre · 4 g added sugar · 0 mg caffeine</td></tr><tr><td style="width:36%"><strong>Range at maturity</strong></td><td>10 SKUs built from Indian flavour idiom</td></tr><tr><td style="width:36%"><strong>MRP</strong></td><td>₹130 per 250 ml can</td></tr><tr><td style="width:36%"><strong>Launch markets</strong></td><td>Delhi NCR · Mumbai · Bengaluru · Pune · Hyderabad</td></tr><tr><td style="width:36%"><strong>Beachhead</strong></td><td>2.99 M premium-beverage buyers (bottom-up)</td></tr><tr><td style="width:36%"><strong>Manufacturing</strong></td><td>Co-packed (tolling) through Year 3; own capacity a Series B consideration</td></tr><tr><td style="width:36%"><strong>Primary channels</strong></td><td>D2C and quick commerce (Y1) → modern trade (Y2) → general trade (Y3)</td></tr><tr><td style="width:36%"><strong>GST treatment</strong></td><td>40% — aerated sweetened beverage slab</td></tr><tr><td style="width:36%"><strong>Year 1 COGS per can</strong></td><td>₹34.00</td></tr><tr><td style="width:36%"><strong>Year 5 COGS per can</strong></td><td>₹23.00</td></tr><tr><td style="width:36%"><strong>Year 1 gross margin</strong></td><td>55.7%</td></tr><tr><td style="width:36%"><strong>Year 5 gross margin</strong></td><td>66.7%</td></tr><tr><td style="width:36%"><strong>Minimum viable MRP</strong></td><td>₹115.89 (at a 50% gross-margin floor)</td></tr><tr><td style="width:36%"><strong>Year 5 net revenue (base)</strong></td><td>₹267.15 Cr ($30.4 M)</td></tr><tr><td style="width:36%"><strong>EBITDA positive</strong></td><td>Year 4 (base case)</td></tr><tr><td style="width:36%"><strong>Peak operating burn</strong></td><td>₹17.01 Cr</td></tr><tr><td style="width:36%"><strong>Peak working capital</strong></td><td>₹13.39 Cr</td></tr><tr><td style="width:36%"><strong>Total capital need</strong></td><td>₹30.40 Cr</td></tr><tr><td style="width:36%"><strong>Funding plan</strong></td><td>₹10 Cr seed → ₹50 Cr Series A → ₹150 Cr Series B</td></tr><tr><td style="width:36%"><strong>Founder ownership post-B</strong></td><td>47.4%</td></tr><tr><td style="width:36%"><strong>Exit assumption</strong></td><td>Year 7 at 3.9× revenue (PepsiCo–Poppi disclosed multiple)</td></tr><tr><td style="width:36%"><strong>Expected seed return</strong></td><td>13.6× MOIC · 45.1% IRR (probability-weighted)</td></tr><tr><td style="width:36%"><strong>Current stage</strong></td><td>Pre-revenue, pre-production. Brand system and financial model complete.</td></tr><tr><td style="width:36%"><strong>Investor readiness</strong></td><td>5.7 / 10 — see Section 23</td></tr></tbody></table>
+</div>
+
+
+<div class="part-divider">
+    <p style="font-family:'Liberation Sans',Arial,sans-serif;font-size:8pt;font-weight:700;letter-spacing:2.4pt;text-transform:uppercase;color:#B8F135;margin:0 0 4mm">Part II</p>
+    <h1 style="font-size:32pt;color:#FFFDF7;margin:0 0 6mm;border:none">The Business</h1>
+    <p style="font-size:11pt;line-height:1.55;color:#BFBAB3;max-width:130mm;text-align:left;margin:0">What FROLIC makes, who would make it, and the brand system that has already been built.</p>
+  </div>
+
+<div class="section">
+  <h1>3 · Promoter, Company &amp; Team</h1>
+
+  <div class="callout warn">
+    <span class="label">The largest gap in this report</span>
+    <p><strong>No founder credentials are documented.</strong> For a consumer brand, investors back the operator
+    before the idea — and nothing in the material underlying this report establishes who is building FROLIC or
+    what they have built before. This is not a presentational problem that better writing can fix. It is the
+    single highest-leverage addition available, worth more than any improvement to the projections.</p>
+  </div>
+
+  <h3>3.1 Proposed structure</h3>
+  <table>
+    <tbody>
+      <tr><td style="width:36%"><strong>Entity</strong></td><td>Frolic Beverages Pvt. Ltd. — private limited company, to be incorporated</td></tr>
+      <tr><td><strong>Registered office</strong></td><td>Pune, Maharashtra</td></tr>
+      <tr><td><strong>Tax election</strong></td><td>Section 115BAA concessional regime — 25% effective corporate rate</td></tr>
+      <tr><td><strong>ESOP pool</strong></td><td>10% at seed, refreshed 2% at each institutional round</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.2 Capability required before the seed round</h3>
+  <p>Four capabilities determine whether this project executes. Two are demonstrated by the work already done;
+  two are not evidenced at all.</p>
+
+  <table>
+    <thead><tr><th style="width:26%">Capability</th><th style="width:12%">Status</th><th>Why it is decisive</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Brand building</strong></td><td><span class="tag v">Shown</span></td>
+        <td>A complete, original design system, ten flavour worlds and a functioning storefront exist. This is credible evidence of capability.</td></tr>
+      <tr><td><strong>Financial rigour</strong></td><td><span class="tag v">Shown</span></td>
+        <td>A generated, assumption-tagged model that surfaces its own weaknesses rather than hiding them.</td></tr>
+      <tr><td><strong>Beverage formulation</strong></td><td><span class="tag e">Unevidenced</span></td>
+        <td>Suspending 7 g of fibre in a clear, stable, carbonated liquid is a genuine technical problem. Requires an in-house food technologist or a named consulting formulator with a track record.</td></tr>
+      <tr><td><strong>FMCG distribution</strong></td><td><span class="tag e">Unevidenced</span></td>
+        <td>Nobody builds Indian beverage distribution from a cold start. A co-founder or first hire from a beverage or FMCG sales organisation is a prerequisite, not a nice-to-have.</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Recommendation:</strong> close the distribution gap before raising the institutional seed. A named
+  operator with regional distributor relationships changes the risk profile of this project more than any
+  additional month of model refinement.</p>
+</div>
+
+<div class="section">
+  <h1>4 · Product &amp; Formulation</h1>
+
+  <h3>4.1 What the product is</h3>
+  <p>A carbonated soft drink in a 250&nbsp;ml sleek aluminium can, containing 7&nbsp;g of prebiotic fibre and
+  between 2&nbsp;g and 5&nbsp;g of added sugar depending on flavour. Caffeine-free across the entire range.
+  Shelf-stable at ambient temperature for a target 12 months.</p>
+
+  <p>The functional premise rests on <strong>prebiotic fibre</strong>, not live cultures. A prebiotic is defined
+  by what happens to it rather than what it is made of: it must resist digestion in the upper gut, be fermentable
+  by colonic micro-organisms, and selectively favour some of them. Inulin — the fibre in chicory root — satisfies
+  all three, because its fructose units are joined by bonds human enzymes cannot cleave.</p>
+
+  <div class="callout good">
+    <span class="label">A structural advantage over probiotic competitors</span>
+    <p>Because FROLIC contains no live cultures, it is <strong>shelf-stable and requires no cold chain</strong>.
+    It survives carbonation, canning, and a warm delivery van. Probiotic products carry refrigeration requirements
+    and short shelf lives that make national distribution in India materially harder and more expensive.</p>
+  </div>
+
+  <h3>4.2 The fibre blend</h3>
+  <p>A 60:40 ratio of chicory inulin to acacia gum, delivering 7&nbsp;g per can. Single-source fibre is simpler;
+  a blend performs better. Inulin ferments relatively quickly, acacia gum slowly and further along the colon.
+  Running them together spreads fermentation out, which in practice means materially better tolerance for
+  consumers who are not used to a high-fibre drink.</p>
+
+  <p>This matters commercially as well as physiologically. Any meaningful increase in fibre intake can cause
+  temporary bloating, and a poor first week is how a consumer concludes that fibre is not for them. The blend,
+  and the explicit "introduce gradually" advisory on pack, are both retention measures.</p>
+
+  <h3>4.3 The formulation problem</h3>
+  <p>Putting 7&nbsp;g of fibre into a clear carbonated liquid is the technical barrier that has kept this category
+  small. Inulin clouds the liquid and drops out of suspension under carbonation; acacia adds body that is unwanted
+  in citrus formulations; carbonation strips the volatile aromatics that make fresh ginger and lime rind taste
+  fresh rather than flat.</p>
+
+  <p>The mitigations are cold-pressing and cold-holding aromatic fractions, adding them late in the process, and
+  the 60:40 blend ratio. <strong>None of this has been validated by a production run.</strong> Every cost and
+  stability figure in this report is an estimate until one is completed.</p>
+
+  <h3>4.4 Where FROLIC is and is not differentiated</h3>
+  <div class="two-col">
+    <div>
+      <h4>Genuinely differentiated</h4>
+      <ul>
+        <li><strong>Flavour portfolio</strong> — ten SKUs from regional Indian drinking culture. A foreign entrant cannot manufacture this; an Indian incumbent could, but has not.</li>
+        <li><strong>Brand craft</strong> — materially ahead of the category.</li>
+        <li><strong>Seasonal sourcing</strong> — jamun and kokum are hard to secure at scale, which is a barrier to fast followers.</li>
+        <li><strong>Direct relationship</strong> — subscription and rewards built from day one.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Not differentiated</h4>
+      <ul>
+        <li><strong>The fibre specification</strong> — 7 g / 4 g is table stakes and already matched by Misfits.</li>
+        <li><strong>The format</strong> — 250 ml sleek can is category standard.</li>
+        <li><strong>The health claim</strong> — weaker than the incumbent's zero-added-sugar position.</li>
+        <li><strong>Anything operational</strong> — no plant, no distribution, no supply advantage.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h1>5 · Product Range — Ten SKUs</h1>
+  <p>Each flavour is built around a drink that already exists somewhere in India — a roadside cart, a coastal
+  kitchen, a summer ritual. The commercial logic is that taste memory is the one thing a multinational cannot
+  synthesise quickly.</p>
+  <table class="compact">
+    <thead><tr>
+      <th style="width:19%">Flavour</th><th style="width:27%">Tasting notes</th>
+      <th class="num">kcal</th><th class="num">Total sugar</th><th class="num">Added sugar</th>
+      <th class="num">Fibre</th><th class="num">Sodium</th><th>Badge</th>
+    </tr></thead>
+    <tbody><tr>
+      <td><span class="swatch" style="background:#D7F23A"></span><strong>Nimbu Masala Fizz</strong></td>
+      <td>Sharp lime · black salt · toasted cumin</td><td class="num">32</td><td class="num">6 g</td>
+      <td class="num">4 g</td><td class="num">7 g</td><td class="num">180 mg</td><td>Most loved</td>
+    </tr><tr>
+      <td><span class="swatch" style="background:#F2C53A"></span><strong>Aam Panna Spark</strong></td>
+      <td>Green mango · roasted jeera · mint</td><td class="num">38</td><td class="num">7 g</td>
+      <td class="num">4 g</td><td class="num">7 g</td><td class="num">140 mg</td><td>—</td>
+    </tr><tr>
+      <td><span class="swatch" style="background:#E0457B"></span><strong>Kokum Burst</strong></td>
+      <td>Tart kokum · sea salt · coconut air</td><td class="num">30</td><td class="num">5 g</td>
+      <td class="num">3 g</td><td class="num">7 g</td><td class="num">200 mg</td><td>Limited batch</td>
+    </tr><tr>
+      <td><span class="swatch" style="background:#8B47BC"></span><strong>Jamun Pop</strong></td>
+      <td>Dark jamun · rock salt · plum skin</td><td class="num">36</td><td class="num">7 g</td>
+      <td class="num">4 g</td><td class="num">7 g</td><td class="num">150 mg</td><td>—</td>
+    </tr><tr>
+      <td><span class="swatch" style="background:#4B2E7A"></span><strong>Kala Khatta Rush</strong></td>
+      <td>Black grape · tamarind · chaat masala</td><td class="num">40</td><td class="num">8 g</td>
+      <td class="num">5 g</td><td class="num">7 g</td><td class="num">220 mg</td><td>—</td>
+    </tr><tr>
+      <td><span class="swatch" style="background:#F0A22B"></span><strong>Ginger Lime Lift</strong></td>
+      <td>Hot ginger · green lime · tulsi</td><td class="num">30</td><td class="num">5 g</td>
+      <td class="num">3 g</td><td class="num">7 g</td><td class="num">90 mg</td><td>Team favourite</td>
+    </tr><tr>
+      <td><span class="swatch" style="background:#C08A3E"></span><strong>Jeera Fizz</strong></td>
+      <td>Roasted cumin · mint · black salt</td><td class="num">26</td><td class="num">4 g</td>
+      <td class="num">2 g</td><td class="num">7 g</td><td class="num">240 mg</td><td>Lowest calorie</td>
+    </tr><tr>
+      <td><span class="swatch" style="background:#8FD6C4"></span><strong>Himalayan Lemon</strong></td>
+      <td>Hill lemon · pink salt · cold air</td><td class="num">24</td><td class="num">4 g</td>
+      <td class="num">2 g</td><td class="num">7 g</td><td class="num">160 mg</td><td>Lowest calorie</td>
+    </tr><tr>
+      <td><span class="swatch" style="background:#F2657B"></span><strong>Guava Chili</strong></td>
+      <td>Pink guava · red chilli · lime salt</td><td class="num">38</td><td class="num">7 g</td>
+      <td class="num">4 g</td><td class="num">7 g</td><td class="num">170 mg</td><td>New</td>
+    </tr><tr>
+      <td><span class="swatch" style="background:#FF6A1A"></span><strong>Orange Masala</strong></td>
+      <td>Blood orange · chaat masala · amla</td><td class="num">36</td><td class="num">7 g</td>
+      <td class="num">4 g</td><td class="num">7 g</td><td class="num">160 mg</td><td>—</td>
+    </tr></tbody>
+  </table>
+  <p class="chart-note">All values per 250 ml serving. Every SKU is caffeine-free and carries 7 g of prebiotic fibre.
+  Figures are formulation targets and require batch verification.</p>
+  <div class="callout">
+    <span class="label">Launch-range recommendation</span>
+    <p><strong>Launch with three SKUs, not ten.</strong> Typical Indian co-packer minimum order quantities run
+    30,000–50,000 cans per SKU per run. Ten SKUs at launch is an inventory and working-capital burden a
+    pre-revenue brand cannot carry, and any experienced consumer investor will say so. Recommended launch set:
+    <strong>Nimbu Masala Fizz, Ginger Lime Lift and Jamun Pop</strong> — one savoury-citrus, one low-sugar
+    workhorse, one distinctive colour-led SKU. Expand on demonstrated velocity.</p>
+  </div>
+</div>
+
+<div class="section">
+  <h1>6 · Brand &amp; Design System</h1>
+  <p>The brand system is complete and is the most developed asset the project currently holds. It is original
+  throughout — name, positioning, palette, typography, flavour worlds, copy and illustration approach were all
+  created for this project, and no third-party brand assets are reproduced.</p>
+
+  <h3>6.1 Colour</h3>
+  <p>Five brand primaries, each shipping as a 50–900 ramp, plus a neutral set. A rule enforced across the system:
+  <strong>the 400-level brand hue is for large areas, never for text or data marks</strong>. Electric Lime at
+  #B8F135 measures 1.32:1 against the cream page surface — correct on a can, unreadable as a chart bar.</p>
+
+  <table class="compact">
+    <thead><tr><th>Token</th><th>Hex</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td><span class="swatch" style="background:#B8F135"></span>Electric Lime</td><td>#B8F135</td><td>Signature. Hero accent, primary flavour world, active states</td></tr>
+      <tr><td><span class="swatch" style="background:#FF6A1A"></span>Deep Orange</td><td>#FF6A1A</td><td>Energy. Orange Masala world</td></tr>
+      <tr><td><span class="swatch" style="background:#6B2E8F"></span>Berry Purple</td><td>#6B2E8F</td><td>Depth. Jamun and Kala Khatta worlds</td></tr>
+      <tr><td><span class="swatch" style="background:#FFD029"></span>Sunshine Yellow</td><td>#FFD029</td><td>Warmth. Aam Panna world</td></tr>
+      <tr><td><span class="swatch" style="background:#3FD9A4"></span>Fresh Mint</td><td>#3FD9A4</td><td>Trust. Verified badges, savings, free-shipping unlock</td></tr>
+      <tr><td><span class="swatch" style="background:#FFFDF7;border:0.4pt solid #ccc"></span>Cream White</td><td>#FFFDF7</td><td>Page surface</td></tr>
+      <tr><td><span class="swatch" style="background:#F6EFE2"></span>Warm Ivory</td><td>#F6EFE2</td><td>Alternating section surface</td></tr>
+      <tr><td><span class="swatch" style="background:#14110F"></span>Charcoal Black</td><td>#14110F</td><td>Body text, primary buttons, dark sections</td></tr>
+    </tbody>
+  </table>
+
+  <h3>6.2 The flavour world system</h3>
+  <p>The mechanism that lets one component set serve ten products. Each product declares four values — a base
+  hue, a deep shade, a page wash and a guaranteed-legible ink — which are applied as CSS custom properties. Any
+  part of the interface can adopt a world independently: a product card, a carousel slide and a whole page each
+  re-skin without affecting each other. <strong>Adding a flavour is one data entry; the shop, quiz, carousel,
+  bundle builder, sitemap, structured data and 3D can label all update automatically.</strong></p>
+
+  <h3>6.3 Typography</h3>
+  <table class="compact">
+    <thead><tr><th style="width:18%">Role</th><th style="width:26%">Family</th><th>Rationale</th></tr></thead>
+    <tbody>
+      <tr><td>Display</td><td>Bricolage Grotesque</td><td>High contrast, slightly irregular — carries the personality in headlines</td></tr>
+      <tr><td>Sans</td><td>Inter</td><td>Chosen for tabular figures, which nutrition panels and price rows depend on</td></tr>
+      <tr><td>Mono</td><td>JetBrains Mono</td><td>Eyebrows, badges, data labels</td></tr>
+    </tbody>
+  </table>
+  <p>All three are self-hosted, so there is no render-blocking request to a font CDN and no layout shift on swap.
+  The type scale is fluid — every step is a <span class="sans">clamp()</span> — so there are no type-only
+  breakpoints and typography cannot break at an untested viewport width.</p>
+
+  <h3>6.4 Accessibility contract</h3>
+  <ul>
+    <li>Body text at or above 4.5:1 contrast; large text and UI boundaries at or above 3:1.</li>
+    <li>Touch targets at or above 44 × 44 px throughout.</li>
+    <li><span class="sans">prefers-reduced-motion</span> honoured globally and per component — 3D assets are not merely frozen, they are never fetched.</li>
+    <li>Charts are never colour-alone: every mark is directly labelled and a table view is available.</li>
+    <li>Nutrition data is marked up as a real table with row headers, so assistive technology announces which value belongs to which nutrient.</li>
+  </ul>
+</div>
+
+<div class="part-divider">
+    <p style="font-family:'Liberation Sans',Arial,sans-serif;font-size:8pt;font-weight:700;letter-spacing:2.4pt;text-transform:uppercase;color:#B8F135;margin:0 0 4mm">Part III</p>
+    <h1 style="font-size:32pt;color:#FFFDF7;margin:0 0 6mm;border:none">Market & Competition</h1>
+    <p style="font-size:11pt;line-height:1.55;color:#BFBAB3;max-width:130mm;text-align:left;margin:0">Who the customer is, why the category is open now, who is already in it, and what can actually be defended.</p>
+  </div>
+
+<div class="section">
+  <h1>7 · Market Analysis</h1>
+
+  <h3>7.1 Category context</h3>
+  <table>
+    <thead><tr><th style="width:20%">Category</th><th style="width:20%">Scale in India</th><th style="width:14%">Price / 250 ml</th><th>Position</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Traditional soft drinks</strong></td><td>Dominant, decades of penetration</td><td>₹20–40</td><td>Actively negative health perception</td></tr>
+      <tr><td><strong>Functional beverages</strong></td><td>USD 4.2–8.3 bn <span class="tag v">V</span></td><td>₹40–150</td><td>Positive but fragmented; no category owner</td></tr>
+      <tr><td><strong>Energy drinks</strong></td><td>Established, urban-skewed</td><td>₹110–125</td><td>Caffeine-led; distribution locked by Red Bull and Sting</td></tr>
+      <tr><td><strong>Gut health drinks</strong></td><td>Small, fastest-growing sub-segment</td><td>₹30–60</td><td>Dairy-led (Yakult); never translated to the soda occasion</td></tr>
+      <tr><td><strong>Kombucha</strong></td><td>Niche, metro-only, stalled</td><td>₹150–250</td><td>Positive but an acquired taste at a difficult price</td></tr>
+      <tr><td><strong>Prebiotic soda</strong></td><td>~USD 12.6 m (2025) <span class="tag v">V</span></td><td>₹75–130</td><td>Two sub-scale entrants; no national distribution</td></tr>
+    </tbody>
+  </table>
+  <p>The prebiotic soda line is the significant one. At approximately $12.6&nbsp;m it is roughly
+  <strong>0.2% of the functional beverage market it sits inside</strong>. In the United States the equivalent
+  sub-category went from nothing to two brands worth a combined ~$3.8&nbsp;bn in seven years.</p>
+
+  <h3>7.2 Bottom-up market sizing</h3>
+  <p>A "0.5% of an $8&nbsp;bn market" projection assumes its own conclusion. This model builds from people.</p>
+  <div class="chart">
+    <div class="bar-row">
+      <span class="bar-label">Adults 18–45, five metros</span>
+      <span class="bar-track"><span class="bar-fill" style="width:100.0%;"></span></span>
+      <span class="bar-val">46.00 M</span>
+    </div><div class="bar-row">
+      <span class="bar-label">× SEC A/A+ share (26%)</span>
+      <span class="bar-track"><span class="bar-fill" style="width:26.0%;"></span></span>
+      <span class="bar-val">11.96 M</span>
+    </div><div class="bar-row">
+      <span class="bar-label">× already buy a ₹100+ beverage (25%)</span>
+      <span class="bar-track"><span class="bar-fill" style="width:6.5%;background:#14110F"></span></span>
+      <span class="bar-val">2.99 M</span>
+    </div>
+    <p class="chart-note">Delhi NCR · Mumbai · Bengaluru · Pune · Hyderabad. Beachhead only — not a national TAM.</p>
+  </div>
+  <p><strong>2.99 million people.</strong> Not 1.4 billion, not "urban
+  India". This is the population FROLIC must win before national expansion is a meaningful question, and every
+  customer figure in this report is expressed as a percentage of it.</p>
+
+  <div class="callout info">
+    <span class="label">The comparison set that matters</span>
+    <p>FROLIC's competition is not Coca-Cola. At ₹130 with a 40% tax, FROLIC and a ₹20 cola are not in the same
+    purchase decision. The relevant set is <strong>Red Bull at ₹125, specialty coffee at ₹250, kombucha at
+    ₹150–250 and cold-pressed juice at ₹120</strong>. At ₹130 FROLIC is mid-range in that set. The "India is
+    price-sensitive" objection is true of the mass market and not of this consumer.</p>
+  </div>
+
+  <h3>7.3 Why India is underpenetrated</h3>
+  <ol>
+    <li><strong>The category was economically impossible until recently.</strong> Food-grade prebiotic fibre at
+    scale was import-dependent and expensive, and the formulation problem is genuinely hard.</li>
+    <li><strong>Health-led beverage in India has been dairy-led.</strong> Yakult trained a generation on
+    "gut health = a small dairy shot". Nobody translated that into the soda occasion, where the volume is.</li>
+    <li><strong>Kombucha taught the wrong lesson.</strong> Incumbents read its stall as "Indians do not want
+    functional fizz". The correct reading is narrower: Indians did not want <em>vinegary</em> functional fizz at
+    ₹200.</li>
+    <li><strong>The 40% GST slab deters volume players.</strong> A brand competing on price is structurally dead,
+    which has kept the category clear of exactly the players who would otherwise crush a startup.</li>
+    <li><strong>Distribution is not yet contested.</strong> Quick commerce has compressed time-to-consumer from
+    years to months, and neither incumbent holds national retail.</li>
+  </ol>
+
+  <h3>7.4 Seasonality</h3>
+  <p>Indian beverage demand is summer-weighted, concentrated in March to June. Working capital planning assumes a
+  Q1 inventory build ahead of that peak. Jamun carries an additional constraint: a roughly six-week harvest window
+  and poor fresh shelf life, requiring freezing at harvest and forward contracting.</p>
+</div>
+
+<div class="section">
+  <h1>8 · Category Creation &amp; Timing</h1>
+
+  <h3>8.1 Why now</h3>
+  <table>
+    <thead><tr><th style="width:38%">Enabler</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Prebiotic ingredient supply at Indian scale</td><td>Available — inulin and acacia both sourceable domestically or via established import routes</td></tr>
+      <tr><td>Consumer awareness of gut health</td><td>Mainstream in metros; no longer requires category education</td></tr>
+      <tr><td>Quick commerce as a premium beverage channel</td><td>Mature — reaches the target consumer in minutes</td></tr>
+      <tr><td>Category proof</td><td>Poppi and Olipop removed all doubt that the category scales <span class="tag v">V</span></td></tr>
+      <tr><td>Indian entrants</td><td>Two, both sub-scale, neither with distribution lock-in <span class="tag v">V</span></td></tr>
+      <tr><td>Capital availability for Indian consumer</td><td>Active but disciplined — gross margin and repeat are the gating criteria</td></tr>
+      <tr><td>Regulatory clarity</td><td>FSSAI framework workable within composition-only claim language</td></tr>
+    </tbody>
+  </table>
+
+  <h3>8.2 Category timing matrix</h3>
+  <p>Two axes determine whether a new entrant can win a category: how validated consumer demand is, and how
+  contested distribution is. Only one quadrant reliably produces new category leaders.</p>
+  <table class="compact">
+    <thead><tr><th style="width:24%"></th><th style="width:38%">Distribution open</th><th>Distribution locked</th></tr></thead>
+    <tbody>
+      <tr>
+        <td style="background:#14110F;color:#FFFDF7"><strong>Demand validated</strong></td>
+        <td style="background:#f6fbe8"><strong>★ Prebiotic soda, India — now</strong><br>
+          <span class="muted">Misfits and the US category proved demand. Nobody holds the shelf. An 18–30 month window.</span></td>
+        <td><strong>Energy drinks</strong><br><span class="muted">Red Bull and Sting hold distribution. Entry means outspending incumbents.</span></td>
+      </tr>
+      <tr>
+        <td style="background:#14110F;color:#FFFDF7"><strong>Demand unvalidated</strong></td>
+        <td><strong>Kombucha, India</strong><br><span class="muted">Shelf is open because nobody wants it. Taste barrier unresolved at ₹200.</span></td>
+        <td><strong>Packaged juice</strong><br><span class="muted">Dabur, ITC and PepsiCo hold it. The worst quadrant for a new entrant.</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <span class="label">The window</span>
+    <p><strong>18 to 30 months.</strong> It closes when either Misfits or Bubz raises a Series A and locks
+    national distribution, or when Coca-Cola or PepsiCo launches an Indian prebiotic line — PepsiCo already owns
+    Poppi and needs only to localise it. This is a specific, falsifiable closing condition, which is why it should
+    be stated rather than implied.</p>
+  </div>
+
+  <h3>8.3 Why being second or third is the right position</h3>
+  <p>True first-movers in consumer categories pay for consumer education and are frequently overtaken by better-
+  executed followers. Misfits is currently funding category awareness in India; FROLIC benefits from that spend
+  without having paid for it. The eventual winner will be whoever wins <strong>taste and distribution</strong>,
+  not whoever issued the first press release.</p>
+</div>
+
+<div class="section">
+  <h1>9 · Competition</h1>
+  <table class="compact">
+    <thead><tr><th style="width:15%"></th><th style="background:#5C8310">FROLIC</th><th>Misfits</th><th>Bubz</th><th>Coca-Cola / Campa</th><th>Paper Boat</th><th>Kombucha</th></tr></thead>
+    <tbody><tr><td><strong>Category</strong></td><td style="background:#f6fbe8">Indian prebiotic soda</td><td>Prebiotic soda</td><td>Prebiotic soda</td><td>Mainstream CSD</td><td>Indian traditional</td><td>Fermented functional</td></tr><tr><td><strong>Price / 250 ml</strong></td><td style="background:#f6fbe8">₹130</td><td>₹75–100</td><td>n/a</td><td>₹20–40</td><td>₹40–60</td><td>₹150–250</td></tr><tr><td><strong>Prebiotic fibre</strong></td><td style="background:#f6fbe8">7 g</td><td>7 g</td><td>Yes</td><td>0 g</td><td>0 g</td><td>Low</td></tr><tr><td><strong>Added sugar</strong></td><td style="background:#f6fbe8">4 g</td><td><strong>0 g</strong></td><td>Low</td><td>25–27 g</td><td>Moderate–high</td><td>Low</td></tr><tr><td><strong>Flavour idiom</strong></td><td style="background:#f6fbe8"><strong>Indian (10 SKUs)</strong></td><td>Western minimal</td><td>Western, Gen Z</td><td>Western</td><td><strong>Indian</strong></td><td>Western</td></tr><tr><td><strong>Distribution</strong></td><td style="background:#f6fbe8"><strong>None</strong></td><td>D2C, Amazon, Instamart</td><td>Early</td><td>~10 M outlets</td><td>National</td><td>Metro premium</td></tr><tr><td><strong>Funding</strong></td><td style="background:#f6fbe8"><strong>None</strong></td><td>Seed (Nu Ventures)</td><td>Early</td><td>—</td><td>Acquired (Wipro)</td><td>Mixed</td></tr><tr><td><strong>Brand system</strong></td><td style="background:#f6fbe8"><strong>Complete, premium</strong></td><td>Functional</td><td>Gen Z</td><td>Iconic</td><td>Strong, nostalgic</td><td>Varies</td></tr></tbody>
+  </table>
+
+  <div class="callout warn">
+    <span class="label">The honest read</span>
+    <p><strong>Misfits is the direct competitor and is ahead on every dimension that currently matters.</strong>
+    Product in market, funded, retail presence, and a cleaner health claim — zero added sugar against FROLIC's
+    4&nbsp;g. FROLIC's advantages today are brand system and flavour portfolio: both real, both entirely unproven
+    at the till.</p>
+    <p>FROLIC's counter-position is that 4&nbsp;g of added sugar buys meaningfully better taste, and that taste
+    drives repeat purchase more than a sugar figure on a label. <strong>This must be demonstrated in a blind
+    panel before the seed round</strong>, not asserted.</p>
+  </div>
+
+  <h3>9.1 The most instructive comparison</h3>
+  <p><strong>Paper Boat</strong> proved that Indian traditional flavours can be built into a national premium
+  brand, and was acquired by Wipro Consumer Care. It is the closest domestic precedent for FROLIC's thesis — and
+  a reminder that the outcome was a trade sale rather than a category-defining independent. It is also the most
+  likely domestic fast-follower, holding the flavour credibility and lacking only the functional claim.</p>
+
+  <h3>9.2 Response to incumbent entry</h3>
+  <p>Coca-Cola and PepsiCo's structural advantages are cost, scale and price — none of which help in a 40%-taxed
+  premium category where discount headroom is 11%. Their realistic move is to acquire the category leader, which
+  is precisely what PepsiCo did with Poppi. The defensive position is therefore to become the obvious acquisition
+  target before either decides to build instead.</p>
+</div>
+
+<div class="section">
+  <h1>10 · Moat Analysis</h1>
+  <p>Scored 1–5 for FROLIC at maturity, with an honest assessment of durability. A report claiming six moats has
+  demonstrated none.</p>
+  <table>
+    <thead><tr><th style="width:20%">Moat</th><th style="width:10%" class="num">Score</th><th style="width:14%">Durable?</th><th>Assessment</th></tr></thead>
+    <tbody><tr><td><strong>Brand</strong></td><td class="num">4 / 5</td><td>Durable</td><td>A complete original design system and ten flavour worlds. Brand is the only thing in beverage that compounds and cannot be bought quickly.</td></tr><tr><td><strong>Taste</strong></td><td class="num">Unproven</td><td>Durable if real</td><td>Potentially the deepest moat — formulation takes years to replicate. Currently a hypothesis, not an asset.</td></tr><tr><td><strong>Flavour IP &amp; sourcing</strong></td><td class="num">3 / 5</td><td>Partially</td><td>Seasonal jamun and kokum sourcing is genuinely hard. Locking supply early constrains fast followers.</td></tr><tr><td><strong>Community</strong></td><td class="num">3 / 5</td><td>Partially</td><td>Subscription, rewards and referral create switching cost. Real but modest — beverage loyalty is weak.</td></tr><tr><td><strong>Product innovation</strong></td><td class="num">3 / 5</td><td>Partially</td><td>Ten SKUs and a still-beverage roadmap. An advantage only if the formulation library is genuinely proprietary.</td></tr><tr><td><strong>Health specification</strong></td><td class="num">2 / 5</td><td><strong>No</strong></td><td>7 g / 4 g is matched by Misfits and beaten on sugar. Any competent formulator replicates it in six months.</td></tr><tr><td><strong>Distribution</strong></td><td class="num">1 / 5</td><td>Eventually</td><td>Zero today. Becomes a moat at Year 4+ with shelf contracts and distributor exclusivity. This is what Series B buys.</td></tr><tr><td><strong>Supply chain</strong></td><td class="num">1 / 5</td><td>Eventually</td><td>Co-packed. No advantage today.</td></tr><tr><td><strong>Cost</strong></td><td class="num">1 / 5</td><td><strong>No</strong></td><td>Subscale. Will never beat a multinational on cost and should not try.</td></tr></tbody>
+  </table>
+
+  <p><strong>Weighted verdict: the moat is brand, taste and flavour IP. Everything else is either absent today or
+  not defensible.</strong> The strategic implication is that FROLIC must convert brand and taste into distribution
+  and habit before an incumbent decides the category is worth entering.</p>
+
+  <h3>10.1 Competitive positioning</h3>
+  <table class="compact">
+    <thead><tr><th style="width:24%"></th><th style="width:38%">Western flavour idiom</th><th>Indian flavour idiom</th></tr></thead>
+    <tbody>
+      <tr>
+        <td style="background:#14110F;color:#FFFDF7"><strong>High functional credibility</strong></td>
+        <td>Misfits · Bubz · kombucha brands</td>
+        <td style="background:#f6fbe8"><strong>★ FROLIC — unoccupied</strong></td>
+      </tr>
+      <tr>
+        <td style="background:#14110F;color:#FFFDF7"><strong>Low functional credibility</strong></td>
+        <td>Coca-Cola · Campa · Sting · Monster</td>
+        <td>Paper Boat · traditional nimbu and jaljeera</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="chart-note">The upper-right quadrant — credibly functional and unmistakably Indian — is unoccupied.
+  Misfits holds functional credibility in a Western idiom; Paper Boat holds the Indian idiom with no functional
+  claim. <strong>The risk is that the quadrant is empty because it is small, not because nobody considered it.</strong>
+  Only repeat-purchase data resolves that.</p>
+</div>
+
+
+<div class="part-divider">
+    <p style="font-family:'Liberation Sans',Arial,sans-serif;font-size:8pt;font-weight:700;letter-spacing:2.4pt;text-transform:uppercase;color:#B8F135;margin:0 0 4mm">Part IV</p>
+    <h1 style="font-size:32pt;color:#FFFDF7;margin:0 0 6mm;border:none">Operations</h1>
+    <p style="font-size:11pt;line-height:1.55;color:#BFBAB3;max-width:130mm;text-align:left;margin:0">How the product gets made, cleared, sold and delivered — and the regulatory constraints that shape all three.</p>
+  </div>
+
+<div class="section">
+  <h1>11 · Manufacturing &amp; Supply Chain</h1>
+
+  <h3>11.1 Manufacturing model</h3>
+  <p><strong>Co-packing (tolling) through Year 3.</strong> This is the standard and correct model for a beverage
+  startup: it converts a large fixed capital requirement into a variable per-unit cost, and removes the risk of
+  owning idle capacity while demand is unproven. Own capacity becomes a Series B consideration, and only if
+  volume justifies it.</p>
+
+  <p>The principal risk of tolling is capacity priority during the March–June peak, when every beverage brand in
+  India wants the same line. The mitigation is committed annual volume contracts, which are also the lever that
+  drives the conversion charge down from ₹5.50 to ₹2.90 per can across the projection period.</p>
+
+  <div class="callout warn">
+    <span class="label">Not yet in place</span>
+    <p><strong>No co-packer has been signed and no production run has been completed.</strong> Both are month
+    0–2 milestones and prerequisites for the seed round. Every cost figure in Part V is an estimate until one
+    production run converts it into an invoice.</p>
+  </div>
+
+  <h3>11.2 Bill of materials — 250 ml can</h3>
+  <table>
+    <thead><tr><th>Component</th><th class="num">Year 1</th><th class="num">Year 5</th><th class="num">% of Y1 COGS</th><th class="num">Δ</th></tr></thead>
+    <tbody>
+      <tr><td>Can body (printed 250 ml sleek)</td><td class="num">₹12.00</td>
+        <td class="num">₹8.00</td><td class="num">35.3%</td>
+        <td class="num">−33%</td></tr><tr><td>Flavour base, acidulants, salt, sweetener</td><td class="num">₹8.00</td>
+        <td class="num">₹5.50</td><td class="num">23.5%</td>
+        <td class="num">−31%</td></tr><tr><td>Conversion / co-packer tolling</td><td class="num">₹5.50</td>
+        <td class="num">₹2.90</td><td class="num">16.2%</td>
+        <td class="num">−47%</td></tr><tr><td>Prebiotic fibre (7 g)</td><td class="num">₹4.00</td>
+        <td class="num">₹3.00</td><td class="num">11.8%</td>
+        <td class="num">−25%</td></tr><tr><td>Secondary packaging (shrink, divider, carton)</td><td class="num">₹2.50</td>
+        <td class="num">₹2.00</td><td class="num">7.4%</td>
+        <td class="num">−20%</td></tr><tr><td>Can end</td><td class="num">₹1.50</td>
+        <td class="num">₹1.20</td><td class="num">4.4%</td>
+        <td class="num">−20%</td></tr><tr><td>Water and CO₂</td><td class="num">₹0.50</td>
+        <td class="num">₹0.40</td><td class="num">1.5%</td>
+        <td class="num">−20%</td></tr>
+      <tr class="tot"><td><strong>Total COGS</strong></td><td class="num"><strong>₹34.00</strong></td>
+        <td class="num"><strong>₹23.00</strong></td><td class="num">100%</td>
+        <td class="num"><strong>−32%</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout info">
+    <span class="label">The counter-intuitive cost fact</span>
+    <p><strong>The prebiotic fibre — the entire product premise — is ₹4.00 per can, 12% of COGS.</strong> The
+    aluminium can costs three times more than the functional ingredient. There is nothing meaningful to save by
+    reducing fibre, and doing so would destroy the proposition. The real cost lever is the can body, and it is a
+    volume negotiation.</p>
+  </div>
+
+  <h3>11.3 Ingredient sourcing</h3>
+  <table>
+    <thead><tr><th style="width:22%">Ingredient</th><th style="width:26%">Source</th><th>Supply risk</th></tr></thead>
+    <tbody>
+      <tr><td>Chicory root inulin</td><td>Contract-farmed, Maharashtra and Karnataka; import routes established</td><td>Low — commodity food ingredient with multiple suppliers</td></tr>
+      <tr><td>Acacia gum</td><td>Imported, re-tested in India</td><td>Low–medium — single origin region, price volatility</td></tr>
+      <tr><td>Kokum</td><td>Konkan coast — Ratnagiri and Sindhudurg</td><td><strong>Medium–high</strong> — grows on one coastline, sun-dried, seasonal</td></tr>
+      <tr><td>Jamun</td><td>Central and northern India</td><td><strong>High</strong> — ~six-week harvest, poor fresh shelf life, requires freezing at harvest</td></tr>
+      <tr><td>Raw green mango, guava, blood orange</td><td>Multiple domestic regions</td><td>Low–medium — seasonal but widely grown</td></tr>
+      <tr><td>Aluminium cans (250 ml sleek)</td><td>Domestic can makers</td><td>Medium — commodity price exposure; largest single cost line</td></tr>
+    </tbody>
+  </table>
+  <p>Jamun and kokum are the two genuine operational constraints. They are also a barrier to fast followers:
+  a competitor cannot replicate those SKUs without building the same forward-contracting relationships.</p>
+
+  <h3>11.4 Quality, shelf life and recall</h3>
+  <ul>
+    <li><strong>Shelf life target 12 months ambient</strong>, requiring both accelerated and real-time validation before retail entry. Not yet performed.</li>
+    <li>Stability testing must specifically cover fibre suspension, carbonation retention and aromatic degradation — the three known failure modes for this formulation.</li>
+    <li>Batch coding, retained samples per batch, third-party lab testing, and a documented recall procedure are required before any retail listing.</li>
+  </ul>
+
+  <h3>11.5 Working capital cycle</h3>
+  <p>Approximately <strong>55 days of COGS</strong> is tied up in inventory and channel receivables at peak.
+  Cans are manufactured, shipped and sit on shelves months before cash returns. This is why the aggressive
+  scenario requires more capital than the base case despite reaching profitability two years earlier.</p>
+  <table>
+    <thead><tr><th>Scenario</th><th class="num">Peak operating burn</th><th class="num">Peak working capital</th><th class="num">Total capital need</th></tr></thead>
+    <tbody><tr><td><strong>Conservative</strong></td>
+        <td class="num">₹25.88 Cr</td>
+        <td class="num">₹3.67 Cr</td>
+        <td class="num"><strong>₹29.55 Cr</strong></td></tr><tr><td><strong>Base</strong></td>
+        <td class="num">₹17.01 Cr</td>
+        <td class="num">₹13.39 Cr</td>
+        <td class="num"><strong>₹30.40 Cr</strong></td></tr><tr><td><strong>Aggressive</strong></td>
+        <td class="num">₹13.07 Cr</td>
+        <td class="num">₹29.84 Cr</td>
+        <td class="num"><strong>₹42.91 Cr</strong></td></tr></tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h1>12 · Regulatory &amp; Compliance</h1>
+
+  <h3>12.1 Tax treatment — the governing constraint</h3>
+  <p>From 22 September 2025 India taxes aerated and sweetened beverages at a flat <strong>40% GST</strong>,
+  replacing the previous 28% plus 12% compensation cess. Non-carbonated fruit- and juice-based drinks and
+  packaged water sit at <strong>5%</strong>.</p>
+  <div class="stats">
+    <div class="stat"><span class="v">40%</span><span class="l">GST on aerated sweetened beverages <span class="tag v">V</span></span></div>
+    <div class="stat"><span class="v">₹37.14</span><span class="l">Tax per ₹130 can — 29% of shelf price</span></div>
+    <div class="stat"><span class="v">5%</span><span class="l">GST on non-carbonated fruit-based drinks <span class="tag v">V</span></span></div>
+    <div class="stat"><span class="v">35 pt</span><span class="l">The arbitrage between the two slabs</span></div>
+  </div>
+
+  <div class="callout good">
+    <span class="label">A 35-point strategic lever</span>
+    <p>A still (non-carbonated) FROLIC — same fibre, same Indian flavours, no carbonation — would face 5% GST.
+    At the same ₹130 MRP the ex-tax value rises from ₹92.86 to ₹123.81:
+    <strong>+₹30.95 per can</strong>, straight into the value chain. That is
+    larger than the entire Year-5 COGS reduction programme, achievable immediately, and requires no scale.</p>
+    <p>This is not a recommendation to abandon carbonation — soda is the category and the product premise. It is
+    a higher-margin second act, a hedge against further tightening of sin-goods policy, and a route into HoReCa
+    and institutional channels where carbonation is a drawback. It belongs on the Series A roadmap.</p>
+  </div>
+
+  <h3>12.2 Claims framework</h3>
+  <p>Governed by the FSS (Advertising and Claims) Regulations 2018, the FSS (Packaging and Labelling) Regulations,
+  the Consumer Protection Act 2019 and the ASCI Code. The operative distinction is between describing
+  <em>composition</em> and asserting a <em>health outcome</em>.</p>
+  <table class="compact">
+    <thead><tr><th style="width:34%">Claim</th><th style="width:14%">Status</th><th>Condition</th></tr></thead>
+    <tbody><tr><td>"7 g prebiotic fibre per 250 ml can"</td><td>Approved</td><td>Composition claim. Batch-verified; must match the panel exactly</td></tr><tr><td>"4 g added sugar"</td><td>Approved</td><td>Per flavour; never stated as a range</td></tr><tr><td>"No caffeine" / "0 mg caffeine"</td><td>Approved</td><td>True across all ten SKUs</td></tr><tr><td>"No artificial colours"</td><td>Approved</td><td>Formulation fact</td></tr><tr><td>"Inulin reaches the colon intact"</td><td>Approved</td><td>Definitional, not an outcome claim</td></tr><tr><td>"−75% sugar vs. regular soda"</td><td>Conditional</td><td>Basis must be visible on the same screen; comparator is a category typical, not a named brand</td></tr><tr><td>"Low sugar"</td><td>Conditional</td><td>Only where the flavour meets the regulatory threshold; not a blanket brand claim</td></tr><tr><td>"Amla is rich in vitamin C"</td><td>Conditional</td><td>True of the ingredient; must not imply the finished product is a vitamin C source</td></tr><tr><td>"Supports gut health"</td><td><strong>Prohibited</strong></td><td>Health claim, unsubstantiated</td></tr><tr><td>"Improves digestion"</td><td><strong>Prohibited</strong></td><td>Health claim</td></tr><tr><td>"Boosts immunity"</td><td><strong>Prohibited</strong></td><td>Health claim; heavily scrutinised</td></tr><tr><td>"Aids weight loss"</td><td><strong>Prohibited</strong></td><td>Health and disease-risk-reduction claim</td></tr><tr><td>"Healthy" (unqualified, of the product)</td><td><strong>Prohibited</strong></td><td>Implied general health claim</td></tr><tr><td>"Suitable for diabetics"</td><td><strong>Prohibited</strong></td><td>Medical claim; the FAQ explicitly declines it</td></tr></tbody>
+  </table>
+
+  <h3>12.3 How compliance is enforced in the build</h3>
+  <ul>
+    <li>Ingredient copy fields carry the discipline explicitly: every description states what the ingredient <em>is</em> or <em>does in the can</em>, never an outcome for the drinker.</li>
+    <li>The CMS schema rejects a banned-phrase list at authoring time with an actionable error message.</li>
+    <li>Nutrition panels validate against arithmetic impossibilities — added sugar cannot exceed total sugar, prebiotic fibre cannot exceed dietary fibre.</li>
+    <li>Compliance sign-off is a blocking gate on any nutrition or ingredient copy change, with full document history as the audit trail.</li>
+    <li>The legal disclaimer appears in the global footer of all 37 pages, not on a policy page.</li>
+  </ul>
+
+  <h3>12.4 Label requirements per can</h3>
+  <p>FSSAI licence number and logo; veg mark; nutrition panel per 100 ml and per serving; full ingredient list in
+  descending order by weight; allergen declaration; net quantity and MRP inclusive of all taxes; batch or lot
+  number, date of manufacture and best-before; manufacturer name and address; customer care contact; storage
+  instruction. Plus one item not required by regulation:</p>
+  <p><strong>"Contains added dietary fibre. Introduce gradually."</strong> This is a voluntary advisory. A poor
+  first week is how a consumer decides fibre is not for them, and telling people up front costs less than a refund
+  and a one-star review.</p>
+</div>
+
+<div class="section">
+  <h1>13 · Technology &amp; Digital Infrastructure</h1>
+  <p>The digital storefront is built and operational — 37 statically pre-rendered pages including ten product
+  pages, a flavour quiz, a bundle builder, subscription flows and a rewards programme.</p>
+
+  <h3>13.1 Architecture</h3>
+  <table>
+    <thead><tr><th style="width:24%">Layer</th><th style="width:28%">Choice</th><th>Rationale</th></tr></thead>
+    <tbody>
+      <tr><td>Frontend</td><td>Next.js 14 (App Router), TypeScript, Tailwind</td><td>Static pre-rendering for every indexable route; Core Web Vitals are an SEO input</td></tr>
+      <tr><td>Commerce</td><td>Headless Shopify + Recharge</td><td>Shopify owns money, inventory, tax and PCI scope; none benefit from a custom build</td></tr>
+      <tr><td>CMS</td><td>Sanity</td><td>TypeScript schemas, so compliance validation runs at authoring time</td></tr>
+      <tr><td>Data</td><td>Postgres</td><td>Owns only what Shopify cannot: loyalty ledger, referrals, quiz analytics, review moderation</td></tr>
+      <tr><td>3D / motion</td><td>React Three Fiber, Framer Motion</td><td>Procedurally generated can — no 3D asset files, no CDN dependency</td></tr>
+    </tbody>
+  </table>
+
+  <h3>13.2 Field ownership</h3>
+  <p>A product record is the union of two sources, with <strong>exclusive</strong> field ownership — no field is
+  writable from both systems. Shopify owns price, SKU, variant ID and inventory; Sanity owns story, flavour world,
+  nutrition and quiz taxonomy. Duplicating a price would create two numbers that can disagree, and the one the
+  customer sees would not be the one they are charged.</p>
+
+  <h3>13.3 Engineering decisions with commercial consequences</h3>
+  <ul>
+    <li><strong>The 3D can is generated, not modelled.</strong> Lathe geometry plus a canvas-drawn label and a procedural lighting rig. A new flavour ships without any 3D work, and nothing in the render path can fail over the network.</li>
+    <li><strong>three.js is genuinely conditional.</strong> Capability and viewport gates sit outside the dynamic-import boundary, so the renderer is never fetched on reduced-motion, Save-Data, slow-network, low-core or low-memory devices. First Load JS is 170 kB against 405 kB before that change.</li>
+    <li><strong>Bundle lines carry their own unit price.</strong> A four-can share of a 24-can box is not re-priced as a four-can pack, so the cart total always matches the price shown.</li>
+    <li><strong>Chart colours are a separate validated set</strong> from brand primaries, checked for colour-vision separation and 3:1 contrast.</li>
+  </ul>
+
+  <h3>13.4 Known gaps</h3>
+  <p>Stated plainly, because they will surface in technical diligence: checkout is not wired to Shopify; forms do
+  not submit; reviews are illustrative placeholders and the aggregate-rating structured data they feed
+  <strong>must be disabled before launch</strong>; there is no test suite; and no analytics are instrumented.</p>
+</div>
+
+<div class="section">
+  <h1>14 · Distribution &amp; Channel Strategy</h1>
+
+  <h3>14.1 What the brand banks per can, by channel</h3>
+  <table>
+    <thead><tr><th>Channel</th><th class="num">MRP</th><th class="num">GST</th><th class="num">Ex-GST</th>
+      <th class="num">Trade + platform</th><th class="num">Freight</th><th class="num">Net to brand</th><th class="num">% of MRP</th></tr></thead>
+    <tbody><tr>
+      <td><strong>D2C (own site)</strong></td><td class="num">₹130</td>
+      <td class="num">−₹37.14</td><td class="num">₹92.86</td>
+      <td class="num">−₹4.64</td><td class="num">−₹4.20</td>
+      <td class="num"><strong>₹84.01</strong></td>
+      <td class="num">64.6%</td></tr><tr>
+      <td><strong>Quick commerce</strong></td><td class="num">₹130</td>
+      <td class="num">−₹37.14</td><td class="num">₹92.86</td>
+      <td class="num">−₹23.21</td><td class="num">−₹2.50</td>
+      <td class="num"><strong>₹67.14</strong></td>
+      <td class="num">51.6%</td></tr><tr>
+      <td><strong>Modern trade</strong></td><td class="num">₹130</td>
+      <td class="num">−₹37.14</td><td class="num">₹92.86</td>
+      <td class="num">−₹28.79</td><td class="num">−₹2.50</td>
+      <td class="num"><strong>₹61.57</strong></td>
+      <td class="num">47.4%</td></tr><tr>
+      <td><strong>General trade</strong></td><td class="num">₹130</td>
+      <td class="num">−₹37.14</td><td class="num">₹92.86</td>
+      <td class="num">−₹27.67</td><td class="num">−₹3.00</td>
+      <td class="num"><strong>₹62.19</strong></td>
+      <td class="num">47.8%</td></tr><tr>
+      <td><strong>HoReCa / gyms</strong></td><td class="num">₹130</td>
+      <td class="num">−₹37.14</td><td class="num">₹92.86</td>
+      <td class="num">−₹11.14</td><td class="num">−₹2.50</td>
+      <td class="num"><strong>₹79.21</strong></td>
+      <td class="num">60.9%</td></tr></tbody>
+  </table>
+
+  <p>The spread is the entire distribution strategy. <strong>D2C is worth
+  35% more per can than modern
+  trade</strong> — it is not a channel to graduate out of, but permanently the most profitable one, and the only
+  one that yields a customer relationship. Retail is brand-building that happens to roughly break even; its value
+  is visibility, credibility and the volume that drives COGS down.</p>
+
+  <h3>14.2 Channel mix by year</h3>
+  <table class="compact">
+    <thead><tr><th>Channel</th><th class="num">Year 1</th><th class="num">Year 2</th><th class="num">Year 3</th><th class="num">Year 4</th><th class="num">Year 5</th></tr></thead>
+    <tbody><tr><td><strong>D2C</strong></td>
+      <td class="num">60%</td><td class="num">42%</td><td class="num">30%</td><td class="num">24%</td><td class="num">20%</td>
+    </tr><tr><td><strong>Quick commerce</strong></td>
+      <td class="num">30%</td><td class="num">38%</td><td class="num">40%</td><td class="num">40%</td><td class="num">38%</td>
+    </tr><tr><td><strong>Modern trade</strong></td>
+      <td class="num">10%</td><td class="num">15%</td><td class="num">20%</td><td class="num">22%</td><td class="num">24%</td>
+    </tr><tr><td><strong>General trade</strong></td>
+      <td class="num">0%</td><td class="num">0%</td><td class="num">5%</td><td class="num">9%</td><td class="num">13%</td>
+    </tr><tr><td><strong>HoReCa</strong></td>
+      <td class="num">0%</td><td class="num">5%</td><td class="num">5%</td><td class="num">5%</td><td class="num">5%</td>
+    </tr></tbody>
+  </table>
+
+  <h3>14.3 Geographic sequencing</h3>
+  <table>
+    <thead><tr><th style="width:10%">Phase</th><th style="width:12%">Period</th><th style="width:38%">Markets</th><th>Channels</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Year 1</td><td>Mumbai, Bengaluru</td><td>D2C and quick commerce only</td></tr>
+      <tr><td>2</td><td>Year 2</td><td>+ Delhi NCR, Pune, Hyderabad</td><td>+ modern trade, HoReCa</td></tr>
+      <tr><td>3</td><td>Year 3</td><td>Top five consolidated</td><td>+ early general trade</td></tr>
+      <tr><td>4</td><td>Year 4</td><td>+ Chennai, Kolkata, Ahmedabad, Jaipur, Chandigarh</td><td>Full omnichannel</td></tr>
+      <tr><td>5</td><td>Year 5</td><td>Pan-India metro and tier-1</td><td>National distribution</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Two cities in Year 1, not five.</strong> Shelf velocity beats shelf coverage: a brand selling eight
+  units per store per week across 200 Mumbai stores is fundable; the same volume spread across 1,000 stores in
+  five cities is not.</p>
+
+  <h3>14.4 Cash-on-delivery and returns</h3>
+  <p>COD represents roughly 35% of Indian D2C beverage orders and is the principal driver of return-to-origin
+  losses, which are a structural drag on Indian D2C margins. The model carries a 5% combined payment-and-RTO
+  provision on D2C. Mitigations: prepaid incentives, pincode-level COD restriction based on RTO history, WhatsApp
+  order confirmation before dispatch, and a ₹2,000 COD cap.</p>
+
+  <div class="callout warn">
+    <span class="label">Concentration risk</span>
+    <p>Quick commerce represents approximately 40% of volume by Year 3. If platforms raise commissions or
+    deprioritise the category, FROLIC is materially exposed. This is the most significant single channel risk
+    in the plan.</p>
+  </div>
+</div>
+
+<div class="section">
+  <h1>15 · Marketing &amp; Conversion</h1>
+
+  <h3>15.1 The friction, in order of cost</h3>
+  <table>
+    <thead><tr><th style="width:30%">Friction</th><th>Mechanism built to address it</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Ten flavours is too many for a cold visitor</strong><br><span class="muted">The single largest leak</span></td>
+        <td>Bestsellers section limits the first decision to four; a four-question flavour quiz scored against the live catalogue; a 6-can starter pack that makes "I don't know which one" a cheap decision; a bundle builder that reframes choice as assembly rather than selection.</td></tr>
+      <tr><td><strong>"Will a functional beverage actually taste good?"</strong></td>
+        <td>Flavour stories lead with sensory memory rather than nutrition; tasting notes are the first scannable element; intensity and sweetness meters set expectations honestly; a four-star review carrying a genuine caveat is deliberately published, because it raises trust in the five-star ones.</td></tr>
+      <tr><td><strong>Subscription feels like a trap</strong></td>
+        <td>"Skip or cancel anytime" stated inside the buy box at the decision point, not in a policy page; no minimum term; no cancellation fee; explicit "no retention script".</td></tr>
+      <tr><td><strong>Cart abandonment</strong></td>
+        <td>Free-shipping progress bar showing the exact rupee gap; drawer opens on add to confirm the action; savings shown as a line item; payment methods named before checkout.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>15.2 Pricing psychology</h3>
+  <p><strong>Two stacked discounts, never one.</strong> Pack tier (0 / 8 / 15%) and subscription (20%) stack
+  multiplicatively. The customer makes two separate, individually small decisions and arrives at 32% off without
+  a single "32% OFF" banner — which would cheapen the brand and anchor the list price as fictional.</p>
+  <p>The ₹999 free-shipping threshold sits deliberately above a 6-pack and below a 12-pack, so the progress bar
+  always has somewhere to go.</p>
+
+  <h3>15.3 Post-purchase sequence</h3>
+  <table class="compact">
+    <thead><tr><th style="width:12%">Day</th><th style="width:34%">Trigger</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td>Order confirmation</td><td>Set delivery expectation</td></tr>
+      <tr><td>2</td><td>Dispatch + WhatsApp tracking</td><td>Reduce "where is it" support contact</td></tr>
+      <tr><td>7</td><td>Review request</td><td>Reviews; the fibre advisory repeats here. Day 7 is chosen so they have actually finished a pack — a day-2 request gets a review of the packaging</td></tr>
+      <tr><td>14</td><td>Subscription offer</td><td>Convert a satisfied one-time buyer</td></tr>
+      <tr><td>30</td><td>Replenishment nudge</td><td>Reorder</td></tr>
+      <tr><td>60</td><td>Win-back with new flavours</td><td>Reactivation</td></tr>
+    </tbody>
+  </table>
+
+  <h3>15.4 SEO and content</h3>
+  <p>The category barely exists in Indian search, so the strategy is category creation rather than capture: win
+  the informational queries that precede commercial ones. Structured data covers Organization, WebSite, Product
+  with NutritionInformation, FAQPage, Article, BreadcrumbList and ItemList. NutritionInformation on a beverage
+  product is underused by competitors and is exactly the kind of structured fact that surfaces in AI-generated
+  answers.</p>
+  <p class="small"><strong>Rule:</strong> never emit aggregate rating structured data without genuine reviews
+  behind it. It is a manual-action risk and it is dishonest.</p>
+</div>
+
+<div class="part-divider">
+    <p style="font-family:'Liberation Sans',Arial,sans-serif;font-size:8pt;font-weight:700;letter-spacing:2.4pt;text-transform:uppercase;color:#B8F135;margin:0 0 4mm">Part V</p>
+    <h1 style="font-size:32pt;color:#FFFDF7;margin:0 0 6mm;border:none">Financials</h1>
+    <p style="font-size:11pt;line-height:1.55;color:#BFBAB3;max-width:130mm;text-align:left;margin:0">Unit economics, three scenarios, the funding plan and what investors actually get back — generated from one model, including the parts that do not flatter.</p>
+  </div>
+
+<div class="section">
+  <h1>16 · Unit Economics</h1>
+
+  <h3>16.1 Where ₹130 goes</h3>
+  <p>The most important table in this report.</p>
+  <table>
+    <thead><tr><th>Channel</th><th class="num">MRP</th><th class="num">GST</th><th class="num">Ex-GST</th>
+      <th class="num">Trade + platform</th><th class="num">Freight</th><th class="num">Net to brand</th><th class="num">% of MRP</th></tr></thead>
+    <tbody><tr>
+      <td><strong>D2C (own site)</strong></td><td class="num">₹130</td>
+      <td class="num">−₹37.14</td><td class="num">₹92.86</td>
+      <td class="num">−₹4.64</td><td class="num">−₹4.20</td>
+      <td class="num"><strong>₹84.01</strong></td>
+      <td class="num">64.6%</td></tr><tr>
+      <td><strong>Quick commerce</strong></td><td class="num">₹130</td>
+      <td class="num">−₹37.14</td><td class="num">₹92.86</td>
+      <td class="num">−₹23.21</td><td class="num">−₹2.50</td>
+      <td class="num"><strong>₹67.14</strong></td>
+      <td class="num">51.6%</td></tr><tr>
+      <td><strong>Modern trade</strong></td><td class="num">₹130</td>
+      <td class="num">−₹37.14</td><td class="num">₹92.86</td>
+      <td class="num">−₹28.79</td><td class="num">−₹2.50</td>
+      <td class="num"><strong>₹61.57</strong></td>
+      <td class="num">47.4%</td></tr><tr>
+      <td><strong>General trade</strong></td><td class="num">₹130</td>
+      <td class="num">−₹37.14</td><td class="num">₹92.86</td>
+      <td class="num">−₹27.67</td><td class="num">−₹3.00</td>
+      <td class="num"><strong>₹62.19</strong></td>
+      <td class="num">47.8%</td></tr><tr>
+      <td><strong>HoReCa / gyms</strong></td><td class="num">₹130</td>
+      <td class="num">−₹37.14</td><td class="num">₹92.86</td>
+      <td class="num">−₹11.14</td><td class="num">−₹2.50</td>
+      <td class="num"><strong>₹79.21</strong></td>
+      <td class="num">60.9%</td></tr></tbody>
+  </table>
+
+  <h3>16.2 Per-can economics by year — 250 ml</h3>
+  <table>
+    <thead><tr><th>Year</th><th class="num">Blended net realisation</th><th class="num">COGS</th>
+      <th class="num">Contribution</th><th class="num">Gross margin</th><th class="num">MRP → net leakage</th></tr></thead>
+    <tbody><tr>
+      <td><strong>Y1</strong></td><td class="num">₹76.71</td>
+      <td class="num">₹34.00</td><td class="num"><strong>₹42.71</strong></td>
+      <td class="num">55.7%</td><td class="num">41.0%</td></tr><tr>
+      <td><strong>Y2</strong></td><td class="num">₹74.00</td>
+      <td class="num">₹31.00</td><td class="num"><strong>₹43.00</strong></td>
+      <td class="num">58.1%</td><td class="num">43.1%</td></tr><tr>
+      <td><strong>Y3</strong></td><td class="num">₹71.45</td>
+      <td class="num">₹28.00</td><td class="num"><strong>₹43.45</strong></td>
+      <td class="num">60.8%</td><td class="num">45.0%</td></tr><tr>
+      <td><strong>Y4</strong></td><td class="num">₹70.12</td>
+      <td class="num">₹25.00</td><td class="num"><strong>₹45.12</strong></td>
+      <td class="num">64.3%</td><td class="num">46.1%</td></tr><tr>
+      <td><strong>Y5</strong></td><td class="num">₹69.14</td>
+      <td class="num">₹23.00</td><td class="num"><strong>₹46.14</strong></td>
+      <td class="num">66.7%</td><td class="num">46.8%</td></tr></tbody>
+  </table>
+  <p>Blended net realisation <em>falls</em> from ₹76.71
+  to ₹69.14 as the mix shifts toward retail. COGS falls
+  faster. <strong>Margin expansion is a procurement achievement, not a pricing one</strong> — which is important,
+  because procurement outcomes are far more controllable than consumer ones.</p>
+
+  <h3>16.3 Format comparison</h3>
+  <table>
+    <thead><tr><th>Format</th><th class="num">MRP</th><th class="num">GST/can</th><th class="num">Net to brand</th>
+      <th class="num">COGS</th><th class="num">Contribution</th><th class="num">GM%</th></tr></thead>
+    <tbody><tr>
+      <td><strong>250 ml sleek can</strong></td><td class="num">₹130</td><td class="num">₹37.14</td>
+      <td class="num">₹76.71</td><td class="num">₹34.00</td>
+      <td class="num"><strong>₹42.71</strong></td>
+      <td class="num">55.7%</td></tr><tr>
+      <td><strong>300 ml can</strong></td><td class="num">₹145</td><td class="num">₹41.43</td>
+      <td class="num">₹85.97</td><td class="num">₹37.50</td>
+      <td class="num"><strong>₹48.47</strong></td>
+      <td class="num">56.4%</td></tr><tr>
+      <td><strong>330 ml sleek can</strong></td><td class="num">₹155</td><td class="num">₹44.29</td>
+      <td class="num">₹92.14</td><td class="num">₹39.80</td>
+      <td class="num"><strong>₹52.34</strong></td>
+      <td class="num">56.8%</td></tr></tbody>
+  </table>
+  <p class="chart-note">Year 1 costs. Larger formats carry marginally better margin because fibre and liquid scale with volume while the can end, label and conversion are near-fixed.</p>
+  <p><strong>Recommendation: launch 250 ml only.</strong> The margin gain from 330 ml is roughly one percentage
+  point, which does not justify a second SKU's tooling, inventory and shelf complexity for a pre-revenue brand.
+  250 ml also matches the price point consumers accept for a single-serve premium beverage and the funded
+  incumbent's format, which keeps shelf comparison straightforward. Add 330 ml in Year 3 for HoReCa and multipack.</p>
+
+  <h3>16.4 Minimum viable selling price</h3>
+  <p>The MRP at which a can clears COGS plus a 50% gross margin after all downstream leakage, solved analytically —
+  every deduction except per-can logistics is proportional to price.</p>
+  <table>
+    <thead><tr><th>Format</th><th class="num">Planned MRP</th><th class="num">Net required</th>
+      <th class="num">Minimum viable MRP</th><th class="num">Headroom</th></tr></thead>
+    <tbody><tr>
+      <td><strong>250 ml sleek can</strong></td><td class="num">₹130</td>
+      <td class="num">₹68.00</td>
+      <td class="num"><strong>₹115.89</strong></td>
+      <td class="num">10.9%</td></tr><tr>
+      <td><strong>300 ml can</strong></td><td class="num">₹145</td>
+      <td class="num">₹75.00</td>
+      <td class="num"><strong>₹127.23</strong></td>
+      <td class="num">12.3%</td></tr><tr>
+      <td><strong>330 ml sleek can</strong></td><td class="num">₹155</td>
+      <td class="num">₹79.60</td>
+      <td class="num"><strong>₹134.69</strong></td>
+      <td class="num">13.1%</td></tr></tbody>
+  </table>
+  <div class="callout warn">
+    <span class="label">Only 11% of pricing headroom</span>
+    <p>FROLIC cannot run deep discounts, cannot fight a price war, and cannot sustain buy-one-get-one mechanics.
+    A 20% promotion on a 250 ml can puts it below the viability floor.</p>
+    <p>This is a strategic constraint and simultaneously a moat: <strong>the same arithmetic binds every
+    entrant.</strong> Nobody can buy this market with price. The category will be won on taste, brand and
+    distribution — which is the competition FROLIC would choose.</p>
+  </div>
+
+  <h3>16.5 Customer acquisition and lifetime value</h3>
+  <table>
+    <thead><tr><th>Year</th><th class="num">CAC</th><th class="num">Y1 contribution</th>
+      <th class="num">3-yr LTV</th><th class="num">LTV:CAC</th><th class="num">Payback</th><th class="num">Retention</th></tr></thead>
+    <tbody><tr>
+      <td><strong>Y1</strong></td><td class="num">₹850</td>
+      <td class="num">₹1,025</td>
+      <td class="num">₹1,506</td>
+      <td class="num"><strong style="color:#BC4104">1.8×</strong></td>
+      <td class="num">10 mo</td>
+      <td class="num">34%</td></tr><tr>
+      <td><strong>Y2</strong></td><td class="num">₹780</td>
+      <td class="num">₹1,129</td>
+      <td class="num">₹1,738</td>
+      <td class="num"><strong style="color:#BC4104">2.2×</strong></td>
+      <td class="num">8 mo</td>
+      <td class="num">38%</td></tr><tr>
+      <td><strong>Y3</strong></td><td class="num">₹640</td>
+      <td class="num">₹1,243</td>
+      <td class="num">₹2,000</td>
+      <td class="num"><strong style="color:#1A8F69">3.1×</strong></td>
+      <td class="num">6 mo</td>
+      <td class="num">42%</td></tr><tr>
+      <td><strong>Y4</strong></td><td class="num">₹580</td>
+      <td class="num">₹1,340</td>
+      <td class="num">₹2,226</td>
+      <td class="num"><strong style="color:#1A8F69">3.8×</strong></td>
+      <td class="num">5 mo</td>
+      <td class="num">45%</td></tr><tr>
+      <td><strong>Y5</strong></td><td class="num">₹540</td>
+      <td class="num">₹1,486</td>
+      <td class="num">₹2,513</td>
+      <td class="num"><strong style="color:#1A8F69">4.7×</strong></td>
+      <td class="num">4 mo</td>
+      <td class="num">47%</td></tr></tbody>
+  </table>
+  <div class="callout warn">
+    <span class="label">Where this model is weakest</span>
+    <p><strong>Year 1 LTV:CAC of 1.8× is below the 3× floor</strong> most
+    consumer investors require, and the model does not clear it until Year
+    3. On a three-year view FROLIC acquires its first two cohorts
+    at close to breakeven.</p>
+    <p>This is normal for a brand buying its first customers, but it must be stated rather than hidden inside a
+    blended figure: <strong>the seed round funds the journey to good unit economics; it does not scale economics
+    that already work.</strong> Any investor told otherwise discovers it in diligence.</p>
+  </div>
+</div>
+
+<div class="section">
+  <h1>17 · Revenue Projections</h1>
+  <table>
+    <thead><tr><th>Year</th><th class="num">Customers</th><th class="num">% of beachhead</th>
+      <th class="num">Cans</th><th class="num">ARPU</th><th class="num">Net revenue</th></tr></thead>
+    <tbody><tr>
+      <td><strong>Y1</strong></td><td class="num">18,000</td>
+      <td class="num">0.6%</td>
+      <td class="num">0.43 M</td>
+      <td class="num">₹1,841</td>
+      <td class="num"><strong>₹3.31 Cr</strong></td></tr><tr>
+      <td><strong>Y2</strong></td><td class="num">75,000</td>
+      <td class="num">2.5%</td>
+      <td class="num">1.97 M</td>
+      <td class="num">₹1,942</td>
+      <td class="num"><strong>₹14.57 Cr</strong></td></tr><tr>
+      <td><strong>Y3</strong></td><td class="num">2,50,000</td>
+      <td class="num">8.4%</td>
+      <td class="num">7.15 M</td>
+      <td class="num">₹2,043</td>
+      <td class="num"><strong>₹51.08 Cr</strong></td></tr><tr>
+      <td><strong>Y4</strong></td><td class="num">6,00,000</td>
+      <td class="num">20.1%</td>
+      <td class="num">17.82 M</td>
+      <td class="num">₹2,083</td>
+      <td class="num"><strong>₹124.96 Cr</strong></td></tr><tr>
+      <td><strong>Y5</strong></td><td class="num">12,00,000</td>
+      <td class="num">40.1%</td>
+      <td class="num">38.64 M</td>
+      <td class="num">₹2,226</td>
+      <td class="num"><strong>₹267.15 Cr</strong></td></tr></tbody>
+  </table>
+  <h3>17.1 Base case revenue trajectory</h3>
+  <div class="chart"><h4>Conservative</h4><div class="bar-row">
+    <span class="bar-label">Year 1</span>
+    <span class="bar-track"><span class="bar-fill ctx" style="width:0.8%"></span></span>
+    <span class="bar-val">₹1.5 Cr</span>
+  </div><div class="bar-row">
+    <span class="bar-label">Year 2</span>
+    <span class="bar-track"><span class="bar-fill ctx" style="width:1.0%"></span></span>
+    <span class="bar-val">₹5.9 Cr</span>
+  </div><div class="bar-row">
+    <span class="bar-label">Year 3</span>
+    <span class="bar-track"><span class="bar-fill ctx" style="width:2.9%"></span></span>
+    <span class="bar-val">₹17.3 Cr</span>
+  </div><div class="bar-row">
+    <span class="bar-label">Year 4</span>
+    <span class="bar-track"><span class="bar-fill ctx" style="width:6.2%"></span></span>
+    <span class="bar-val">₹37.1 Cr</span>
+  </div><div class="bar-row">
+    <span class="bar-label">Year 5</span>
+    <span class="bar-track"><span class="bar-fill ctx" style="width:12.3%"></span></span>
+    <span class="bar-val">₹73.2 Cr</span>
+  </div><h4>Base</h4><div class="bar-row">
+    <span class="bar-label">Year 1</span>
+    <span class="bar-track"><span class="bar-fill " style="width:0.8%"></span></span>
+    <span class="bar-val">₹3.3 Cr</span>
+  </div><div class="bar-row">
+    <span class="bar-label">Year 2</span>
+    <span class="bar-track"><span class="bar-fill " style="width:2.4%"></span></span>
+    <span class="bar-val">₹14.6 Cr</span>
+  </div><div class="bar-row">
+    <span class="bar-label">Year 3</span>
+    <span class="bar-track"><span class="bar-fill " style="width:8.6%"></span></span>
+    <span class="bar-val">₹51.1 Cr</span>
+  </div><div class="bar-row">
+    <span class="bar-label">Year 4</span>
+    <span class="bar-track"><span class="bar-fill " style="width:21.0%"></span></span>
+    <span class="bar-val">₹125.0 Cr</span>
+  </div><div class="bar-row">
+    <span class="bar-label">Year 5</span>
+    <span class="bar-track"><span class="bar-fill " style="width:44.9%"></span></span>
+    <span class="bar-val">₹267.1 Cr</span>
+  </div><h4>Aggressive</h4><div class="bar-row">
+    <span class="bar-label">Year 1</span>
+    <span class="bar-track"><span class="bar-fill ctx" style="width:0.9%"></span></span>
+    <span class="bar-val">₹5.7 Cr</span>
+  </div><div class="bar-row">
+    <span class="bar-label">Year 2</span>
+    <span class="bar-track"><span class="bar-fill ctx" style="width:4.8%"></span></span>
+    <span class="bar-val">₹28.3 Cr</span>
+  </div><div class="bar-row">
+    <span class="bar-label">Year 3</span>
+    <span class="bar-track"><span class="bar-fill ctx" style="width:18.0%"></span></span>
+    <span class="bar-val">₹107.0 Cr</span>
+  </div><div class="bar-row">
+    <span class="bar-label">Year 4</span>
+    <span class="bar-track"><span class="bar-fill ctx" style="width:49.0%"></span></span>
+    <span class="bar-val">₹291.6 Cr</span>
+  </div><div class="bar-row">
+    <span class="bar-label">Year 5</span>
+    <span class="bar-track"><span class="bar-fill ctx" style="width:100.0%"></span></span>
+    <span class="bar-val">₹595.3 Cr</span>
+  </div><p class="chart-note">All three scenarios on a common scale (max ₹595 Cr). Base case highlighted.</p></div>
+  <p>Year 5 base case is approximately <strong>$30.4 M</strong>. For
+  reference, Poppi reached ~$500 M in its sixth year. The base case is roughly 6% of that trajectory, which is
+  appropriate for a market with lower ARPU, a smaller premium cohort and a 40% tax.</p>
+
+  <h3>17.2 The two assumptions that decide the outcome</h3>
+  <ol>
+    <li><strong>Annual retention.</strong> At 34% in Year 1 the model works. At 25% it does not — LTV:CAC never clears 3× and the business needs a fourth round.</li>
+    <li><strong>Cans per order.</strong> At 10 cans the ₹4.20 per-can D2C last-mile is absorbable. At 6 cans it is ₹8.40 and Year 1 gross margin drops below 50%. This is the entire reason the bundle builder enforces 12- and 24-can boxes.</li>
+  </ol>
+
+  <h3>17.3 Adoption curve</h3>
+  <table>
+    <thead><tr><th>Year</th><th class="num">Customers</th><th class="num">Penetration of beachhead</th><th>Adopter band</th></tr></thead>
+    <tbody><tr><td><strong>Y1</strong></td>
+      <td class="num">18,000</td>
+      <td class="num">0.60%</td><td>Innovators</td></tr><tr><td><strong>Y2</strong></td>
+      <td class="num">75,000</td>
+      <td class="num">2.51%</td><td>Early adopters</td></tr><tr><td><strong>Y3</strong></td>
+      <td class="num">2,50,000</td>
+      <td class="num">8.36%</td><td>Early adopters</td></tr><tr><td><strong>Y4</strong></td>
+      <td class="num">6,00,000</td>
+      <td class="num">20.07%</td><td>Early majority</td></tr><tr><td><strong>Y5</strong></td>
+      <td class="num">12,00,000</td>
+      <td class="num">40.13%</td><td>Early majority</td></tr></tbody>
+  </table>
+  <p class="chart-note">Year 5 penetration of 40.1% of the
+  beachhead is aggressive for any consumer brand in five years, and is flagged as one of the model's most
+  attackable assumptions. A more conservative 20–25% still supports a ₹150 Cr+ business.</p>
+</div>
+
+<div class="section">
+  <h1>18 · Profitability — Three Scenarios</h1>
+  <div class="stats"><div class="stat"><span class="v">₹73 Cr</span>
+      <span class="l"><strong>Conservative</strong> · Y5 revenue · EBITDA+ Year 5 · 5.8% margin</span></div><div class="stat"><span class="v">₹267 Cr</span>
+      <span class="l"><strong>Base</strong> · Y5 revenue · EBITDA+ Year 4 · 23.3% margin</span></div><div class="stat"><span class="v">₹595 Cr</span>
+      <span class="l"><strong>Aggressive</strong> · Y5 revenue · EBITDA+ Year 3 · 34.6% margin</span></div></div>
+
+  <h3>18.1 Base case</h3>
+  <table>
+    <thead><tr><th>Year</th><th class="num">Net revenue</th><th class="num">Gross profit</th><th class="num">GM%</th>
+      <th class="num">Marketing</th><th class="num">Opex</th><th class="num">EBITDA</th>
+      <th class="num">EBITDA%</th><th class="num">Net profit</th></tr></thead>
+    <tbody><tr>
+      <td><strong>Y1</strong></td><td class="num">₹3.31</td>
+      <td class="num">₹1.85</td><td class="num">55.7%</td>
+      <td class="num">₹1.99</td><td class="num">₹4.50</td>
+      <td class="num"><strong style="color:#BC4104">−₹4.64</strong></td>
+      <td class="num">−140.1%</td>
+      <td class="num">−₹5.64</td></tr><tr>
+      <td><strong>Y2</strong></td><td class="num">₹14.57</td>
+      <td class="num">₹8.46</td><td class="num">58.1%</td>
+      <td class="num">₹6.56</td><td class="num">₹9.00</td>
+      <td class="num"><strong style="color:#BC4104">−₹7.09</strong></td>
+      <td class="num">−48.7%</td>
+      <td class="num">−₹8.09</td></tr><tr>
+      <td><strong>Y3</strong></td><td class="num">₹51.08</td>
+      <td class="num">₹31.06</td><td class="num">60.8%</td>
+      <td class="num">₹16.35</td><td class="num">₹20.00</td>
+      <td class="num"><strong style="color:#BC4104">−₹5.28</strong></td>
+      <td class="num">−10.3%</td>
+      <td class="num">−₹6.28</td></tr><tr>
+      <td><strong>Y4</strong></td><td class="num">₹124.96</td>
+      <td class="num">₹80.41</td><td class="num">64.3%</td>
+      <td class="num">₹29.99</td><td class="num">₹38.00</td>
+      <td class="num"><strong style="color:#1A8F69">₹12.42</strong></td>
+      <td class="num">9.9%</td>
+      <td class="num">₹6.69</td></tr><tr>
+      <td><strong>Y5</strong></td><td class="num">₹267.15</td>
+      <td class="num">₹178.28</td><td class="num">66.7%</td>
+      <td class="num">₹48.09</td><td class="num">₹68.00</td>
+      <td class="num"><strong style="color:#1A8F69">₹62.19</strong></td>
+      <td class="num">23.3%</td>
+      <td class="num">₹44.02</td></tr></tbody>
+  </table>
+  <p class="chart-note">All figures ₹ Cr. Depreciation ₹1.0 Cr (Y1–Y3) and ₹3.5 Cr (Y4–Y5); tax at 25% on positive EBIT.</p>
+  <div class="col-chart"><div class="col">
+      <div class="col-top"></div>
+      <div class="col-zero"></div>
+      <div class="col-bot"><div class="col-bar neg" style="height:1.9mm"></div><div class="col-cap neg">−₹4.6</div>
+        <div class="col-lab">Year 1</div></div>
+    </div><div class="col">
+      <div class="col-top"></div>
+      <div class="col-zero"></div>
+      <div class="col-bot"><div class="col-bar neg" style="height:2.8mm"></div><div class="col-cap neg">−₹7.1</div>
+        <div class="col-lab">Year 2</div></div>
+    </div><div class="col">
+      <div class="col-top"></div>
+      <div class="col-zero"></div>
+      <div class="col-bot"><div class="col-bar neg" style="height:2.1mm"></div><div class="col-cap neg">−₹5.3</div>
+        <div class="col-lab">Year 3</div></div>
+    </div><div class="col">
+      <div class="col-top"><div class="col-cap">+₹12.4</div><div class="col-bar" style="height:5.0mm"></div></div>
+      <div class="col-zero"></div>
+      <div class="col-bot">
+        <div class="col-lab">Year 4</div></div>
+    </div><div class="col">
+      <div class="col-top"><div class="col-cap">+₹62.2</div><div class="col-bar" style="height:24.9mm"></div></div>
+      <div class="col-zero"></div>
+      <div class="col-bot">
+        <div class="col-lab">Year 5</div></div>
+    </div></div>
+  <p class="chart-note">EBITDA, ₹ Cr, base case. Losses through Year 3 are modest relative to the Year 5 result — that asymmetry is the shape of the investment.</p>
+
+  <h3>18.2 Conservative case</h3>
+  <table>
+    <thead><tr><th>Year</th><th class="num">Net revenue</th><th class="num">Gross profit</th><th class="num">GM%</th>
+      <th class="num">Marketing</th><th class="num">Opex</th><th class="num">EBITDA</th>
+      <th class="num">EBITDA%</th><th class="num">Net profit</th></tr></thead>
+    <tbody><tr>
+      <td><strong>Y1</strong></td><td class="num">₹1.52</td>
+      <td class="num">₹0.85</td><td class="num">55.7%</td>
+      <td class="num">₹1.06</td><td class="num">₹4.20</td>
+      <td class="num"><strong style="color:#BC4104">−₹4.42</strong></td>
+      <td class="num">−290.9%</td>
+      <td class="num">−₹5.42</td></tr><tr>
+      <td><strong>Y2</strong></td><td class="num">₹5.90</td>
+      <td class="num">₹3.43</td><td class="num">58.1%</td>
+      <td class="num">₹3.07</td><td class="num">₹7.00</td>
+      <td class="num"><strong style="color:#BC4104">−₹6.64</strong></td>
+      <td class="num">−112.4%</td>
+      <td class="num">−₹7.64</td></tr><tr>
+      <td><strong>Y3</strong></td><td class="num">₹17.29</td>
+      <td class="num">₹10.51</td><td class="num">60.8%</td>
+      <td class="num">₹6.57</td><td class="num">₹12.50</td>
+      <td class="num"><strong style="color:#BC4104">−₹8.56</strong></td>
+      <td class="num">−49.5%</td>
+      <td class="num">−₹9.56</td></tr><tr>
+      <td><strong>Y4</strong></td><td class="num">₹37.10</td>
+      <td class="num">₹23.87</td><td class="num">64.3%</td>
+      <td class="num">₹11.13</td><td class="num">₹19.00</td>
+      <td class="num"><strong style="color:#BC4104">−₹6.26</strong></td>
+      <td class="num">−16.9%</td>
+      <td class="num">−₹9.76</td></tr><tr>
+      <td><strong>Y5</strong></td><td class="num">₹73.18</td>
+      <td class="num">₹48.83</td><td class="num">66.7%</td>
+      <td class="num">₹17.56</td><td class="num">₹27.00</td>
+      <td class="num"><strong style="color:#1A8F69">₹4.27</strong></td>
+      <td class="num">5.8%</td>
+      <td class="num">₹0.58</td></tr></tbody>
+  </table>
+  <p class="chart-note">All figures ₹ Cr. Depreciation ₹1.0 Cr (Y1–Y3) and ₹3.5 Cr (Y4–Y5); tax at 25% on positive EBIT.</p>
+  <p>This case assumes management <strong>responds</strong> to underperformance — slower hiring, deferred line
+  investment, tighter G&amp;A. Opex peaks at ₹27 Cr rather than ₹68 Cr. A conservative case that keeps base-case
+  spending is a strawman, not a downside.</p>
+  <p>The honest read: this is a <strong>survivable business, not a venture outcome</strong>. ₹73 Cr of revenue and
+  ₹4 Cr of EBITDA at Year 5 is a real company that would struggle to raise a Series B at a step-up.</p>
+
+  <h3>18.3 Aggressive case</h3>
+  <table>
+    <thead><tr><th>Year</th><th class="num">Net revenue</th><th class="num">Gross profit</th><th class="num">GM%</th>
+      <th class="num">Marketing</th><th class="num">Opex</th><th class="num">EBITDA</th>
+      <th class="num">EBITDA%</th><th class="num">Net profit</th></tr></thead>
+    <tbody><tr>
+      <td><strong>Y1</strong></td><td class="num">₹5.65</td>
+      <td class="num">₹3.15</td><td class="num">55.7%</td>
+      <td class="num">₹3.28</td><td class="num">₹5.50</td>
+      <td class="num"><strong style="color:#BC4104">−₹5.63</strong></td>
+      <td class="num">−99.6%</td>
+      <td class="num">−₹6.63</td></tr><tr>
+      <td><strong>Y2</strong></td><td class="num">₹28.33</td>
+      <td class="num">₹16.46</td><td class="num">58.1%</td>
+      <td class="num">₹11.90</td><td class="num">₹12.00</td>
+      <td class="num"><strong style="color:#BC4104">−₹7.44</strong></td>
+      <td class="num">−26.3%</td>
+      <td class="num">−₹8.44</td></tr><tr>
+      <td><strong>Y3</strong></td><td class="num">₹106.98</td>
+      <td class="num">₹65.05</td><td class="num">60.8%</td>
+      <td class="num">₹32.09</td><td class="num">₹28.00</td>
+      <td class="num"><strong style="color:#1A8F69">₹4.96</strong></td>
+      <td class="num">4.6%</td>
+      <td class="num">₹2.97</td></tr><tr>
+      <td><strong>Y4</strong></td><td class="num">₹291.57</td>
+      <td class="num">₹187.62</td><td class="num">64.3%</td>
+      <td class="num">₹64.15</td><td class="num">₹55.00</td>
+      <td class="num"><strong style="color:#1A8F69">₹68.48</strong></td>
+      <td class="num">23.5%</td>
+      <td class="num">₹48.73</td></tr><tr>
+      <td><strong>Y5</strong></td><td class="num">₹595.29</td>
+      <td class="num">₹397.26</td><td class="num">66.7%</td>
+      <td class="num">₹95.25</td><td class="num">₹96.00</td>
+      <td class="num"><strong style="color:#1A8F69">₹206.01</strong></td>
+      <td class="num">34.6%</td>
+      <td class="num">₹151.88</td></tr></tbody>
+  </table>
+  <p class="chart-note">All figures ₹ Cr. Depreciation ₹1.0 Cr (Y1–Y3) and ₹3.5 Cr (Y4–Y5); tax at 25% on positive EBIT.</p>
+
+  <h3>18.4 What drives the turn to profit</h3>
+  <p>Three things move together, and all three are required:</p>
+  <ol>
+    <li><strong>Gross margin 55.7% → 66.7%.</strong> The most reliable of the three — a procurement outcome, not a consumer one.</li>
+    <li><strong>Marketing 60% → 18% of net revenue.</strong> The <em>least</em> reliable. It assumes brand equity and repeat carry the demand that paid media carried in Year 1. If marketing must stay at 30% in Year 5, EBITDA drops to roughly ₹30 Cr and margin halves.</li>
+    <li><strong>Operating leverage.</strong> ₹68 Cr of opex on ₹267 Cr of revenue is 25% — lean but achievable for a brand that outsources manufacturing.</li>
+  </ol>
+
+  <h3>18.5 Sensitivities</h3>
+  <table>
+    <thead><tr><th style="width:36%">Change from base case</th><th style="width:22%">Year 5 EBITDA</th><th>Effect</th></tr></thead>
+    <tbody><tr><td>Retention falls 34% → 25% in Year 1</td><td><strong>Materially negative</strong></td><td>Customer base compounds far slower; requires a fourth round</td></tr><tr><td>Marketing stays at 30% of revenue in Year 5</td><td><strong>~₹30 Cr EBITDA</strong></td><td>Margin halves to roughly 11%</td></tr><tr><td>COGS stalls at ₹28 (no scale benefit)</td><td><strong>~₹43 Cr EBITDA</strong></td><td>−₹19 Cr; still profitable</td></tr><tr><td>Cans per order falls 11.5 → 8</td><td><strong>Materially negative</strong></td><td>D2C last-mile per can rises ~44%</td></tr><tr><td>MRP cut to ₹110</td><td><strong>Negative</strong></td><td>Only 11% headroom above the ₹115.89 viability floor</td></tr><tr><td>Quick commerce commission rises 25% → 32%</td><td><strong>Negative</strong></td><td>~40% of volume by Y3 is exposed</td></tr></tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h1>19 · Working Capital &amp; Funding Plan</h1>
+
+  <h3>19.1 Capital requirement</h3>
+  <table>
+    <thead><tr><th>Scenario</th><th class="num">Peak operating burn</th><th class="num">Peak working capital</th><th class="num">Total capital need</th></tr></thead>
+    <tbody><tr><td><strong>Conservative</strong></td>
+        <td class="num">₹25.88 Cr</td>
+        <td class="num">₹3.67 Cr</td>
+        <td class="num"><strong>₹29.55 Cr</strong></td></tr><tr><td><strong>Base</strong></td>
+        <td class="num">₹17.01 Cr</td>
+        <td class="num">₹13.39 Cr</td>
+        <td class="num"><strong>₹30.40 Cr</strong></td></tr><tr><td><strong>Aggressive</strong></td>
+        <td class="num">₹13.07 Cr</td>
+        <td class="num">₹29.84 Cr</td>
+        <td class="num"><strong>₹42.91 Cr</strong></td></tr></tbody>
+  </table>
+  <div class="callout info">
+    <span class="label">A result worth pausing on</span>
+    <p><strong>The aggressive case requires more capital than the base case</strong>
+    (₹42.9 Cr against ₹30.4 Cr)
+    despite reaching profitability two years earlier. Growth consumes working capital: cans are manufactured,
+    shipped and sit on shelves months before the cash returns.</p>
+    <p>Any plan that treats "grow faster" as the answer to a funding gap has the sign wrong.</p>
+  </div>
+
+  <h3>19.2 Funding plan</h3>
+  <table>
+    <thead><tr><th>Round</th><th>Timing</th><th class="num">Raise</th><th class="num">Post-money</th>
+      <th class="num">Dilution</th><th>Purpose</th></tr></thead>
+    <tbody><tr><td><strong>Seed</strong></td><td>Year 0</td>
+      <td class="num">₹10 Cr</td><td class="num">₹50 Cr</td><td class="num">20.0%</td><td>2-city launch, 3 SKUs, D2C and quick commerce, first production runs</td></tr><tr><td><strong>Series A</strong></td><td>End Year 2</td>
+      <td class="num">₹50 Cr</td><td class="num">₹250 Cr</td><td class="num">20.0%</td><td>5-city expansion, modern trade entry, full range</td></tr><tr><td><strong>Series B</strong></td><td>End Year 4</td>
+      <td class="num">₹150 Cr</td><td class="num">₹1050 Cr</td><td class="num">14.0%</td><td>National distribution, still-beverage line, own capacity</td></tr></tbody>
+  </table>
+  <p>Total ₹210 Cr raised against a modelled capital need of ₹30.4 Cr
+  (base) to ₹42.9 Cr (aggressive). The surplus funds national
+  distribution build-out — <strong>a growth choice, not a survival requirement.</strong> The business does not
+  need Series B to survive; it needs it to win.</p>
+
+  <h3>19.3 Use of seed proceeds</h3>
+  <table>
+    <thead><tr><th style="width:40%">Application</th><th class="num" style="width:16%">₹ Cr</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td>Inventory and first production runs</td><td class="num">2.8</td><td>3 SKUs, committed volume to secure conversion pricing</td></tr>
+      <tr><td>Marketing and customer acquisition</td><td class="num">3.0</td><td>Two cities, D2C and quick commerce</td></tr>
+      <tr><td>Team — distribution, formulation, ops</td><td class="num">2.4</td><td>The distribution hire is the priority</td></tr>
+      <tr><td>Retail entry and trade spend</td><td class="num">0.9</td><td>Modern trade listings, shelf support</td></tr>
+      <tr><td>Compliance, testing, shelf-life validation</td><td class="num">0.4</td><td>FSSAI, lab, stability studies</td></tr>
+      <tr><td>Technology and working capital buffer</td><td class="num">0.5</td><td></td></tr>
+      <tr class="tot"><td><strong>Total</strong></td><td class="num"><strong>10.0</strong></td><td></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h1>20 · Cap Table &amp; Investor Returns</h1>
+
+  <h3>20.1 Cap table evolution</h3>
+  <table>
+    <thead><tr><th>Stage</th><th class="num">Raise</th><th class="num">Post-money</th><th class="num">Founders</th>
+      <th class="num">ESOP</th><th class="num">Seed</th><th class="num">Series A</th><th class="num">Series B</th></tr></thead>
+    <tbody><tr><td><strong>Post-ESOP pool</strong></td>
+      <td class="num">—</td>
+      <td class="num">—</td>
+      <td class="num"><strong>90.0%</strong></td><td class="num">10.0%</td>
+      <td class="num">—</td><td class="num">—</td>
+      <td class="num">—</td></tr><tr><td><strong>Post-Seed</strong></td>
+      <td class="num">₹10 Cr</td>
+      <td class="num">₹50 Cr</td>
+      <td class="num"><strong>72.0%</strong></td><td class="num">8.0%</td>
+      <td class="num">20.0%</td><td class="num">—</td>
+      <td class="num">—</td></tr><tr><td><strong>Post-Series A</strong></td>
+      <td class="num">₹50 Cr</td>
+      <td class="num">₹250 Cr</td>
+      <td class="num"><strong>56.5%</strong></td><td class="num">8.3%</td>
+      <td class="num">15.7%</td><td class="num">19.6%</td>
+      <td class="num">—</td></tr><tr><td><strong>Post-Series B</strong></td>
+      <td class="num">₹150 Cr</td>
+      <td class="num">₹1050 Cr</td>
+      <td class="num"><strong>47.4%</strong></td><td class="num">8.9%</td>
+      <td class="num">13.2%</td><td class="num">16.5%</td>
+      <td class="num">14.0%</td></tr></tbody>
+  </table>
+  <p>Founders retain <strong>47.4%</strong> through Series B — healthy by
+  Indian consumer standards and sufficient to keep the team motivated across a seven-year hold. The ESOP pool is
+  refreshed 2% at each institutional round.</p>
+
+  <h3>20.2 Exit assumption</h3>
+  <p>Year 7 exit at <strong>3.9× revenue</strong>. This is not a chosen multiple — it is the multiple PepsiCo
+  actually paid for Poppi ($1.95 bn cash plus $0.2 bn contingent against ~$500 m of 2024 revenue), as disclosed
+  in its Form 10-Q. Using a strategic acquirer's disclosed multiple for the same category is considerably more
+  defensible than a constructed comparable set.</p>
+  <table>
+    <thead><tr><th>Scenario</th><th class="num">Year 7 revenue</th><th class="num">Multiple</th>
+      <th class="num">Exit value</th><th class="num">USD</th></tr></thead>
+    <tbody><tr><td><strong>Conservative</strong></td><td class="num">₹310 Cr</td>
+        <td class="num">3.9×</td><td class="num"><strong>₹1209 Cr</strong></td>
+        <td class="num">$137 M</td></tr><tr><td><strong>Base</strong></td><td class="num">₹760 Cr</td>
+        <td class="num">3.9×</td><td class="num"><strong>₹2964 Cr</strong></td>
+        <td class="num">$337 M</td></tr><tr><td><strong>Aggressive</strong></td><td class="num">₹1450 Cr</td>
+        <td class="num">3.9×</td><td class="num"><strong>₹5655 Cr</strong></td>
+        <td class="num">$643 M</td></tr></tbody>
+  </table>
+
+  <h3>20.3 Returns by round</h3>
+  <h4>Base case — exit ₹2964 Cr</h4>
+    <table class="compact">
+      <thead><tr><th>Round</th><th class="num">Invested</th><th class="num">Entry post-money</th>
+        <th class="num">Final ownership</th><th class="num">Exit proceeds</th><th class="num">MOIC</th><th class="num">IRR</th></tr></thead>
+      <tbody><tr><td><strong>Seed</strong></td><td class="num">₹10 Cr</td>
+        <td class="num">₹50 Cr</td><td class="num">13.2%</td>
+        <td class="num">₹390 Cr</td>
+        <td class="num"><strong>39.0×</strong></td>
+        <td class="num">68.8%</td></tr><tr><td><strong>Series A</strong></td><td class="num">₹50 Cr</td>
+        <td class="num">₹250 Cr</td><td class="num">16.5%</td>
+        <td class="num">₹488 Cr</td>
+        <td class="num"><strong>9.8×</strong></td>
+        <td class="num">57.7%</td></tr><tr><td><strong>Series B</strong></td><td class="num">₹150 Cr</td>
+        <td class="num">₹1050 Cr</td><td class="num">14.0%</td>
+        <td class="num">₹415 Cr</td>
+        <td class="num"><strong>2.8×</strong></td>
+        <td class="num">40.4%</td></tr></tbody>
+    </table><h4>Conservative case — exit ₹1209 Cr</h4>
+    <table class="compact">
+      <thead><tr><th>Round</th><th class="num">Invested</th><th class="num">Entry post-money</th>
+        <th class="num">Final ownership</th><th class="num">Exit proceeds</th><th class="num">MOIC</th><th class="num">IRR</th></tr></thead>
+      <tbody><tr><td><strong>Seed</strong></td><td class="num">₹10 Cr</td>
+        <td class="num">₹50 Cr</td><td class="num">13.2%</td>
+        <td class="num">₹159 Cr</td>
+        <td class="num"><strong>15.9×</strong></td>
+        <td class="num">48.5%</td></tr><tr><td><strong>Series A</strong></td><td class="num">₹50 Cr</td>
+        <td class="num">₹250 Cr</td><td class="num">16.5%</td>
+        <td class="num">₹199 Cr</td>
+        <td class="num"><strong>4.0×</strong></td>
+        <td class="num">31.8%</td></tr><tr><td><strong>Series B</strong></td><td class="num">₹150 Cr</td>
+        <td class="num">₹1050 Cr</td><td class="num">14.0%</td>
+        <td class="num">₹169 Cr</td>
+        <td class="num"><strong>1.1×</strong></td>
+        <td class="num">4.1%</td></tr></tbody>
+    </table><h4>Aggressive case — exit ₹5655 Cr</h4>
+    <table class="compact">
+      <thead><tr><th>Round</th><th class="num">Invested</th><th class="num">Entry post-money</th>
+        <th class="num">Final ownership</th><th class="num">Exit proceeds</th><th class="num">MOIC</th><th class="num">IRR</th></tr></thead>
+      <tbody><tr><td><strong>Seed</strong></td><td class="num">₹10 Cr</td>
+        <td class="num">₹50 Cr</td><td class="num">13.2%</td>
+        <td class="num">₹745 Cr</td>
+        <td class="num"><strong>74.5×</strong></td>
+        <td class="num">85.1%</td></tr><tr><td><strong>Series A</strong></td><td class="num">₹50 Cr</td>
+        <td class="num">₹250 Cr</td><td class="num">16.5%</td>
+        <td class="num">₹931 Cr</td>
+        <td class="num"><strong>18.6×</strong></td>
+        <td class="num">79.5%</td></tr><tr><td><strong>Series B</strong></td><td class="num">₹150 Cr</td>
+        <td class="num">₹1050 Cr</td><td class="num">14.0%</td>
+        <td class="num">₹792 Cr</td>
+        <td class="num"><strong>5.3×</strong></td>
+        <td class="num">74.1%</td></tr></tbody>
+    </table>
+
+  <div class="callout warn">
+    <span class="label">The asymmetry is the risk profile of this deal</span>
+    <p>Seed returns <strong>15.9×</strong> even in the conservative
+    case. Series B returns <strong>1.1×</strong> in that same case —
+    barely capital back, after three years, with no liquidity. Late money in this business is a bet that growth
+    continues exactly as modelled; early money is protected by entry price.</p>
+    <p>Any Series B investor should price protective terms accordingly, and any founder should understand that the
+    ₹1,050 Cr post-money is only defensible if Year 4 lands near base case.</p>
+  </div>
+
+  <h3>20.4 Probability-weighted seed return</h3>
+  <p>Every deck shows the success case. This is the number a seed partner is actually underwriting.</p>
+  <table>
+    <thead><tr><th>Outcome</th><th class="num">Probability</th><th class="num">Seed proceeds</th>
+      <th class="num">MOIC</th><th class="num">Weighted contribution</th></tr></thead>
+    <tbody><tr><td><strong>Failure / acquihire</strong></td>
+      <td class="num">55%</td><td class="num">₹0 Cr</td>
+      <td class="num">0.0×</td><td class="num">₹0.0 Cr</td></tr><tr><td><strong>Conservative</strong></td>
+      <td class="num">25%</td><td class="num">₹159 Cr</td>
+      <td class="num">15.9×</td><td class="num">₹39.8 Cr</td></tr><tr><td><strong>Base</strong></td>
+      <td class="num">15%</td><td class="num">₹390 Cr</td>
+      <td class="num">39.0×</td><td class="num">₹58.6 Cr</td></tr><tr><td><strong>Aggressive</strong></td>
+      <td class="num">5%</td><td class="num">₹745 Cr</td>
+      <td class="num">74.5×</td><td class="num">₹37.2 Cr</td></tr>
+      <tr class="tot"><td><strong>Expected value</strong></td><td class="num">100%</td>
+        <td class="num"><strong>₹135.6 Cr</strong></td>
+        <td class="num"><strong>13.6×</strong></td>
+        <td class="num"><strong>45.1% IRR</strong></td></tr>
+    </tbody>
+  </table>
+  <p>A 55% failure weighting is deliberately harsh and appropriate for a pre-revenue consumer brand facing a
+  funded incumbent. Even so, the expected return clears the bar for a seed consumer fund, because the entry price
+  is low relative to the category's demonstrated exit values.</p>
+  <p><strong>What the weighting hides:</strong> 55% of the time this returns nothing. The fund mathematics works
+  because of portfolio construction, not because this particular company is likely to succeed. An honest
+  presentation says that out loud.</p>
+
+  <h3>20.5 What breaks the return</h3>
+  <table>
+    <thead><tr><th style="width:36%">Change</th><th style="width:26%">Effect on seed MOIC</th><th>Comment</th></tr></thead>
+    <tbody><tr><td>Exit multiple 3.9× → 2.5×</td><td><strong>39.0× → 25.0× (base)</strong></td><td>Still a strong seed outcome</td></tr><tr><td>Year 7 revenue base → conservative</td><td><strong>39.0× → 15.9×</strong></td><td>The scenario risk</td></tr><tr><td>One additional ₹75 Cr round before exit</td><td><strong>39.0× → ~33×</strong></td><td>~15% further dilution</td></tr><tr><td>Seed post-money ₹50 Cr → ₹80 Cr</td><td><strong>39.0× → ~24×</strong></td><td><strong>Entry price is the single biggest lever</strong></td></tr><tr><td>Exit at Year 9 instead of Year 7</td><td><strong>IRR 68.8% → ~52%</strong></td><td>MOIC unchanged; time value lost</td></tr></tbody>
+  </table>
+  <p>The most sensitive variable is not revenue — it is <strong>seed entry price</strong>. A ₹50 Cr post-money is
+  the difference between a fund-returning position and a merely good one.</p>
+</div>
+
+
+<div class="part-divider">
+    <p style="font-family:'Liberation Sans',Arial,sans-serif;font-size:8pt;font-weight:700;letter-spacing:2.4pt;text-transform:uppercase;color:#B8F135;margin:0 0 4mm">Part VI</p>
+    <h1 style="font-size:32pt;color:#FFFDF7;margin:0 0 6mm;border:none">Risk & Execution</h1>
+    <p style="font-size:11pt;line-height:1.55;color:#BFBAB3;max-width:130mm;text-align:left;margin:0">What can go wrong, what must be proven before raising, and the honest assessment of how fundable this is today.</p>
+  </div>
+
+<div class="section">
+  <h1>21 · Risk Register</h1>
+  <p>Scored on likelihood and impact as the project stands today. Risks are ordered by severity, not by how
+  comfortable they are to discuss.</p>
+  <table class="compact">
+    <thead><tr><th style="width:28%">Risk</th><th style="width:12%">Likelihood</th><th style="width:12%">Impact</th><th>Mitigation</th></tr></thead>
+    <tbody><tr><td><strong>Taste does not beat the incumbent</strong></td><td>Medium</td>
+      <td>Critical</td><td>Blind panel before any further spend; reformulate rather than fundraise if it loses</td></tr><tr><td><strong>Team lacks FMCG distribution capability</strong></td><td>High</td>
+      <td>Critical</td><td>Hire or co-found before the seed round</td></tr><tr><td><strong>Misfits raises a Series A and locks distribution</strong></td><td>Medium</td>
+      <td>High</td><td>Compress time to first production run; concentrate on two cities</td></tr><tr><td><strong>Repeat rate below 25%</strong></td><td>Medium</td>
+      <td>High</td><td>Six-month D2C pilot answers it before institutional capital is at risk</td></tr><tr><td><strong>Coca-Cola or PepsiCo launches an Indian prebiotic line</strong></td><td>Medium</td>
+      <td>High</td><td>Build regional dominance so cloning is slower than acquiring</td></tr><tr><td><strong>Quick commerce commission increase or delisting</strong></td><td>Medium</td>
+      <td>High</td><td>~40% of volume by Y3. Diversify into modern trade earlier</td></tr><tr><td><strong>GST tightens further on sin goods</strong></td><td>Low–medium</td>
+      <td>High</td><td>Still-beverage line at 5% GST is the structural hedge</td></tr><tr><td><strong>Co-packer capacity unavailable in peak season</strong></td><td>Medium</td>
+      <td>Medium</td><td>Committed annual volume contracts; Q1 inventory build</td></tr><tr><td><strong>Jamun / kokum supply failure</strong></td><td>Medium</td>
+      <td>Medium</td><td>Freeze at harvest, forward contract, and do not launch with these SKUs</td></tr><tr><td><strong>Basket size falls below 8 cans</strong></td><td>Medium</td>
+      <td>Medium</td><td>Bundle builder enforces 12- and 24-can boxes</td></tr><tr><td><strong>Aluminium price shock</strong></td><td>Low–medium</td>
+      <td>Medium</td><td>Largest single cost line; forward cover at volume</td></tr><tr><td><strong>Batch stability failure in market</strong></td><td>Low</td>
+      <td>Critical</td><td>Shelf-life validation before retail; retained samples; recall procedure</td></tr><tr><td><strong>Claims challenge from FSSAI or ASCI</strong></td><td>Low</td>
+      <td>Medium</td><td>Composition-only language; banned-phrase validation at authoring time</td></tr><tr><td><strong>COD return-to-origin losses exceed provision</strong></td><td>Medium</td>
+      <td>Low–medium</td><td>Pincode-level COD restriction; prepaid incentives; ₹2,000 cap</td></tr></tbody>
+  </table>
+
+  <h3>21.1 The three that matter most</h3>
+  <div class="callout warn">
+    <span class="label">Risk 1 — taste does not win</span>
+    <p>FROLIC's only durable differentiation is flavour, and it is entirely unproven. Misfits ships a cleaner
+    health claim (zero added sugar). If FROLIC does not demonstrably beat it in a blind panel, the strategic
+    position collapses and there is no fallback — the fibre specification is identical and the price is higher.</p>
+    <p><strong>Mitigation:</strong> run the blind test before spending anything else. ~₹4 L, six weeks. If FROLIC
+    loses, reformulate rather than fundraise.</p>
+  </div>
+  <div class="callout warn">
+    <span class="label">Risk 2 — the incumbent raises first</span>
+    <p>Misfits is already funded. A Series A that locks national distribution closes the window before FROLIC
+    has a product in market.</p>
+    <p><strong>Mitigation:</strong> compress time to first production run. The window is 18–30 months and every
+    month spent fundraising instead of manufacturing consumes it.</p>
+  </div>
+  <div class="callout warn">
+    <span class="label">Risk 3 — the team gap</span>
+    <p>No FMCG distribution capability is documented. Indian beverage distribution cannot be built from a cold
+    start, and no amount of capital substitutes for the relationships.</p>
+    <p><strong>Mitigation:</strong> hire or co-found before the seed round. This is the single highest-leverage
+    action available to the project.</p>
+  </div>
+</div>
+
+<div class="section">
+  <h1>22 · Proof Required Before Funding</h1>
+  <p>The most operationally useful section of this report. Everything preceding it is a model; this is the work.</p>
+
+  <h3>22.1 Sequencing</h3>
+  <p>Raising ₹10 Cr on a model alone, against a funded incumbent with a near-identical product, invites either a
+  pass or a valuation that permanently damages the cap table. The sequence that works:</p>
+  <table>
+    <thead><tr><th style="width:18%">Stage</th><th style="width:22%">Raise</th><th>Against</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Now</strong></td><td>₹1.5–2.5 Cr angel / pre-seed</td><td>One production run · 3 SKUs · 2 cities · 6 months of D2C</td></tr>
+      <tr><td><strong>Month 9</strong></td><td>—</td><td>Cohort and taste data in hand; readiness reassessed</td></tr>
+      <tr><td><strong>Month 10</strong></td><td>₹10 Cr institutional seed at ₹50 Cr post</td><td>Real repeat-purchase and shelf-velocity evidence</td></tr>
+    </tbody>
+  </table>
+
+  <h3>22.2 Product validation</h3>
+  <table class="compact">
+    <thead><tr><th style="width:22%">Evidence</th><th style="width:38%">Specification</th><th>Why it decides the deal</th></tr></thead>
+    <tbody><tr><td><strong>Blind taste test</strong></td><td>n ≥ 200, five metros, FROLIC vs Misfits vs a mainstream cola. Monadic, blind, third-party administered. Target ≥ 60% preference vs Misfits on at least 3 SKUs</td><td>The entire thesis. If FROLIC loses blind, nothing else matters</td></tr><tr><td><strong>Sugar objection test</strong></td><td>Does 4 g added sugar cost preference against a 0 g competitor when disclosed?</td><td>Quantify the competitive threat before an investor does</td></tr><tr><td><strong>Repeat purchase</strong></td><td>≥ 35% of first-time buyers order again within 90 days</td><td>The model's central assumption; currently unvalidated</td></tr><tr><td><strong>Shelf-life validation</strong></td><td>12 months ambient, accelerated and real-time. Fibre suspension, carbonation retention, flavour degradation</td><td>A separating batch is a recall. Non-negotiable before retail</td></tr><tr><td><strong>FSSAI compliance</strong></td><td>Licence, label approval, nutrition panel verification, claims review</td><td>Table stakes. Absence is disqualifying</td></tr><tr><td><strong>Formulation defensibility</strong></td><td>Documented process IP; ideally a provisional patent on the fibre suspension method</td><td>Converts taste from a hypothesis into an asset</td></tr></tbody>
+  </table>
+
+  <h3>22.3 Market validation</h3>
+  <table class="compact">
+    <thead><tr><th style="width:22%">Evidence</th><th style="width:38%">Specification</th><th>Why it decides the deal</th></tr></thead>
+    <tbody><tr><td><strong>D2C revenue</strong></td><td>≥ ₹40 L cumulative over 6 months; ≥ ₹12 L in month 6</td><td>Demand at full price without trade support</td></tr><tr><td><strong>Cohort retention</strong></td><td>M1 / M3 / M6 curves by acquisition channel; M3 ≥ 35%</td><td>Distinguishes a brand from a promotion</td></tr><tr><td><strong>CAC by channel</strong></td><td>Blended ≤ ₹900 at ₹12 L/month scale</td><td>The model assumes ₹850. Prove it holds beyond the first ₹2 L of spend</td></tr><tr><td><strong>Basket size</strong></td><td>≥ 10 cans per order sustained</td><td>Below 8, D2C gross margin breaks</td></tr><tr><td><strong>Subscription attach</strong></td><td>≥ 20% of orders by month 6</td><td>The LTV case depends on it</td></tr><tr><td><strong>Retail sell-through</strong></td><td>50-store pilot, ≥ 4 units/store/week sustained 8 weeks</td><td>The number every distributor and consumer investor asks for</td></tr><tr><td><strong>Quick commerce velocity</strong></td><td>Listed on ≥ 2 platforms in 2 cities, repeat-order rate tracked</td><td>The realistic scale channel</td></tr><tr><td><strong>Distributor interest</strong></td><td>≥ 3 signed LOIs from regional distributors</td><td>Evidence that trade will carry it</td></tr></tbody>
+  </table>
+  <p class="small"><strong>Deliberately excluded:</strong> Instagram followers, waitlist signups, press mentions
+  and expressions of retailer "interest". No competent investor counts them.</p>
+
+  <h3>22.4 Financial validation</h3>
+  <table class="compact">
+    <thead><tr><th style="width:22%">Evidence</th><th style="width:38%">Specification</th><th>Why it decides the deal</th></tr></thead>
+    <tbody><tr><td><strong>Gross margin > 40%</strong></td><td>55.7% modelled in Year 1</td><td>Modelled, unvalidated</td></tr><tr><td><strong>CAC payback < 12 months</strong></td><td>10.0 months modelled in Year 1</td><td>Modelled</td></tr><tr><td><strong>LTV:CAC ≥ 3×</strong></td><td>1.8× in Year 1, 3.1× in Year 3</td><td><strong>Below threshold in Y1–Y2 — disclose proactively</strong></td></tr><tr><td><strong>Working capital quantified</strong></td><td>₹13.4 Cr peak (base case)</td><td>Modelled</td></tr><tr><td><strong>Actual COGS from a production run</strong></td><td>₹34/can assumed</td><td><strong>Not yet known. One invoice converts the entire cost stack from estimate to fact</strong></td></tr></tbody>
+  </table>
+
+  <h3>22.5 The three questions that decide everything</h3>
+  <p>Ranked by how much they matter and how cheaply they can be answered.</p>
+  <table>
+    <thead><tr><th style="width:8%">#</th><th style="width:40%">Question</th><th class="num" style="width:14%">Cost</th><th class="num" style="width:14%">Time</th><th>Sequence</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1</strong></td><td>Does it taste better than Misfits, blind?</td><td class="num">~₹4 L</td><td class="num">6 weeks</td><td>Answer this before spending anything else</td></tr>
+      <tr><td><strong>2</strong></td><td>Do 35% of first buyers come back within 90 days?</td><td class="num">~₹25 L</td><td class="num">6 months</td><td>Requires inventory and media</td></tr>
+      <tr><td><strong>3</strong></td><td>Can it hold 4 units/store/week in 50 stores?</td><td class="num">~₹8 L</td><td class="num">8 weeks</td><td>Can run in parallel with 2</td></tr>
+      <tr class="tot"><td></td><td><strong>Total to reach institutional readiness</strong></td><td class="num"><strong>~₹37 L</strong></td><td class="num"><strong>9 months</strong></td><td></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h1>23 · Investor Readiness Assessment</h1>
+  <p>Scored as the business stands today: pre-product, pre-revenue, with a complete brand system and financial
+  model.</p>
+  <table>
+    <thead><tr><th style="width:26%">Dimension</th><th style="width:14%" class="num">Score</th><th>Rationale</th></tr></thead>
+    <tbody><tr><td><strong>Market opportunity</strong></td><td class="num">8 / 10</td><td>Large, growing, global precedent unambiguous</td></tr><tr><td><strong>Category timing</strong></td><td class="num">8 / 10</td><td>Early but no longer speculative — incumbents validate demand</td></tr><tr><td><strong>Product differentiation</strong></td><td class="num">6 / 10</td><td>Indian-flavour wedge is real; the fibre specification is not</td></tr><tr><td><strong>Brand &amp; design</strong></td><td class="num">9 / 10</td><td>Complete, original, genuinely premium; ahead of the category</td></tr><tr><td><strong>Team</strong></td><td class="num"><strong>Unscored</strong></td><td><strong>Not assessable. The largest gap in this report</strong></td></tr><tr><td><strong>Traction</strong></td><td class="num"><strong>1 / 10</strong></td><td><strong>None. No sales, no taste data, no shelf presence</strong></td></tr><tr><td><strong>Unit economics</strong></td><td class="num">6 / 10</td><td>Modelled and coherent, entirely unvalidated</td></tr><tr><td><strong>Financial model quality</strong></td><td class="num">8 / 10</td><td>Assumption-driven, auditable, internally consistent</td></tr><tr><td><strong>Defensibility</strong></td><td class="num">4 / 10</td><td>Brand and flavour IP only; no supply or distribution lock</td></tr><tr><td><strong>Capital efficiency</strong></td><td class="num">7 / 10</td><td>₹30 Cr to EBITDA breakeven is reasonable for the category</td></tr>
+    <tr class="tot"><td><strong>Overall</strong></td><td class="num"><strong>5.7 / 10</strong></td>
+      <td><strong>Not yet institutionally fundable</strong></td></tr></tbody>
+  </table>
+
+  <div class="callout warn">
+    <span class="label">Overall: 5.7 / 10 — not yet institutionally fundable</span>
+    <p>That is not a failing grade for a pre-revenue brand; it is an accurate one. The score is dragged down
+    almost entirely by two things, and both are fixable within nine months.</p>
+    <p><strong>Traction (1/10).</strong> Nothing substitutes for it.<br>
+    <strong>Team (unscored).</strong> No founder credentials are documented anywhere. For a consumer brand,
+    investors back the operator before the idea. If the founding team includes beverage formulation or FMCG
+    distribution experience, documenting it is the single highest-leverage addition to this report.</p>
+    <p><strong>Projected score at a realistic ₹10 Cr seed</strong> (after 9–12 months of D2C):
+    <strong>7.5–8 / 10</strong>, assuming repeat and taste data land where the model assumes.</p>
+  </div>
+
+  <h3>23.1 How seven investor lenses would assess this</h3>
+  <table class="compact">
+    <thead><tr><th style="width:18%">Lens</th><th style="width:41%">Why they would invest</th><th>Why they would pass</th></tr></thead>
+    <tbody><tr><td><strong>Peak XV Partners</strong></td><td>Category creation with a proven global playbook; ₹3,000 Cr+ outcome if a leader emerges</td><td>Underwrites velocity. Indian beverage is a distribution and capital game. Pre-revenue against a funded incumbent is a pass at seed</td></tr><tr><td><strong>Accel India</strong></td><td>D2C-first brand with owned demand; subscription and CRM assets are real</td><td>Indian D2C beverage economics are poor at low AOV. Will interrogate whether the free-shipping threshold drives basket size or erodes margin</td></tr><tr><td><strong>Fireside Ventures</strong></td><td><strong>The most likely lead.</strong> "Western format, Indian taste" is precisely their thesis</td><td>Ten SKUs at launch is an inventory disaster. Will push hard to launch with three, and will ask why 4 g sugar when the incumbent is at zero</td></tr><tr><td><strong>DSG Consumer Partners</strong></td><td>Underwrites gross margin and repeat. 55.7% → 66.7% on net revenue after a 40% tax is genuinely good</td><td>Sceptical of heavy marketing ratios. Year 1 at 60% of net revenue signals a brand buying trial</td></tr><tr><td><strong>Coca-Cola Ventures</strong></td><td>Strategic defence. Watched PepsiCo pay $1.95 bn. Distribution could reach 500,000 outlets in 24 months</td><td>Strategics do not lead pre-revenue seed rounds. Can develop a prebiotic line internally for less</td></tr><tr><td><strong>PepsiCo Ventures</strong></td><td>Already owns the global playbook via Poppi; understands the unit economics better than any financial investor</td><td>Owning Poppi means they can launch it in India themselves. Build-versus-buy cuts hard against FROLIC</td></tr><tr><td><strong>Generalist growth fund (Series B)</strong></td><td>By Series B the only question is whether the machine compounds. 8.4× trailing is defensible for a category leader</td><td>In the conservative case Series B returns 1.1×. Nothing protects late money except growth continuing exactly as planned</td></tr></tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h1>24 · Implementation Roadmap</h1>
+  <table>
+    <thead><tr><th style="width:12%">Month</th><th style="width:50%">Milestone</th><th>Unlocks</th></tr></thead>
+    <tbody><tr><td><strong>0–2</strong></td><td>Formulation locked (3 SKUs). Co-packer signed. FSSAI licence obtained</td><td>Ability to manufacture</td></tr><tr><td><strong>2–3</strong></td><td>First production run ~50,000 cans. <strong>Actual COGS recorded</strong></td><td>Cost stack verified</td></tr><tr><td><strong>3</strong></td><td><strong>Blind taste test, n ≥ 200</strong></td><td>Go / no-go on the entire thesis</td></tr><tr><td><strong>3–4</strong></td><td>Shelf-life study initiated (accelerated)</td><td>Retail readiness</td></tr><tr><td><strong>4–9</strong></td><td>D2C live in 2 cities. Quick commerce listing</td><td>Revenue, cohort data, CAC</td></tr><tr><td><strong>6</strong></td><td>50-store retail pilot</td><td>Sell-through evidence</td></tr><tr><td><strong>9</strong></td><td>M3 retention curve complete</td><td>The number the seed round turns on</td></tr><tr><td><strong>10</strong></td><td><strong>₹10 Cr seed raise</strong></td><td>5-city expansion</td></tr><tr><td><strong>12–18</strong></td><td>Modern trade entry; full 10-SKU range</td><td>Series A narrative</td></tr><tr><td><strong>24</strong></td><td>₹15 Cr revenue run-rate</td><td><strong>Series A at ₹250 Cr post-money</strong></td></tr><tr><td><strong>36</strong></td><td>₹51 Cr revenue; general trade entry</td><td>Path to EBITDA breakeven visible</td></tr><tr><td><strong>48</strong></td><td>₹125 Cr revenue; <strong>EBITDA positive</strong></td><td><strong>Series B at ₹1,050 Cr post-money</strong></td></tr><tr><td><strong>60</strong></td><td>₹267 Cr revenue; 23.3% EBITDA margin</td><td>National distribution; still-beverage line</td></tr><tr><td><strong>84</strong></td><td>₹760 Cr revenue</td><td><strong>Exit at 3.9× revenue</strong></td></tr></tbody>
+  </table>
+  <h3>24.1 Critical path</h3>
+  <p>The binding constraint is not capital — it is <strong>time to first production run</strong>. Every month
+  spent fundraising rather than manufacturing consumes the 18–30 month window before an incumbent locks
+  distribution. The correct order is: sign a co-packer, produce, test blind, sell, then raise.</p>
+</div>
+
+<div class="part-divider">
+    <p style="font-family:'Liberation Sans',Arial,sans-serif;font-size:8pt;font-weight:700;letter-spacing:2.4pt;text-transform:uppercase;color:#B8F135;margin:0 0 4mm">Annexures</p>
+    <h1 style="font-size:32pt;color:#FFFDF7;margin:0 0 6mm;border:none">Annexures</h1>
+    <p style="font-size:11pt;line-height:1.55;color:#BFBAB3;max-width:130mm;text-align:left;margin:0">Full model assumptions, generated financial tables, selected investor questions and the sources behind every verified claim.</p>
+  </div>
+
+<div class="section">
+  <h1>Annexure A · Model Assumptions in Full</h1>
+  <p>Every input to the financial model, with provenance. These are the numbers to attack in diligence.</p>
+  <h3>Tax</h3>
+    <table class="compact"><thead><tr><th style="width:44%">Input</th><th style="width:34%">Value</th><th class="num">Provenance</th></tr></thead>
+    <tbody><tr><td>GST — aerated sweetened beverages</td><td><strong>40%</strong></td>
+      <td class="num"><span class="tag v">V</span></td></tr><tr><td>GST — non-carbonated fruit-based</td><td><strong>5%</strong></td>
+      <td class="num"><span class="tag v">V</span></td></tr><tr><td>Corporate tax (s.115BAA)</td><td><strong>25%</strong></td>
+      <td class="num"><span class="tag v">V</span></td></tr></tbody></table><h3>Product &amp; cost — 250 ml</h3>
+    <table class="compact"><thead><tr><th style="width:44%">Input</th><th style="width:34%">Value</th><th class="num">Provenance</th></tr></thead>
+    <tbody><tr><td>MRP</td><td><strong>₹130</strong></td>
+      <td class="num"><span class="tag a">A</span></td></tr><tr><td>COGS Year 1 → Year 5</td><td><strong>₹34.00 → ₹23.00</strong></td>
+      <td class="num"><span class="tag e">E</span></td></tr><tr><td>Prebiotic fibre cost per can</td><td><strong>₹4.00 → ₹3.00</strong></td>
+      <td class="num"><span class="tag e">E</span></td></tr><tr><td>Can body cost per can</td><td><strong>₹12.00 → ₹8.00</strong></td>
+      <td class="num"><span class="tag e">E</span></td></tr></tbody></table><h3>Channel</h3>
+    <table class="compact"><thead><tr><th style="width:44%">Input</th><th style="width:34%">Value</th><th class="num">Provenance</th></tr></thead>
+    <tbody><tr><td>D2C logistics per can</td><td><strong>₹4.20 (₹50/order ÷ 12 cans)</strong></td>
+      <td class="num"><span class="tag e">E</span></td></tr><tr><td>D2C payment + RTO provision</td><td><strong>5%</strong></td>
+      <td class="num"><span class="tag e">E</span></td></tr><tr><td>Quick commerce commission</td><td><strong>25%</strong></td>
+      <td class="num"><span class="tag e">E</span></td></tr><tr><td>Modern trade retailer margin</td><td><strong>25%</strong></td>
+      <td class="num"><span class="tag e">E</span></td></tr><tr><td>Modern trade distributor margin</td><td><strong>8%</strong></td>
+      <td class="num"><span class="tag e">E</span></td></tr><tr><td>General trade retailer / distributor</td><td><strong>22% / 10%</strong></td>
+      <td class="num"><span class="tag e">E</span></td></tr></tbody></table><h3>Market</h3>
+    <table class="compact"><thead><tr><th style="width:44%">Input</th><th style="width:34%">Value</th><th class="num">Provenance</th></tr></thead>
+    <tbody><tr><td>Adults 18–45, five metros</td><td><strong>46.0 M</strong></td>
+      <td class="num"><span class="tag e">E</span></td></tr><tr><td>SEC A/A+ share</td><td><strong>26%</strong></td>
+      <td class="num"><span class="tag e">E</span></td></tr><tr><td>Premium beverage buyer share</td><td><strong>25%</strong></td>
+      <td class="num"><span class="tag e">E</span></td></tr><tr><td>Beachhead</td><td><strong>2.99 M</strong></td>
+      <td class="num"><span class="tag e">E</span></td></tr></tbody></table><h3>Demand — base case</h3>
+    <table class="compact"><thead><tr><th style="width:44%">Input</th><th style="width:34%">Value</th><th class="num">Provenance</th></tr></thead>
+    <tbody><tr><td>Customers Y1 → Y5</td><td><strong>18,000 → 1,200,000</strong></td>
+      <td class="num"><span class="tag a">A</span></td></tr><tr><td>Orders per customer per year</td><td><strong>2.4 → 2.8</strong></td>
+      <td class="num"><span class="tag a">A</span></td></tr><tr><td>Cans per order</td><td><strong>10.0 → 11.5</strong></td>
+      <td class="num"><span class="tag a">A</span></td></tr><tr><td>Annual retention</td><td><strong>34% → 47%</strong></td>
+      <td class="num"><span class="tag a">A</span></td></tr><tr><td>CAC</td><td><strong>₹850 → ₹540</strong></td>
+      <td class="num"><span class="tag a">A</span></td></tr><tr><td>Marketing as % of net revenue</td><td><strong>60% → 18%</strong></td>
+      <td class="num"><span class="tag a">A</span></td></tr><tr><td>Operating expenditure</td><td><strong>₹4.5 Cr → ₹68 Cr</strong></td>
+      <td class="num"><span class="tag a">A</span></td></tr></tbody></table><h3>Funding &amp; exit</h3>
+    <table class="compact"><thead><tr><th style="width:44%">Input</th><th style="width:34%">Value</th><th class="num">Provenance</th></tr></thead>
+    <tbody><tr><td>Seed</td><td><strong>₹10 Cr at ₹50 Cr post</strong></td>
+      <td class="num"><span class="tag a">A</span></td></tr><tr><td>Series A</td><td><strong>₹50 Cr at ₹250 Cr post</strong></td>
+      <td class="num"><span class="tag a">A</span></td></tr><tr><td>Series B</td><td><strong>₹150 Cr at ₹1,050 Cr post</strong></td>
+      <td class="num"><span class="tag a">A</span></td></tr><tr><td>ESOP at seed / refresh per round</td><td><strong>10% / 2%</strong></td>
+      <td class="num"><span class="tag a">A</span></td></tr><tr><td>Exit year</td><td><strong>Year 7</strong></td>
+      <td class="num"><span class="tag a">A</span></td></tr><tr><td>Exit revenue multiple</td><td><strong>3.9× (PepsiCo–Poppi disclosed)</strong></td>
+      <td class="num"><span class="tag v">V</span></td></tr><tr><td>Year 7 revenue — cons / base / agg</td><td><strong>₹310 / ₹760 / ₹1,450 Cr</strong></td>
+      <td class="num"><span class="tag a">A</span></td></tr><tr><td>Failure probability weighting</td><td><strong>55%</strong></td>
+      <td class="num"><span class="tag a">A</span></td></tr></tbody></table>
+</div>
+
+<div class="section">
+  <h1>Annexure B · Generated Financial Tables</h1>
+  <h3>B.1 Channel economics</h3>
+  <table class="compact">
+    <thead><tr><th>Channel</th><th class="num">Net to brand</th><th class="num">% of MRP</th><th class="num">vs modern trade</th></tr></thead>
+    <tbody><tr><td>D2C (own site)</td>
+      <td class="num">₹84.01</td><td class="num">64.6%</td>
+      <td class="num">35%</td></tr><tr><td>Quick commerce</td>
+      <td class="num">₹67.14</td><td class="num">51.6%</td>
+      <td class="num">8%</td></tr><tr><td>Modern trade</td>
+      <td class="num">₹61.57</td><td class="num">47.4%</td>
+      <td class="num">-1%</td></tr><tr><td>General trade</td>
+      <td class="num">₹62.19</td><td class="num">47.8%</td>
+      <td class="num">0%</td></tr><tr><td>HoReCa / gyms</td>
+      <td class="num">₹79.21</td><td class="num">60.9%</td>
+      <td class="num">27%</td></tr></tbody>
+  </table>
+  <h3>B.2 Unit economics by year — all formats</h3>
+  <table class="compact">
+    <thead><tr><th>Format</th><th class="num">Y1 net</th><th class="num">Y1 COGS</th><th class="num">Y1 GM%</th>
+      <th class="num">Y5 net</th><th class="num">Y5 COGS</th><th class="num">Y5 GM%</th></tr></thead>
+    <tbody><tr><td><strong>250 ml sleek can</strong></td>
+        <td class="num">₹76.71</td><td class="num">₹34.00</td>
+        <td class="num">55.7%</td>
+        <td class="num">₹69.14</td><td class="num">₹23.00</td>
+        <td class="num">66.7%</td></tr><tr><td><strong>300 ml can</strong></td>
+        <td class="num">₹85.97</td><td class="num">₹37.50</td>
+        <td class="num">56.4%</td>
+        <td class="num">₹77.45</td><td class="num">₹25.40</td>
+        <td class="num">67.2%</td></tr><tr><td><strong>330 ml sleek can</strong></td>
+        <td class="num">₹92.14</td><td class="num">₹39.80</td>
+        <td class="num">56.8%</td>
+        <td class="num">₹82.99</td><td class="num">₹27.00</td>
+        <td class="num">67.5%</td></tr></tbody>
+  </table>
+  <h3>B.3 Full P&amp;L — all scenarios</h3>
+  <h4>Conservative</h4>
+    <table class="compact">
+      <thead><tr><th>Yr</th><th class="num">Customers</th><th class="num">Cans</th><th class="num">ARPU</th>
+        <th class="num">Revenue</th><th class="num">GM%</th><th class="num">Mktg</th><th class="num">Opex</th>
+        <th class="num">EBITDA</th><th class="num">CAC</th></tr></thead>
+      <tbody><tr><td>Y1</td>
+        <td class="num">11,000</td>
+        <td class="num">0.20 M</td>
+        <td class="num">₹1,381</td>
+        <td class="num">₹1.5</td><td class="num">55.7%</td>
+        <td class="num">₹1.1</td><td class="num">₹4.2</td>
+        <td class="num"><strong>−₹4.4</strong></td>
+        <td class="num">₹1100</td></tr><tr><td>Y2</td>
+        <td class="num">40,000</td>
+        <td class="num">0.80 M</td>
+        <td class="num">₹1,476</td>
+        <td class="num">₹5.9</td><td class="num">58.1%</td>
+        <td class="num">₹3.1</td><td class="num">₹7.0</td>
+        <td class="num"><strong>−₹6.6</strong></td>
+        <td class="num">₹950</td></tr><tr><td>Y3</td>
+        <td class="num">1,10,000</td>
+        <td class="num">2.42 M</td>
+        <td class="num">₹1,572</td>
+        <td class="num">₹17.3</td><td class="num">60.8%</td>
+        <td class="num">₹6.6</td><td class="num">₹12.5</td>
+        <td class="num"><strong>−₹8.6</strong></td>
+        <td class="num">₹820</td></tr><tr><td>Y4</td>
+        <td class="num">2,30,000</td>
+        <td class="num">5.29 M</td>
+        <td class="num">₹1,613</td>
+        <td class="num">₹37.1</td><td class="num">64.3%</td>
+        <td class="num">₹11.1</td><td class="num">₹19.0</td>
+        <td class="num"><strong>−₹6.3</strong></td>
+        <td class="num">₹760</td></tr><tr><td>Y5</td>
+        <td class="num">4,20,000</td>
+        <td class="num">10.58 M</td>
+        <td class="num">₹1,742</td>
+        <td class="num">₹73.2</td><td class="num">66.7%</td>
+        <td class="num">₹17.6</td><td class="num">₹27.0</td>
+        <td class="num"><strong>₹4.3</strong></td>
+        <td class="num">₹720</td></tr></tbody>
+    </table><h4>Base</h4>
+    <table class="compact">
+      <thead><tr><th>Yr</th><th class="num">Customers</th><th class="num">Cans</th><th class="num">ARPU</th>
+        <th class="num">Revenue</th><th class="num">GM%</th><th class="num">Mktg</th><th class="num">Opex</th>
+        <th class="num">EBITDA</th><th class="num">CAC</th></tr></thead>
+      <tbody><tr><td>Y1</td>
+        <td class="num">18,000</td>
+        <td class="num">0.43 M</td>
+        <td class="num">₹1,841</td>
+        <td class="num">₹3.3</td><td class="num">55.7%</td>
+        <td class="num">₹2.0</td><td class="num">₹4.5</td>
+        <td class="num"><strong>−₹4.6</strong></td>
+        <td class="num">₹850</td></tr><tr><td>Y2</td>
+        <td class="num">75,000</td>
+        <td class="num">1.97 M</td>
+        <td class="num">₹1,942</td>
+        <td class="num">₹14.6</td><td class="num">58.1%</td>
+        <td class="num">₹6.6</td><td class="num">₹9.0</td>
+        <td class="num"><strong>−₹7.1</strong></td>
+        <td class="num">₹780</td></tr><tr><td>Y3</td>
+        <td class="num">2,50,000</td>
+        <td class="num">7.15 M</td>
+        <td class="num">₹2,043</td>
+        <td class="num">₹51.1</td><td class="num">60.8%</td>
+        <td class="num">₹16.4</td><td class="num">₹20.0</td>
+        <td class="num"><strong>−₹5.3</strong></td>
+        <td class="num">₹640</td></tr><tr><td>Y4</td>
+        <td class="num">6,00,000</td>
+        <td class="num">17.82 M</td>
+        <td class="num">₹2,083</td>
+        <td class="num">₹125.0</td><td class="num">64.3%</td>
+        <td class="num">₹30.0</td><td class="num">₹38.0</td>
+        <td class="num"><strong>₹12.4</strong></td>
+        <td class="num">₹580</td></tr><tr><td>Y5</td>
+        <td class="num">12,00,000</td>
+        <td class="num">38.64 M</td>
+        <td class="num">₹2,226</td>
+        <td class="num">₹267.1</td><td class="num">66.7%</td>
+        <td class="num">₹48.1</td><td class="num">₹68.0</td>
+        <td class="num"><strong>₹62.2</strong></td>
+        <td class="num">₹540</td></tr></tbody>
+    </table><h4>Aggressive</h4>
+    <table class="compact">
+      <thead><tr><th>Yr</th><th class="num">Customers</th><th class="num">Cans</th><th class="num">ARPU</th>
+        <th class="num">Revenue</th><th class="num">GM%</th><th class="num">Mktg</th><th class="num">Opex</th>
+        <th class="num">EBITDA</th><th class="num">CAC</th></tr></thead>
+      <tbody><tr><td>Y1</td>
+        <td class="num">26,000</td>
+        <td class="num">0.74 M</td>
+        <td class="num">₹2,175</td>
+        <td class="num">₹5.7</td><td class="num">55.7%</td>
+        <td class="num">₹3.3</td><td class="num">₹5.5</td>
+        <td class="num"><strong>−₹5.6</strong></td>
+        <td class="num">₹780</td></tr><tr><td>Y2</td>
+        <td class="num">1,20,000</td>
+        <td class="num">3.83 M</td>
+        <td class="num">₹2,360</td>
+        <td class="num">₹28.3</td><td class="num">58.1%</td>
+        <td class="num">₹11.9</td><td class="num">₹12.0</td>
+        <td class="num"><strong>−₹7.4</strong></td>
+        <td class="num">₹700</td></tr><tr><td>Y3</td>
+        <td class="num">4,20,000</td>
+        <td class="num">14.97 M</td>
+        <td class="num">₹2,547</td>
+        <td class="num">₹107.0</td><td class="num">60.8%</td>
+        <td class="num">₹32.1</td><td class="num">₹28.0</td>
+        <td class="num"><strong>₹5.0</strong></td>
+        <td class="num">₹590</td></tr><tr><td>Y4</td>
+        <td class="num">10,50,000</td>
+        <td class="num">41.58 M</td>
+        <td class="num">₹2,777</td>
+        <td class="num">₹291.6</td><td class="num">64.3%</td>
+        <td class="num">₹64.2</td><td class="num">₹55.0</td>
+        <td class="num"><strong>₹68.5</strong></td>
+        <td class="num">₹530</td></tr><tr><td>Y5</td>
+        <td class="num">20,50,000</td>
+        <td class="num">86.10 M</td>
+        <td class="num">₹2,904</td>
+        <td class="num">₹595.3</td><td class="num">66.7%</td>
+        <td class="num">₹95.3</td><td class="num">₹96.0</td>
+        <td class="num"><strong>₹206.0</strong></td>
+        <td class="num">₹495</td></tr></tbody>
+    </table>
+</div>
+
+<div class="section">
+  <h1>Annexure C · Investor FAQ — Selected</h1>
+  <p class="small">The full set of 100 questions is maintained in <span class="sans">docs/investor/09-investor-faq.md</span>.
+  Reproduced here are those most likely to be asked in a first meeting.</p>
+  <h3>Market</h3><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>How big is the Indian prebiotic soda category?</strong></p>
+     <p class="muted" style="margin-bottom:0">~USD 12.6 m in 2025 — roughly 0.2% of the functional beverage market it sits inside. That is both the opportunity and the risk in one figure.</p></div><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>Isn’t that too small to build a venture business in?</strong></p>
+     <p class="muted" style="margin-bottom:0">Today, yes. The bet is on trajectory: the US equivalent went from zero to two brands worth ~$3.8 bn combined in seven years.</p></div><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>Isn’t India too price-sensitive for a ₹130 can?</strong></p>
+     <p class="muted" style="margin-bottom:0">The mass market is; this consumer is not. They already pay ₹125 for Red Bull and ₹250 for specialty coffee. We are mid-range in that set, and should never be compared to a ₹20 cola.</p></div><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>Who exactly is the customer?</strong></p>
+     <p class="muted" style="margin-bottom:0">Adults 18–45, SEC A/A+, in five metros, already spending ₹100+ on a single beverage. 2.99 million people — not "health-conscious Indians".</p></div><h3>Competition</h3><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>Are you claiming to be India’s first prebiotic soda?</strong></p>
+     <p class="muted" style="margin-bottom:0">No, and any deck that does is wrong. Misfits and Bubz are both in market; Misfits is seed-funded with a near-identical specification.</p></div><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>Then what is your differentiation?</strong></p>
+     <p class="muted" style="margin-bottom:0">Indian flavour idiom. Misfits is a Western-format minimal-ingredient soda made in India. FROLIC is nimbu masala, aam panna, kokum, jamun and jeera.</p></div><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>Misfits has zero added sugar. You have 4 g. Isn’t that a disadvantage?</strong></p>
+     <p class="muted" style="margin-bottom:0">Yes, and we disclose it. Our position is that 4 g buys meaningfully better taste and that taste drives repeat more than a label figure. This must be proven blind before the seed round, not asserted.</p></div><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>What stops Coca-Cola or PepsiCo from crushing you?</strong></p>
+     <p class="muted" style="margin-bottom:0">Nothing, eventually. But their advantages are cost, scale and price — none of which help in a 40%-taxed premium category. Their realistic move is to buy the category leader, as PepsiCo did with Poppi.</p></div><h3>Margins &amp; economics</h3><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>What is your gross margin?</strong></p>
+     <p class="muted" style="margin-bottom:0">55.7% in Year 1 rising to 66.7% by Year 5, on net revenue after 40% GST. Modelled, not yet validated by a production run.</p></div><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>What do you actually net per can?</strong></p>
+     <p class="muted" style="margin-bottom:0">₹84.01 D2C, ₹67.14 quick commerce, ₹61.57 modern trade — from a ₹130 MRP. ₹37.14 of every can is tax.</p></div><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>What is LTV:CAC?</strong></p>
+     <p class="muted" style="margin-bottom:0">1.8× in Year 1, crossing 3× only in Year 3. Below the threshold most consumer investors require, and we disclose it rather than presenting a blended figure that hides it.</p></div><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>What is the most important number in the model?</strong></p>
+     <p class="muted" style="margin-bottom:0">90-day repeat rate. Modelled at 34% in Year 1. At 25% the business needs a fourth round and LTV:CAC never clears 3×.</p></div><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>How much does the prebiotic fibre cost?</strong></p>
+     <p class="muted" style="margin-bottom:0">₹4.00 per can — 12% of COGS. The aluminium can costs three times more than the functional ingredient.</p></div><h3>Manufacturing &amp; regulation</h3><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>Do you own a plant?</strong></p>
+     <p class="muted" style="margin-bottom:0">No. Co-packed through Year 3. Own capacity is a Series B consideration, and only if volume justifies it.</p></div><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>Can you actually make this product?</strong></p>
+     <p class="muted" style="margin-bottom:0">The formulation challenge is real — 7 g of fibre in a clear carbonated liquid clouds and drops out of suspension. No production run has happened yet.</p></div><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>Do you need cold chain?</strong></p>
+     <p class="muted" style="margin-bottom:0">No. Shelf-stable ambient, because we use prebiotic fibre rather than live cultures. A genuine structural advantage over probiotic competitors.</p></div><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>What health claims can you legally make?</strong></p>
+     <p class="muted" style="margin-bottom:0">Composition claims only. "Contains 7 g of prebiotic fibre" is fine; "supports gut health" is a prohibited health claim under FSS (Advertising & Claims) Regulations 2018.</p></div><h3>Fundraising &amp; exit</h3><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>How much are you raising?</strong></p>
+     <p class="muted" style="margin-bottom:0">The recommendation in this report is not to raise ₹10 Cr now. Raise ₹1.5–2.5 Cr from angels against a production run and six months of D2C, then the seed on cohort data.</p></div><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>Why not raise the full seed now?</strong></p>
+     <p class="muted" style="margin-bottom:0">Readiness is 5.7/10 — zero traction and an undocumented team. Raising on a model, against a funded incumbent, invites a pass or a valuation that damages the cap table permanently.</p></div><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>What multiple are you using for exit?</strong></p>
+     <p class="muted" style="margin-bottom:0">3.9× revenue — the multiple PepsiCo actually paid for Poppi per its Form 10-Q, not a comparable-company average.</p></div><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>What does seed return?</strong></p>
+     <p class="muted" style="margin-bottom:0">15.9× conservative, 39.0× base, 74.5× aggressive. Probability-weighted with a 55% failure rate: 13.6× MOIC, 45.1% IRR.</p></div><div class="avoid-break" style="margin-bottom:3mm"><p style="margin-bottom:1mm"><strong>Is an IPO realistic?</strong></p>
+     <p class="muted" style="margin-bottom:0">Not at these numbers. ₹760 Cr of Year 7 revenue is below the scale at which an Indian consumer IPO makes sense. Trade sale is the base case.</p></div>
+</div>
+
+<div class="section">
+  <h1>Annexure D · Sources &amp; References</h1>
+  <h3>D.1 Verified claims</h3>
+  <table class="compact">
+    <thead><tr><th style="width:52%">Claim</th><th>Source</th></tr></thead>
+    <tbody><tr><td>40% GST on aerated sweetened beverages, effective 22 Sep 2025</td><td>CBIC rate rationalisation; ClearTax; industry reporting</td></tr><tr><td>5% GST on non-carbonated fruit-based drinks</td><td>Same</td></tr><tr><td>PepsiCo acquired Poppi for $1.95 bn cash + $0.2 bn contingent</td><td>PepsiCo Form 10-Q, FY2025 (SEC EDGAR)</td></tr><tr><td>Poppi 2024 revenue ~$500 m; implied multiple 3.9×</td><td>PepsiCo Form 10-Q; CNBC</td></tr><tr><td>Olipop valued at $1.85 bn; profitable since early 2024</td><td>Reported funding round coverage</td></tr><tr><td>Misfits — India prebiotic soda, seed-funded, 250 ml / 7 g fibre / 4 g sugar, zero added sugar</td><td>BW Disrupt; YourStory; company site</td></tr><tr><td>Bubz — second Indian prebiotic soda entrant</td><td>SME Futures</td></tr></tbody>
+  </table>
+  <h3>D.2 Requiring citation before external use</h3>
+  <div class="callout warn">
+    <span class="label">Outstanding</span>
+    <p>The following figures are carried through this report as supplied and <strong>have not been verified
+    against a primary source</strong>. They must be cited or replaced before this document is circulated:</p>
+    <ul>
+      <li>Indian functional beverage market at USD 4.2–8.3 bn (2025–26)</li>
+      <li>Functional beverage CAGR of ~10–11%</li>
+      <li>Indian prebiotic soda category at USD 12.6 m (2025)</li>
+      <li>"Fewer than 50% of Indian adults meet recommended daily fibre intake"</li>
+      <li>Category-typical sugar content figures for juice, cola and energy drinks</li>
+    </ul>
+  </div>
+  <h3>D.3 Model provenance</h3>
+  <p>Every figure in this report is generated from <span class="sans">investor/assumptions.mjs</span> via
+  <span class="sans">investor/build.mjs</span> and <span class="sans">investor/dpr/build-dpr.mjs</span>.
+  No number was typed by hand. Model version 1.0, generated 2026-09-19.</p>
+  <p class="small muted">Prepared for Frolic Beverages Pvt. Ltd. (proposed). Confidential. This document is not a
+  prospectus, an offer or a solicitation. Projections are illustrative and depend on assumptions that may prove
+  incorrect. FROLIC is a food product, not a medicine, and nothing herein is a claim to diagnose, treat, cure or
+  prevent any condition.</p>
+</div>
+
+</body>
+</html>

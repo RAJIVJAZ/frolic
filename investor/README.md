@@ -60,3 +60,29 @@ the three findings that change the pitch before anything else.
 FROLIC is pre-revenue, pre-product and pre-traction. Every projection here is
 arithmetic applied to assumptions. The model is internally consistent; that is
 not the same as being right.
+
+## Detailed Project Report (PDF)
+
+```bash
+node investor/build.mjs          # regenerate model.json
+node investor/dpr/build-dpr.mjs  # assemble the HTML
+node investor/dpr/render-pdf.mjs # render to PDF via Chromium
+```
+
+Output: `investor/output/FROLIC-Detailed-Project-Report.pdf` — 55 pages, A4.
+
+```
+investor/dpr/
+├── style.mjs          Print stylesheet (A4, 18mm margins)
+├── parts-a.mjs        Cover, notice, contents, executive summary, glance
+├── parts-b.mjs        Business (3–6), market & competition (7–10)
+├── parts-c.mjs        Operations (11–15), financials (16–20)
+├── parts-d.mjs        Risk & execution (21–24), annexures A–D
+├── faq-selection.mjs  Investor questions for Annexure C
+├── build-dpr.mjs      Assembles the HTML from model.json
+└── render-pdf.mjs     Chromium → PDF
+```
+
+**Every figure in the report is read from `output/model.json`.** Change an
+assumption, re-run all three commands, and the whole 55-page document
+regenerates consistently.
