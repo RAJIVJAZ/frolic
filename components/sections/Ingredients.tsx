@@ -173,7 +173,7 @@ function IngredientCard({
                     return (
                       <li key={handle}>
                         <Link
-                          href={`/products/${handle}`}
+                          href={`/flavours/${handle}`}
                           className="chip transition hover:border-charcoal/40 hover:bg-cream"
                         >
                           <span

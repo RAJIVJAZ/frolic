@@ -128,8 +128,8 @@ export default function StoryPage() {
         </ul>
 
         <div className="mt-14">
-          <ButtonLink href="/shop" size="lg">
-            See what we made <Arrow />
+          <ButtonLink href="/flavours" size="lg">
+            See the range <Arrow />
           </ButtonLink>
         </div>
       </section>

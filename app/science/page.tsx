@@ -125,8 +125,8 @@ export default function SciencePage() {
             ))}
           </dl>
           <div className="mt-10">
-            <ButtonLink href="/shop" size="lg">
-              Try it for yourself <Arrow />
+            <ButtonLink href="/waitlist" size="lg">
+              Join the waitlist <Arrow />
             </ButtonLink>
           </div>
         </div>

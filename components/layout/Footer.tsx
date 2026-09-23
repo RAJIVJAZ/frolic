@@ -4,33 +4,32 @@ import { products } from '@/lib/products';
 
 const COLUMNS = [
   {
-    title: 'Shop',
+    title: 'The Brand',
     links: [
-      { href: '/shop', label: 'All flavours' },
-      { href: '/bundle', label: 'Build a bundle' },
-      { href: '/subscribe', label: 'Subscribe & save' },
-      { href: '/quiz', label: 'Flavour quiz' },
-      { href: '/rewards', label: 'Rewards' },
+      { href: '/flavours', label: 'Flavours' },
+      { href: '/story', label: 'Our story' },
+      { href: '/founder', label: 'The founder' },
+      { href: '/science', label: 'The science' },
+      { href: '/ingredients', label: 'Ingredients' },
     ],
   },
   {
-    title: 'Learn',
+    title: 'Progress',
     links: [
-      { href: '/science', label: 'The science' },
-      { href: '/ingredients', label: 'Ingredients' },
-      { href: '/story', label: 'Our story' },
+      { href: '/development', label: "What's built" },
+      { href: '/quiz', label: 'Find your flavour' },
       { href: '/journal', label: 'Journal' },
       { href: '/faq', label: 'FAQ' },
     ],
   },
   {
-    title: 'Support',
+    title: 'Work With Us',
     links: [
+      { href: '/waitlist', label: 'Join the waitlist' },
+      { href: '/distributors', label: 'Distributors & retail' },
+      { href: '/investors', label: 'Investors' },
+      { href: '/careers', label: 'Join the team' },
       { href: '/contact', label: 'Contact' },
-      { href: '/shipping', label: 'Shipping & returns' },
-      { href: '/stockists', label: 'Find a stockist' },
-      { href: '/wholesale', label: 'Wholesale' },
-      { href: '/careers', label: 'Careers' },
     ],
   },
 ];
@@ -43,13 +42,13 @@ export function Footer() {
           <div className="space-y-6">
             <Wordmark className="text-step-4" />
             <p className="max-w-[34ch] text-step-1 text-cream/65">
-              Feel Good. Sip Different. Seven grams of prebiotic fibre, a quarter of the sugar, and
-              flavours we actually grew up drinking.
+              Feel Good. Sip Different. A premium prebiotic soda being built in India, on the
+              flavours we actually grew up drinking. In development — not yet available.
             </p>
 
             <form className="max-w-sm space-y-2">
               <label htmlFor="footer-email" className="eyebrow block text-cream/50">
-                Get first access to new flavours
+                Be first to taste it
               </label>
               <div className="flex gap-2">
                 <input
@@ -95,12 +94,12 @@ export function Footer() {
         </div>
 
         <div className="mt-14 border-t border-cream/12 pt-8">
-          <h3 className="eyebrow text-cream/45">Every flavour</h3>
+          <h3 className="eyebrow text-cream/45">The range in development</h3>
           <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
             {products.map((p) => (
               <li key={p.handle}>
                 <Link
-                  href={`/products/${p.handle}`}
+                  href={`/flavours/${p.handle}`}
                   className="text-step--1 text-cream/60 transition-colors hover:text-lime"
                 >
                   {p.name}
@@ -111,7 +110,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-4 border-t border-cream/12 pt-8 text-[0.75rem] text-cream/45 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Frolic Beverages Pvt. Ltd. Made in India.</p>
+          <p>© {new Date().getFullYear()} FROLIC · Frolic Beverages (proposed). Pune, India.</p>
           <ul className="flex flex-wrap gap-5">
             <li><Link href="/privacy" className="hover:text-cream">Privacy</Link></li>
             <li><Link href="/terms" className="hover:text-cream">Terms</Link></li>
@@ -120,10 +119,10 @@ export function Footer() {
         </div>
 
         <p className="mt-8 max-w-[70ch] text-[0.7rem] leading-relaxed text-cream/30">
-          FROLIC is a food product, not a medicine. It is not intended to diagnose, treat, cure or
-          prevent any disease. Nutritional values are per 250 ml serving and may vary marginally by
-          batch. If you are pregnant, nursing, or managing a medical condition, talk to a qualified
-          healthcare professional before making changes to your diet.
+          FROLIC is in pre-launch development and is not yet available for sale. Product images are
+          design concepts; formulations, nutritional values and packaging are not final. FROLIC is
+          intended as a food product, not a medicine, and nothing here is a claim to diagnose,
+          treat, cure or prevent any disease.
         </p>
       </div>
 

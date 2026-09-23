@@ -105,12 +105,13 @@ export default function JournalPost({ params }: Params) {
 
           <aside className="mt-16 rounded-panel border-2 border-charcoal p-8">
             <p className="eyebrow">While you are here</p>
-            <h2 className="mt-3 text-step-2">Ten flavours, 7g of fibre each.</h2>
+            <h2 className="mt-3 text-step-2">We are building this.</h2>
             <p className="mt-2 text-charcoal-muted">
-              Built from nimbu, jamun, kokum and everything else we grew up drinking.
+              FROLIC is a prebiotic soda in development — nimbu, jamun, kokum and everything else we
+              grew up drinking. Not yet available.
             </p>
             <div className="mt-6">
-              <ButtonLink href="/shop">Shop FROLIC <Arrow /></ButtonLink>
+              <ButtonLink href="/waitlist">Join the waitlist <Arrow /></ButtonLink>
             </div>
           </aside>
         </div>

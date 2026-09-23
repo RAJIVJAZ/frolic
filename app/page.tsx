@@ -1,42 +1,61 @@
 import type { Metadata } from 'next';
-import { Hero } from '@/components/sections/Hero';
-import { BestSellers } from '@/components/sections/BestSellers';
-import { Story } from '@/components/sections/Story';
-import { FlavourCarousel } from '@/components/sections/FlavourCarousel';
-import { Ingredients } from '@/components/sections/Ingredients';
+import { PreLaunchHero } from '@/components/sections/PreLaunchHero';
+import { Mission } from '@/components/sections/Mission';
+import { LaunchFlavours } from '@/components/sections/LaunchFlavours';
+import { FounderStory } from '@/components/sections/FounderStory';
+import { DevelopmentRoadmap, Timeline } from '@/components/prelaunch/Roadmap';
 import { Science } from '@/components/sections/Science';
-import { SocialProof } from '@/components/sections/SocialProof';
-import { SubscribeCta } from '@/components/sections/SubscribeCta';
+import { Ingredients } from '@/components/sections/Ingredients';
+import { SignupForm } from '@/components/prelaunch/SignupForm';
 import { JsonLd } from '@/components/JsonLd';
-import { buildMetadata, itemListSchema, faqSchema } from '@/lib/seo';
-import { HOME_FAQS } from '@/lib/faqs';
+import { buildMetadata, faqSchema } from '@/lib/seo';
+import { PRELAUNCH_FAQS } from '@/lib/faqs';
 
 export const metadata: Metadata = buildMetadata({
-  title: "FROLIC — India's Prebiotic Functional Soda | Feel Good. Sip Different.",
+  title: 'FROLIC — A New Generation of Indian Soda | Launching 2027',
   description:
-    'Ten prebiotic sodas built from Indian fruit and spice. 7g of prebiotic fibre, 4g added sugar, no caffeine. Nimbu masala, aam panna, kokum, jamun and more. Free shipping over ₹999.',
+    'FROLIC is a premium prebiotic soda being built in India — nimbu masala, aam panna, kokum and ginger lime, with prebiotic fibre and a quarter of the sugar. In development. Join the waitlist.',
   path: '/',
   keywords: [
     'prebiotic soda India',
+    'Indian functional soda',
     'healthy soda India',
-    'low sugar soft drink',
+    'low sugar soft drink India',
     'gut health drink India',
-    'functional beverage India',
   ],
 });
 
 export default function HomePage() {
   return (
     <>
-      <JsonLd data={[itemListSchema(), faqSchema(HOME_FAQS)]} />
-      <Hero />
-      <BestSellers />
-      <Story />
-      <FlavourCarousel />
+      <JsonLd data={faqSchema(PRELAUNCH_FAQS)} />
+      <PreLaunchHero />
+      <Mission />
+      <LaunchFlavours />
+      <DevelopmentRoadmap limit={6} />
+      <FounderStory />
       <Science />
       <Ingredients limit={6} showFilter={false} />
-      <SocialProof />
-      <SubscribeCta />
+      <Timeline />
+
+      <section className="py-section">
+        <div className="shell">
+          <div className="mx-auto max-w-3xl rounded-panel border-2 border-charcoal bg-cream p-8 text-center sm:p-12">
+            <p className="eyebrow">Coming soon</p>
+            <h2 className="mt-4 text-step-4">Be among the first to taste FROLIC.</h2>
+            <p className="mx-auto mt-5 max-w-prose text-step-1 text-charcoal-muted">
+              Early tasters get pilot batches before launch. Distributors and investors can register
+              interest on the same page.
+            </p>
+            <div className="mx-auto mt-8 max-w-md">
+              <SignupForm intent="waitlist" compact />
+            </div>
+            <p className="mt-5 text-step--1 text-charcoal-muted">
+              We write when something real happens — not on a schedule.
+            </p>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

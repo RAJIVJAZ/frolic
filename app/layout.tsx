@@ -4,7 +4,6 @@ import './globals.css';
 import { Nav } from '@/components/layout/Nav';
 import { Footer } from '@/components/layout/Footer';
 import { Announcement } from '@/components/layout/Announcement';
-import { CartDrawer } from '@/components/commerce/CartDrawer';
 import { SITE, organizationSchema, websiteSchema, absoluteUrl } from '@/lib/seo';
 import { JsonLd } from '@/components/JsonLd';
 
@@ -41,7 +40,7 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `FROLIC — ${SITE.tagline} | India's Prebiotic Functional Soda`,
+    default: `FROLIC — ${SITE.tagline} | A New Generation of Indian Soda`,
     template: '%s | FROLIC',
   },
   description: SITE.description,
@@ -96,7 +95,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Nav />
         <main id="main">{children}</main>
         <Footer />
-        <CartDrawer />
       </body>
     </html>
   );

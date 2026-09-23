@@ -4,11 +4,10 @@ import { useCallback, useState } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { LazyCanStage } from '@/components/three/LazyCanStage';
-import { products, formatINR, unitPriceFor } from '@/lib/products';
+import { products } from '@/lib/products';
 import { worldVars, cn } from '@/lib/utils';
-import { Button, ButtonLink, Arrow } from '@/components/ui/Button';
+import { ButtonLink, Arrow } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { useCart } from '@/lib/cart';
 
 
 /**
@@ -20,7 +19,6 @@ import { useCart } from '@/lib/cart';
 export function FlavourCarousel() {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(1);
-  const add = useCart((s) => s.add);
   const product = products[index];
 
   const go = useCallback((next: number) => {
@@ -94,9 +92,8 @@ export function FlavourCarousel() {
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               >
                 <div className="flex flex-wrap items-center gap-2">
-                  {product.badge && <Badge tone="ink">{product.badge}</Badge>}
-                  <Badge tone="world">{product.nutrition.prebioticFibreG}g fibre</Badge>
-                  <Badge>{product.nutrition.energyKcal} kcal</Badge>
+                  <Badge tone="ink">Concept</Badge>
+                  <Badge tone="world">{product.nutrition.prebioticFibreG}g fibre target</Badge>
                 </div>
 
                 <h3 className="mt-5 text-step-4">{product.name}</h3>
@@ -115,15 +112,11 @@ export function FlavourCarousel() {
                 </div>
 
                 <div className="mt-9 flex flex-wrap items-center gap-3">
-                  <Button
-                    variant="world"
-                    size="lg"
-                    onClick={() => add({ handle: product.handle, packSize: 12, subscribe: false })}
-                  >
-                    Add 12-pack · {formatINR(unitPriceFor(product, 12) * 12)}
-                  </Button>
-                  <ButtonLink href={`/products/${product.handle}`} variant="outline" size="lg">
-                    Full details <Arrow />
+                  <ButtonLink href="/waitlist" variant="world" size="lg">
+                    Join the waitlist <Arrow />
+                  </ButtonLink>
+                  <ButtonLink href={`/flavours/${product.handle}`} variant="outline" size="lg">
+                    Flavour story <Arrow />
                   </ButtonLink>
                 </div>
               </motion.div>
@@ -167,7 +160,7 @@ export function FlavourCarousel() {
             href="/flavours"
             className="group inline-flex items-center gap-2 font-semibold underline decoration-charcoal/25 decoration-2 underline-offset-[6px] transition hover:decoration-charcoal"
           >
-            See all ten side by side <Arrow />
+            See the full range <Arrow />
           </Link>
         </div>
       </div>

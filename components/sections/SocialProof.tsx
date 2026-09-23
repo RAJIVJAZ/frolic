@@ -84,7 +84,7 @@ export function SocialProof() {
                       </span>
                       {product && (
                         <Link
-                          href={`/products/${product.handle}`}
+                          href={`/flavours/${product.handle}`}
                           className="chip shrink-0 transition hover:border-charcoal/40"
                         >
                           <span

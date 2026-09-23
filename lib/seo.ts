@@ -7,7 +7,7 @@ export const SITE = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://frolic.in',
   tagline: 'Feel Good. Sip Different.',
   description:
-    "India's premium prebiotic functional soda. 7g of prebiotic fibre, low sugar and botanical ingredients in ten flavours built from Indian fruit and spice.",
+    "A premium prebiotic soda being built in India — prebiotic fibre, low sugar and botanical ingredients in flavours drawn from Indian drinking culture. In development.",
   twitter: '@drinkfrolic',
   instagram: 'https://instagram.com/drinkfrolic',
 } as const;

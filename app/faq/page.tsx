@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { HOME_FAQS } from '@/lib/faqs';
+import { PRELAUNCH_FAQS } from '@/lib/faqs';
 import { JsonLd } from '@/components/JsonLd';
 import { buildMetadata, faqSchema, breadcrumbSchema } from '@/lib/seo';
 import { ButtonLink, Arrow } from '@/components/ui/Button';
@@ -16,7 +16,7 @@ export default function FaqPage() {
     <>
       <JsonLd
         data={[
-          faqSchema(HOME_FAQS),
+          faqSchema(PRELAUNCH_FAQS),
           breadcrumbSchema([
             { name: 'Home', path: '/' },
             { name: 'FAQ', path: '/faq' },
@@ -29,7 +29,7 @@ export default function FaqPage() {
           <h1 className="mt-4 text-step-5">Straight answers.</h1>
 
           <dl className="mt-12 divide-y divide-charcoal-line border-y border-charcoal-line">
-            {HOME_FAQS.map((faq) => (
+            {PRELAUNCH_FAQS.map((faq) => (
               <div key={faq.question} className="py-7">
                 <dt className="font-display text-step-2 font-bold">{faq.question}</dt>
                 <dd className="mt-3 max-w-prose leading-relaxed text-charcoal-muted">{faq.answer}</dd>

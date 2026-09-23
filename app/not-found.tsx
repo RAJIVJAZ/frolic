@@ -9,14 +9,14 @@ export default function NotFound() {
         <p className="eyebrow">404</p>
         <h1 className="mt-4 text-step-5">This flavour does not exist. Yet.</h1>
         <p className="mt-5 text-step-1 text-charcoal-muted">
-          The page you were after has moved or never existed. Here are ten that definitely do.
+          The page you were after has moved or never existed. Here are ten flavour concepts that do.
         </p>
 
         <ul className="mt-8 flex flex-wrap justify-center gap-2">
           {products.map((p) => (
             <li key={p.handle}>
               <Link
-                href={`/products/${p.handle}`}
+                href={`/flavours/${p.handle}`}
                 className="chip transition hover:border-charcoal/40 hover:bg-cream"
               >
                 <span
@@ -31,8 +31,8 @@ export default function NotFound() {
         </ul>
 
         <div className="mt-10 flex flex-wrap justify-center gap-3">
-          <ButtonLink href="/shop" size="lg">
-            Shop all flavours <Arrow />
+          <ButtonLink href="/waitlist" size="lg">
+            Join the waitlist <Arrow />
           </ButtonLink>
           <ButtonLink href="/" variant="outline" size="lg">
             Back home

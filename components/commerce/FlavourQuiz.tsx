@@ -1,11 +1,12 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { products, type Product, formatINR, unitPriceFor } from '@/lib/products';
+import { products, type Product } from '@/lib/products';
 import { Button, ButtonLink, Arrow } from '@/components/ui/Button';
-import { ProductCard } from './ProductCard';
-import { useCart } from '@/lib/cart';
+import { SignupForm } from '@/components/prelaunch/SignupForm';
+import { CanFallback } from '@/components/three/CanFallback';
 import { cn, worldVars } from '@/lib/utils';
 
 /**
@@ -119,7 +120,6 @@ function score(answers: Record<string, Answer>): Product[] {
 export function FlavourQuiz() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
-  const add = useCart((s) => s.add);
 
   const done = step >= QUESTIONS.length;
   const question = QUESTIONS[step];
@@ -130,10 +130,6 @@ export function FlavourQuiz() {
     setAnswers((prev) => ({ ...prev, [question.id]: answer }));
     // Small beat so the selected state is visible before the panel swaps.
     window.setTimeout(() => setStep((s) => s + 1), 180);
-  }
-
-  function addAllThree() {
-    results.forEach((p) => add({ handle: p.handle, packSize: 6, subscribe: false }));
   }
 
   return (
@@ -221,8 +217,8 @@ export function FlavourQuiz() {
                 Start with <span className="gradient-text">{results[0].shortName}</span>.
               </h2>
               <p className="mt-4 max-w-prose text-step-1 text-charcoal-muted">
-                {results[0].tagline} Based on your answers, these three are the closest fit — and a
-                6-can starter of each is the cheapest way to find your actual favourite.
+                {results[0].tagline} Based on your answers, these three concepts are the closest
+                fit. Tell us and we will make sure your first taste includes them.
               </p>
             </div>
 
@@ -240,16 +236,40 @@ export function FlavourQuiz() {
                       Best match
                     </span>
                   )}
-                  <ProductCard product={product} packSize={6} />
+                  <article
+                    className="h-full overflow-hidden rounded-card border border-charcoal-line bg-cream"
+                    style={worldVars(product.world)}
+                  >
+                    <div className="grid aspect-[4/5] place-items-center" style={{ background: product.world.wash }}>
+                      <CanFallback product={product} widthClass="w-[36%]" />
+                    </div>
+                    <div className="p-5">
+                      <h3 className="text-step-1 leading-tight">{product.name}</h3>
+                      <p className="mt-1.5 text-step--1 text-charcoal-muted">{product.notes.join(' · ')}</p>
+                      <Link
+                        href={`/flavours/${product.handle}`}
+                        className="mt-4 inline-flex items-center gap-2 text-step--1 font-semibold"
+                      >
+                        Flavour story <Arrow />
+                      </Link>
+                    </div>
+                  </article>
                 </motion.li>
               ))}
             </ul>
 
-            <div className="mt-10 flex flex-wrap items-center gap-3">
-              <Button variant="primary" size="lg" onClick={addAllThree}>
-                Add all three 6-packs ·{' '}
-                {formatINR(results.reduce((sum, p) => sum + unitPriceFor(p, 6) * 6, 0))}
-              </Button>
+            <div className="mt-10 rounded-panel border-2 border-charcoal bg-cream p-7">
+              <h3 className="text-step-2">Want these three first?</h3>
+              <p className="mt-2 max-w-prose text-charcoal-muted">
+                Join the waitlist and we will note your matches. Early tasters receive pilot batches
+                before launch.
+              </p>
+              <div className="mt-6 max-w-md">
+                <SignupForm intent="waitlist" compact />
+              </div>
+            </div>
+
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <Button
                 variant="outline"
                 size="lg"
@@ -260,8 +280,8 @@ export function FlavourQuiz() {
               >
                 Start over
               </Button>
-              <ButtonLink href="/shop" variant="ghost" size="lg">
-                Browse all ten <Arrow />
+              <ButtonLink href="/flavours" variant="ghost" size="lg">
+                See the full range <Arrow />
               </ButtonLink>
             </div>
           </motion.div>

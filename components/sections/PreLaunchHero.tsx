@@ -11,27 +11,31 @@ import {
 import { ButtonLink, Arrow } from '@/components/ui/Button';
 import { RevealWords } from '@/components/ui/Reveal';
 import { LazyCanStage } from '@/components/three/LazyCanStage';
-import { products } from '@/lib/products';
+import { StagePill } from '@/components/prelaunch/StatusPill';
+import { getProduct } from '@/lib/products';
+import { LAUNCH_FLAVOURS, COMPANY } from '@/lib/company';
 import { worldVars } from '@/lib/utils';
 
+const HERO_PRODUCT = getProduct(LAUNCH_FLAVOURS[0])!;
 
-const HERO_PRODUCT = products[0];
-
-export function Hero() {
+/**
+ * Pre-launch hero.
+ *
+ * Headline note: an earlier draft read "India's First Premium Prebiotic Soda".
+ * That is not true — Misfits and Bubz are both already in market in India.
+ * A first-mover claim that fails one search is the cheapest possible way to
+ * lose a distributor or an investor, so the position here is the one that is
+ * both true and more defensible: the Indian flavour idiom.
+ */
+export function PreLaunchHero() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start start', 'end start'],
-  });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
 
-  // Parallax: copy drifts up and fades, the can holds longer and scales down.
-  const copyY = useTransform(scrollYProgress, [0, 1], ['0%', '-38%']);
+  const copyY = useTransform(scrollYProgress, [0, 1], ['0%', '-34%']);
   const copyOpacity = useTransform(scrollYProgress, [0, 0.62], [1, 0]);
-  const canScale = useTransform(scrollYProgress, [0, 1], [1, 0.82]);
+  const canScale = useTransform(scrollYProgress, [0, 1], [1, 0.84]);
 
-  // Scroll → can tilt. Written into a ref rather than state: the 3D scene
-  // samples it inside its own render loop, so scrolling costs zero React work.
   const spin = useTransform(scrollYProgress, [0, 1], [0, 14]);
   const spinRef = useRef(0);
   useMotionValueEvent(spin, 'change', (v) => {
@@ -44,7 +48,6 @@ export function Hero() {
       className="grain relative isolate overflow-hidden"
       style={worldVars(HERO_PRODUCT.world)}
     >
-      {/* Colour wash keyed to the hero flavour world */}
       <div className="world-wash pointer-events-none absolute inset-0 -z-10 opacity-70" aria-hidden />
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-cream to-transparent"
@@ -56,31 +59,30 @@ export function Hero() {
           style={reduce ? undefined : { y: copyY, opacity: copyOpacity }}
           className="relative z-10 order-2 max-w-[38rem] lg:order-1"
         >
-          <motion.p
-            className="chip mb-6"
+          <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
+            className="mb-6"
           >
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-mint" />
-            7g prebiotic fibre · 4g added sugar · 0 caffeine
-          </motion.p>
+            <StagePill />
+          </motion.div>
 
           <h1 className="text-step-6">
-            <RevealWords text="India's most" delay={0.15} />
+            <RevealWords text="A new generation" delay={0.15} />
             <br />
-            <RevealWords text="exciting" delay={0.3} className="gradient-text" />{' '}
-            <RevealWords text="functional soda" delay={0.42} />
+            <RevealWords text="of" delay={0.32} />{' '}
+            <RevealWords text="Indian soda" delay={0.4} className="gradient-text" />
           </h1>
 
           <motion.p
-            className="mt-6 max-w-[42ch] text-step-1 text-charcoal-muted"
+            className="mt-6 max-w-[44ch] text-step-1 text-charcoal-muted"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.7 }}
           >
-            Prebiotic fibre, botanical ingredients, and amazing taste — built from nimbu, jamun,
-            kokum and every other flavour we actually grew up drinking.
+            Prebiotic fibre, botanical ingredients and bold Indian flavours — nimbu masala, aam
+            panna, kokum, ginger lime. Being built now, in Pune.
           </motion.p>
 
           <motion.div
@@ -89,11 +91,11 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.82 }}
           >
-            <ButtonLink href="/shop" size="lg" variant="primary">
-              Shop Now <Arrow />
+            <ButtonLink href="/waitlist" size="lg" variant="primary">
+              Join the waitlist <Arrow />
             </ButtonLink>
-            <ButtonLink href="/flavours" size="lg" variant="outline">
-              Explore Flavours
+            <ButtonLink href="/development" size="lg" variant="outline">
+              See what&apos;s built
             </ButtonLink>
           </motion.div>
 
@@ -104,9 +106,9 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 1 }}
           >
             {[
-              { v: '7g', l: 'Prebiotic fibre' },
-              { v: '−75%', l: 'Sugar vs. regular soda' },
-              { v: '10', l: 'Flavours' },
+              { v: '7g', l: 'Prebiotic fibre, target' },
+              { v: '4', l: 'Launch flavours' },
+              { v: '2027', l: COMPANY.launchWindow.replace('Targeting first ', '').replace(' in 2027', '') },
             ].map((s) => (
               <div key={s.l}>
                 <dt className="sr-only">{s.l}</dt>
@@ -134,33 +136,6 @@ export function Hero() {
           />
         </motion.div>
       </div>
-
-      <ScrollCue />
     </section>
-  );
-}
-
-function ScrollCue() {
-  return (
-    <motion.div
-      className="pointer-events-none absolute inset-x-0 bottom-6 z-10 hidden justify-center lg:flex"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 1.4, duration: 0.8 }}
-      aria-hidden
-    >
-      <div className="flex flex-col items-center gap-2">
-        <span className="font-mono text-[0.6rem] font-semibold uppercase tracking-[0.22em] text-charcoal-muted">
-          Scroll
-        </span>
-        <span className="relative block h-9 w-[1px] overflow-hidden bg-charcoal/15">
-          <motion.span
-            className="absolute inset-x-0 top-0 block h-3 bg-charcoal"
-            animate={{ y: [-12, 36] }}
-            transition={{ duration: 1.9, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        </span>
-      </div>
-    </motion.div>
   );
 }

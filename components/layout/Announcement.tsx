@@ -6,11 +6,11 @@ export function Announcement() {
       <Marquee
         speed={44}
         items={[
-          'Free shipping over ₹999',
-          '7g prebiotic fibre in every can',
-          'Subscribe & save 20%',
-          '10 flavours, 0 mg caffeine',
-          'Shipping across India',
+          'In development — launching 2027',
+          'Join the waitlist for early access',
+          'Prebiotic fibre · low sugar · no caffeine',
+          'Built in Pune, India',
+          'Early taster applications open',
         ]}
         itemClassName="font-mono text-[0.66rem] font-semibold uppercase tracking-[0.2em]"
         separator="✳"
