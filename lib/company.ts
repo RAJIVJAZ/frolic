@@ -37,19 +37,26 @@ export const FOUNDER = {
   soloFounder: true,
   credentials: [
     'B.Tech, Electrical Engineering',
-    'Founder, Anuradha Enterprises',
-    'Food manufacturing and dairy processing',
+    'Founder, Anuradha Enterprises — food manufacturing, dairy processing',
+    'Two years running it end to end: development through production',
   ],
+  email: 'rajeevjaiswal027@gmail.com',
+  /** Years operating Anuradha Enterprises, single-handedly. */
+  yearsOperating: 'two',
   /**
-   * PLACEHOLDERS — replace before publishing. An investor or distributor who
-   * reads "[university]" on a live site draws the obvious conclusion.
+   * STILL PLACEHOLDERS — replace before pointing anyone at /founder or
+   * /careers. A visitor who reads "[LinkedIn URL]" on a live page reads the
+   * whole site as abandoned.
+   *
+   * Filled so far: email, years operating.
+   * Outstanding: university, graduation year, LinkedIn, and Anuradha's
+   * capacity. Capacity is the most persuasive of these to a beverage
+   * investor — litres/day carries more weight than any adjective.
    */
   placeholders: {
     university: '[University name]',
     graduationYear: '[Year]',
-    yearsInManufacturing: '[N]',
-    anuradhaScale: '[Daily processing capacity / years operating]',
-    email: '[founder email]',
+    anuradhaCapacity: '[Daily processing capacity]',
     linkedin: '[LinkedIn URL]',
   },
 } as const;

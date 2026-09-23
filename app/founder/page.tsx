@@ -86,7 +86,7 @@ export default function FounderPage() {
             <dl className="mt-6 space-y-3 text-step--1">
               <div className="flex justify-between gap-4 border-b border-charcoal-line pb-3">
                 <dt className="text-charcoal-muted">Email</dt>
-                <dd className="font-semibold">{FOUNDER.placeholders.email}</dd>
+                <dd className="font-semibold">{FOUNDER.email}</dd>
               </div>
               <div className="flex justify-between gap-4 border-b border-charcoal-line pb-3">
                 <dt className="text-charcoal-muted">LinkedIn</dt>

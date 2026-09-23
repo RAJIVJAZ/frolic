@@ -40,10 +40,11 @@ export function FounderStory({ full = false }: { full?: boolean }) {
           <Reveal>
             <p>
               I am an electrical engineer by training and a manufacturer by trade. For the last{' '}
-              {FOUNDER.placeholders.yearsInManufacturing} years I have run Anuradha Enterprises, a
-              food manufacturing business working in dairy processing — which means my working days
-              are spent on the unglamorous end of this industry: cold chain, procurement, batch
-              consistency, margins that move on the price of packaging.
+              {FOUNDER.yearsOperating} years I have run Anuradha Enterprises, a food manufacturing
+              business working in dairy processing — and I run all of it myself, from development
+              through to production. That means my working days are spent on the unglamorous end of
+              this industry: cold chain, procurement, batch consistency, margins that move on the
+              price of packaging.
             </p>
           </Reveal>
           <Reveal delay={1}>
@@ -52,7 +53,8 @@ export function FounderStory({ full = false }: { full?: boolean }) {
               am cautious about it. Making a drink that tastes good once, in a kitchen, is not
               difficult. Making the same drink ten thousand times, at a stable cost, with a
               twelve-month shelf life and a supply chain that does not fail in May, is an entirely
-              different problem. I have spent years on the second one.
+              different problem. That second one is what I run every day — and I run the whole of
+              it, not a function within it.
             </p>
           </Reveal>
           <Reveal delay={2}>

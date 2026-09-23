@@ -114,7 +114,7 @@ export default function CareersPage() {
         <div className="shell mx-auto max-w-2xl">
           <h2 className="text-step-3">Interested?</h2>
           <p className="mt-3 text-charcoal-muted">
-            There is no application portal. Write to {FOUNDER.placeholders.email} with what you have
+            There is no application portal. Write to {FOUNDER.email} with what you have
             built, or use the form below. It is read by the founder, because the founder is the
             whole company.
           </p>
