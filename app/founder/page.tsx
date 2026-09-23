@@ -21,7 +21,7 @@ function personSchema() {
     name: FOUNDER.name,
     jobTitle: FOUNDER.role,
     worksFor: { '@type': 'Organization', name: SITE.name },
-    address: { '@type': 'PostalAddress', addressLocality: 'Pune', addressRegion: 'Maharashtra', addressCountry: 'IN' },
+    address: { '@type': 'PostalAddress', addressLocality: 'Prayagraj', addressRegion: 'Uttar Pradesh', addressCountry: 'IN' },
   };
 }
 

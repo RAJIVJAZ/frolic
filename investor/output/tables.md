@@ -3,7 +3,7 @@
 
 # FROLIC — Generated Model Tables
 
-Model version 1.0 · generated 2026-09-19 · USD at ₹88
+Model version 1.0 · generated 2026-09-23 · USD at ₹88
 
 ## 1. Channel economics — 250 ml can at MRP ₹130
 

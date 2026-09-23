@@ -26,7 +26,7 @@ export function partA(M) {
       <tr style="background:none"><td style="border:none;padding:1mm 8mm 1mm 0;color:#8F8880">Sector</td><td style="border:none;padding:1mm 0;color:#FFFDF7">FMCG — Functional Beverages</td></tr>
       <tr style="background:none"><td style="border:none;padding:1mm 8mm 1mm 0;color:#8F8880">Stage</td><td style="border:none;padding:1mm 0;color:#FFFDF7">Pre-revenue · pre-production</td></tr>
       <tr style="background:none"><td style="border:none;padding:1mm 8mm 1mm 0;color:#8F8880">Capital sought</td><td style="border:none;padding:1mm 0;color:#FFFDF7">₹10 Cr seed at ₹50 Cr post-money</td></tr>
-      <tr style="background:none"><td style="border:none;padding:1mm 8mm 1mm 0;color:#8F8880">Base location</td><td style="border:none;padding:1mm 0;color:#FFFDF7">Pune, Maharashtra</td></tr>
+      <tr style="background:none"><td style="border:none;padding:1mm 8mm 1mm 0;color:#8F8880">Base location</td><td style="border:none;padding:1mm 0;color:#FFFDF7">Prayagraj, Uttar Pradesh</td></tr>
       </tbody>
     </table>
   </div>
@@ -273,7 +273,8 @@ function glanceTable(M) {
     ['Product', '250 ml sleek can · 7 g prebiotic fibre · 4 g added sugar · 0 mg caffeine'],
     ['Range at maturity', '10 SKUs built from Indian flavour idiom'],
     ['MRP', '₹130 per 250 ml can'],
-    ['Launch markets', M.market.cities.join(' · ')],
+    ['Year 1 markets', 'Lucknow · Delhi NCR — sequenced from the Prayagraj base'],
+    ['Target metros (by Y3)', M.market.cities.join(' · ')],
     ['Beachhead', `${M.market.premiumBeverageBuyersMn.toFixed(2)} M premium-beverage buyers (bottom-up)`],
     ['Manufacturing', 'Co-packed (tolling) through Year 3; own capacity a Series B consideration'],
     ['Primary channels', 'D2C and quick commerce (Y1) → modern trade (Y2) → general trade (Y3)'],

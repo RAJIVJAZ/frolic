@@ -25,7 +25,7 @@ const ROLES = [
   {
     title: 'Beverage Formulation Lead',
     type: 'Founding team',
-    location: 'Pune · on-site',
+    location: 'Prayagraj · on-site',
     priority: 'Highest priority',
     body: 'Suspending 7 g of fibre in a clear carbonated liquid without clouding it, losing carbonation or flattening the aromatics. If you have solved this before, you are the most important hire this company makes.',
     looking: ['Food technology or beverage science background', 'Hands-on bench trial experience', 'Ideally carbonated soft drinks or functional beverages'],
@@ -33,7 +33,7 @@ const ROLES = [
   {
     title: 'Sales & Distribution Lead',
     type: 'Founding team',
-    location: 'Mumbai or Pune · field',
+    location: 'Delhi NCR or Lucknow · field',
     priority: 'Highest priority',
     body: 'Indian beverage distribution cannot be built from a cold start, and no amount of capital substitutes for the relationships. We need someone who already has them.',
     looking: ['FMCG or beverage distribution experience', 'Existing distributor and modern trade relationships', 'Comfortable being early and building the function'],
@@ -49,7 +49,7 @@ const ROLES = [
   {
     title: 'Operations & Supply Chain',
     type: 'Founding team',
-    location: 'Pune · on-site',
+    location: 'Prayagraj · on-site',
     priority: 'After co-packer selection',
     body: 'Co-packer management, ingredient sourcing including seasonal fruit, inventory and the unglamorous work that decides whether a beverage brand survives its first summer.',
     looking: ['FMCG operations or procurement', 'Comfortable with seasonal and perishable inputs', 'Quality systems experience'],

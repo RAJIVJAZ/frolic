@@ -87,15 +87,21 @@ The two levers that matter more than anything else in this model:
 
 | Phase | Period | Markets | Channel |
 |---|---|---|---|
-| 1 | Y1 | Mumbai, Bengaluru | D2C + quick commerce only |
-| 2 | Y2 | + Delhi NCR, Pune, Hyderabad | + modern trade, HoReCa |
+| 1 | Y1 | Lucknow, Delhi NCR | D2C + quick commerce only |
+| 2 | Y2 | + Mumbai, Bengaluru, Pune, Hyderabad | + modern trade, HoReCa |
 | 3 | Y3 | Top 5 consolidated | + early general trade |
 | 4 | Y4 | + Chennai, Kolkata, Ahmedabad, Jaipur, Chandigarh | Full omnichannel |
 | 5 | Y5 | Pan-India metro + tier-1 | National distribution |
 
 Two cities in Year 1, not five. Concentration beats coverage when the goal is
-shelf velocity — a brand that sells 8 units/store/week in 200 Mumbai stores is
-fundable; the same volume spread across 1,000 stores in five cities is not.
+shelf velocity — a brand that sells 8 units/store/week in 200 stores in one city
+is fundable; the same volume spread across 1,000 stores in five cities is not.
+
+**Phase 1 follows the plant, not the biggest market.** From the Prayagraj base,
+Lucknow (~200 km) is a low-cost proving ground and Delhi NCR (~600 km) is the
+first large premium market on a single truck route. Mumbai and Bengaluru move to
+Year 2. The beachhead sizing is unchanged — manufacturing location does not move
+where the customers are. See [10-siting-and-sourcing.md](10-siting-and-sourcing.md).
 
 ## Where this projection is most likely wrong
 

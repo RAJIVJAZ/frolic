@@ -43,7 +43,7 @@ export const PRELAUNCH_FAQS: Faq[] = [
   {
     question: 'Who is building FROLIC?',
     answer:
-      'Rajeev Jaiswal, an electrical engineer and food manufacturer based in Pune who runs Anuradha Enterprises, a dairy processing business. He is currently the sole founder and is recruiting a founding team.',
+      'Rajeev Jaiswal, an electrical engineer and food manufacturer based in Prayagraj, Uttar Pradesh, who has run Anuradha Enterprises — a dairy processing business — single-handedly for two years. He is currently the sole founder and is recruiting a founding team.',
   },
   {
     question: 'Can I stock FROLIC in my store or caf\u00e9?',

@@ -72,8 +72,8 @@ export function organizationSchema() {
     foundingDate: '2024',
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'Pune',
-      addressRegion: 'Maharashtra',
+      addressLocality: 'Prayagraj',
+      addressRegion: 'Uttar Pradesh',
       addressCountry: 'IN',
     },
     sameAs: [SITE.instagram, 'https://www.linkedin.com/company/drinkfrolic'],

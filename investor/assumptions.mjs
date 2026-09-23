@@ -161,6 +161,10 @@ export const MARKET = {
   olipopRevenueUsdMn: 400,
 
   // Bottom-up beachhead. This is what we actually underwrite against.
+  // Note: Year 1 sells into Lucknow and Delhi NCR (see docs/investor/10-siting-
+  // and-sourcing.md). Lucknow is deliberately NOT added to this list — it is a
+  // proving ground near the Prayagraj base, not a sized market. Keeping it out
+  // means Y1 volume is never credited to demand we have not underwritten.
   beachhead: {
     cities: ['Delhi NCR', 'Mumbai', 'Bengaluru', 'Pune', 'Hyderabad'],
     adultPopulationMn: 46,        // [E] 18–45 across the five metros

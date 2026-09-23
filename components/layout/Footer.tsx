@@ -110,7 +110,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-4 border-t border-cream/12 pt-8 text-[0.75rem] text-cream/45 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} FROLIC · Frolic Beverages (proposed). Pune, India.</p>
+          <p>© {new Date().getFullYear()} FROLIC · Frolic Beverages (proposed). Prayagraj, India.</p>
           <ul className="flex flex-wrap gap-5">
             <li><Link href="/privacy" className="hover:text-cream">Privacy</Link></li>
             <li><Link href="/terms" className="hover:text-cream">Terms</Link></li>

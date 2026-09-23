@@ -20,7 +20,7 @@ ${partDivider('Part II', 'The Business', 'What FROLIC makes, who would make it, 
   <table>
     <tbody>
       <tr><td style="width:36%"><strong>Entity</strong></td><td>Frolic Beverages Pvt. Ltd. — private limited company, to be incorporated</td></tr>
-      <tr><td><strong>Registered office</strong></td><td>Pune, Maharashtra</td></tr>
+      <tr><td><strong>Registered office</strong></td><td>Prayagraj, Uttar Pradesh</td></tr>
       <tr><td><strong>Tax election</strong></td><td>Section 115BAA concessional regime — 25% effective corporate rate</td></tr>
       <tr><td><strong>ESOP pool</strong></td><td>10% at seed, refreshed 2% at each institutional round</td></tr>
     </tbody>

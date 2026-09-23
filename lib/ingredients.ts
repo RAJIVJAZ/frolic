@@ -46,7 +46,7 @@ export const ingredients: Ingredient[] = [
     slug: 'prebiotic-blend',
     name: 'The FROLIC Prebiotic Blend',
     category: 'Fibre',
-    origin: 'Blended and tested at our Pune facility',
+    origin: 'Blended and tested in Prayagraj, Uttar Pradesh',
     flavourProfile: 'Neutral, with a very slight body-building silkiness',
     benefit:
       'A 60:40 inulin-to-acacia ratio delivering 7 g of prebiotic fibre per 250 ml can — about a quarter of the 25–30 g daily fibre intake most Indian adults fall short of.',

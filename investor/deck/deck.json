@@ -2,12 +2,13 @@
   "v": 4,
   "createdOnFiles": { "v": 1, "at": "2026-09-19T00:00:00Z" },
   "title": "FROLIC — Seed Investor Deck",
-  "order": ["cover","proof","problem","product","honest","wedge","market","timing","gst","margins","revenue","ebitda","ltv","moat","ask","returns","milestones","close"],
+  "order": ["cover","proof","problem","product","honest","wedge","market","timing","gst","margins","revenue","ebitda","ltv","moat","founder","status","ask","returns","milestones","close"],
   "sections": {
     "s1": { "description": "The category is proven globally and open in India", "start": "cover" },
     "s2": { "description": "What FROLIC is, and the honest competitive position", "start": "product" },
     "s3": { "description": "The economics, built bottom-up on verified tax and channel inputs", "start": "gst" },
-    "s4": { "description": "The ask, the returns, and what must be proven first", "start": "ask" }
+    "s4": { "description": "Who is building it and how far along the work actually is", "start": "founder" },
+    "s5": { "description": "The ask, the returns, and what must be proven first", "start": "ask" }
   },
   "faces": {
     "bricolage-grotesque": {

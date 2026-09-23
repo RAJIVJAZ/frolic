@@ -16,7 +16,7 @@ export const metadata: Metadata = buildMetadata({
 const CHAPTERS = [
   {
     year: '2023',
-    title: 'A bad afternoon in a Pune warehouse',
+    title: 'A bad afternoon in a Prayagraj warehouse',
     body: 'Our first batch of nimbu masala separated in the can within eleven days. The fibre dropped out of suspension, the salt clumped at the bottom, and the whole thing tasted like disappointed seawater. We drank one each anyway, because that is what you do, and then went back to the formulation bench for another fourteen months.',
   },
   {

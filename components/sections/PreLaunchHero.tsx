@@ -82,7 +82,7 @@ export function PreLaunchHero() {
             transition={{ duration: 0.7, delay: 0.7 }}
           >
             Prebiotic fibre, botanical ingredients and bold Indian flavours — nimbu masala, aam
-            panna, kokum, ginger lime. Being built now, in Pune.
+            panna, kokum, ginger lime. Being built now, in Prayagraj.
           </motion.p>
 
           <motion.div

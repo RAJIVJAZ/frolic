@@ -167,16 +167,20 @@ ${partDivider('Part IV', 'Operations', 'How the product gets made, cleared, sold
   <table>
     <thead><tr><th style="width:10%">Phase</th><th style="width:12%">Period</th><th style="width:38%">Markets</th><th>Channels</th></tr></thead>
     <tbody>
-      <tr><td>1</td><td>Year 1</td><td>Mumbai, Bengaluru</td><td>D2C and quick commerce only</td></tr>
-      <tr><td>2</td><td>Year 2</td><td>+ Delhi NCR, Pune, Hyderabad</td><td>+ modern trade, HoReCa</td></tr>
+      <tr><td>1</td><td>Year 1</td><td>Lucknow, Delhi NCR</td><td>D2C and quick commerce only</td></tr>
+      <tr><td>2</td><td>Year 2</td><td>+ Mumbai, Bengaluru, Pune, Hyderabad</td><td>+ modern trade, HoReCa</td></tr>
       <tr><td>3</td><td>Year 3</td><td>Top five consolidated</td><td>+ early general trade</td></tr>
       <tr><td>4</td><td>Year 4</td><td>+ Chennai, Kolkata, Ahmedabad, Jaipur, Chandigarh</td><td>Full omnichannel</td></tr>
       <tr><td>5</td><td>Year 5</td><td>Pan-India metro and tier-1</td><td>National distribution</td></tr>
     </tbody>
   </table>
   <p><strong>Two cities in Year 1, not five.</strong> Shelf velocity beats shelf coverage: a brand selling eight
-  units per store per week across 200 Mumbai stores is fundable; the same volume spread across 1,000 stores in
-  five cities is not.</p>
+  units per store per week across 200 stores in one city is fundable; the same volume spread across 1,000 stores
+  in five cities is not.</p>
+  <p>Phase 1 follows the plant rather than the biggest market. From a Prayagraj base, Lucknow is ~200 km — a
+  low-cost proving ground for velocity and repeat — and Delhi NCR at ~600 km is the first genuinely large premium
+  market, reachable on a single truck route. Mumbai and Bengaluru move to Year 2, when volumes justify the
+  freight. See <span class="sans">docs/investor/10-siting-and-sourcing.md</span>.</p>
 
   <h3>14.4 Cash-on-delivery and returns</h3>
   <p>COD represents roughly 35% of Indian D2C beverage orders and is the principal driver of return-to-origin

@@ -22,7 +22,7 @@ export const COMPANY = {
   tagline: 'Feel Good. Sip Different.',
   category: 'Premium functional prebiotic soda',
   country: 'India',
-  base: 'Pune, Maharashtra',
+  base: 'Prayagraj, Uttar Pradesh',
   /** Shown as the status pill sitewide. */
   stage: 'Pre-launch · in development',
   /** Deliberately a window, not a date. Do not promise a month. */

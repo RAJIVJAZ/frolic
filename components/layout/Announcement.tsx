@@ -9,7 +9,7 @@ export function Announcement() {
           'In development — launching 2027',
           'Join the waitlist for early access',
           'Prebiotic fibre · low sugar · no caffeine',
-          'Built in Pune, India',
+          'Built in Prayagraj, India',
           'Early taster applications open',
         ]}
         itemClassName="font-mono text-[0.66rem] font-semibold uppercase tracking-[0.2em]"

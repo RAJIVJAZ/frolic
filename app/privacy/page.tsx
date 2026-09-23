@@ -54,7 +54,7 @@ export default function PrivacyPage() {
 
         <h2>Contact</h2>
         <p>
-          Frolic Beverages Pvt. Ltd., Pune, Maharashtra, India. Data queries: privacy@frolic.in.
+          Frolic Beverages Pvt. Ltd., Prayagraj, Uttar Pradesh, India. Data queries: privacy@frolic.in.
         </p>
       </Prose>
     </PageShell>

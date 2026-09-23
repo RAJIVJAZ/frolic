@@ -55,7 +55,7 @@ export default function TermsPage() {
         </p>
 
         <h2>Governing law</h2>
-        <p>These terms are governed by the laws of India, with courts in Pune having jurisdiction.</p>
+        <p>These terms are governed by the laws of India, with courts in Prayagraj having jurisdiction.</p>
       </Prose>
     </PageShell>
   );
