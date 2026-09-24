@@ -108,3 +108,12 @@ the drinker. The claims matrix in
 [docs/13-compliance-claims.md](docs/13-compliance-claims.md) records what may
 and may not be said, and the CMS schemas enforce the obvious cases at authoring
 time.
+
+---
+
+## Also in this repository
+
+[`mithaiwallah/`](mithaiwallah/README.md) is a separate, self-contained Next.js
+site (its own `package.json`, `tsconfig` and deploy) for Mithaiwallah, a
+premium sweets and gifting brand. It is excluded from FROLIC's TypeScript
+build and shares no code with it.

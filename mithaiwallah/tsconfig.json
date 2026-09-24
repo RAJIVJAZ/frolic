@@ -17,12 +17,5 @@
     "paths": { "@/*": ["./*"] }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  // `sanity/` holds schemas for the Sanity Studio, which is a separate
-  // workspace with its own dependencies and tsconfig. They are deliverable
-  // artifacts, not part of the Next build, and type-checking them here would
-  // require pulling the whole Studio toolchain into this app.
-  // `mithaiwallah/` is a separate Next.js app with its own package.json,
-  // tsconfig and `@/` alias; compiling it here would resolve its imports
-  // against FROLIC's lib/ and fail.
-  "exclude": ["node_modules", "sanity", "mithaiwallah"]
+  "exclude": ["node_modules"]
 }
